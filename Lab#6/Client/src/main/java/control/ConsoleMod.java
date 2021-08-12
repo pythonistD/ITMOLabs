@@ -1,6 +1,7 @@
 package control;
 
 import MyExceptions.IncorrectIdException;
+import control.commands.Command;
 import control.commands.CommandFactoryImpl;
 
 import java.io.FileNotFoundException;
@@ -10,7 +11,7 @@ import java.util.NoSuchElementException;
 /**
  * Главный класс, который отвечает за консольный интерактивный режим
  */
-public class Application {
+public class ConsoleMod {
     private static boolean loop = true;
     private DataReader dataReader = new DataReader();
     private CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
@@ -19,12 +20,10 @@ public class Application {
     private Information information;
     private InfDeliverer infDeliverer;
 
-    public void consoleMod() throws Exception {
-        try {
+    public Command getDataFromKeyboard() {
             Utility.createAvailableCommandsMap();
-            DataReader.getCollectionData();
-            dataWriter.writeCollectionData(DataReader.getCollectionData());
             String line;
+            Command command = new Command();
             while (loop) {
                 information = new Information();
                 try {
@@ -40,11 +39,9 @@ public class Application {
                     System.out.println("Комманда введена неверно" + "\n" + "Попробуйте ввести ещё раз" + "\n" + "Чтобы получить список доступных команд напишите help");
                     continue;
                 }
-                commandFactoryImpl.chooseCommand(information.getCommand()).execute();
+                command = commandFactoryImpl.chooseCommand(information.getCommand());
             }
-        } catch (FileNotFoundException | UnsupportedEncodingException | IncorrectIdException noFile) {
-            System.out.print(noFile.getMessage());
-        }
+            return command;
     }
 
     /**
@@ -52,7 +49,7 @@ public class Application {
      * @param loop
      */
     public static void setTreat(boolean loop) {
-        Application.loop = loop;
+        ConsoleMod.loop = loop;
     }
 
 

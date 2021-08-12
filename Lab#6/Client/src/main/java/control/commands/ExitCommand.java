@@ -1,6 +1,6 @@
 package control.commands;
 
-import control.Application;
+import control.ConsoleMod;
 
 public class ExitCommand extends Command{
     /**
@@ -9,7 +9,7 @@ public class ExitCommand extends Command{
      */
     @Override
     public void execute() {
-        Application.setTreat(false);
+        ConsoleMod.setTreat(false);
         System.out.println("Работа успешно завершена");
     }
 }
