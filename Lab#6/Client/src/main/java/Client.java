@@ -1,6 +1,9 @@
 import control.ConsoleMod;
+import control.Response;
+import control.commands.Command;
 
 import java.io.*;
+import java.net.DatagramPacket;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
@@ -42,6 +45,7 @@ public class Client {
         while (processingStatus){
             try {
                 sendData(consoleMod.getDataFromKeyboard());
+                getServerResponse();
             }catch (IOException e){
                 System.out.println("Ошибка. Данные не отправлены");
             }
@@ -92,5 +96,19 @@ public class Client {
             System.out.println("Ошибка в процессе полуения данных");
         }
 
+    }
+    private Command deSerialize(byte[] buffer){
+        Response object = null;
+        ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
+        try(ObjectInputStream ois = new ObjectInputStream(bais)) {
+            object = (Response) ois.readObject();
+            System.out.println(object);
+        } catch (ClassNotFoundException e) {
+            System.out.println("Класс не найден");
+        } catch (IOException e) {
+            System.out.println("Ошибка десериализации");
+            e.printStackTrace();
+        }
+        return object;
     }
 }
