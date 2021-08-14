@@ -36,7 +36,8 @@ public class Server {
                 socket.receive(packetReceived);
                 getClientAddress(packetReceived);
                 clientObject = deSerialize(packetReceived);
-                response=clientObject.execute();
+                clientObject.execute();
+                response=clientObject.getResponse();
                 buffSend = serialization(response);
                 packetSend = createServerResponsePacket(buffSend);
                 sendServerResponse(packetSend);

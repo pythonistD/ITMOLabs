@@ -3,13 +3,15 @@ package control.commands;
 import control.Response;
 
 public class HelpCommand extends Command{
+    private static final long serialVersionUID = 3947034539840505591L;
+    private Response response = null;
     /**
      * Запуск комманды
      * @throws Exception
      */
     @Override
-    public Response execute() {
-        return new Response("help","info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)\n" +
+    public void execute() {
+        response = new Response("help","info : вывести в стандартный поток вывода информацию о коллекции (тип, дата инициализации, количество элементов и т.д.)\n" +
                 "show : вывести в стандартный поток вывода все элементы коллекции в строковом представлении\n" +
                 "add {element} : добавить новый элемент в коллекцию\n" +
                 "update id {element} : обновить значение элемента коллекции, id которого равен заданному\n" +

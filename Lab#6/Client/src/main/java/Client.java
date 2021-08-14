@@ -20,7 +20,7 @@ public class Client {
     private ObjectOutputStream objectOutputStream;
     private ObjectInputStream objectInputStream;
     private ByteBuffer bufferedData;
-    private Object serverResponse;
+    private Response serverResponse;
     private ConsoleMod consoleMod = new ConsoleMod();
 
 
@@ -45,7 +45,10 @@ public class Client {
         while (processingStatus){
             try {
                 sendData(consoleMod.getDataFromKeyboard());
-                getServerResponse();
+                buffReceived = getServerResponse();
+                serverResponse = deSerialize(buffReceived);
+                serverResponse.viewResponse();
+
             }catch (IOException e){
                 System.out.println("Ошибка. Данные не отправлены");
             }
@@ -83,21 +86,18 @@ public class Client {
     /*
     Server response
      */
-    private void getServerResponse(){
+    private byte[] getServerResponse() {
+        byte[] data = new byte[0];
         try {
             SocketAddress responseAddress =
                     channel.receive(bufferedData);
-            byte[] data = bufferedData.array();
-            ByteArrayInputStream bais = new ByteArrayInputStream(data);
-            ObjectInputStream ois = new ObjectInputStream(bais);
-            serverResponse = ois;
-
+            data = bufferedData.array();
         } catch (IOException e) {
-            System.out.println("Ошибка в процессе полуения данных");
+            System.out.println("Ошибка при получении данных от сервера");
         }
-
+        return data;
     }
-    private Command deSerialize(byte[] buffer){
+        private Response deSerialize(byte[] buffer){
         Response object = null;
         ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
         try(ObjectInputStream ois = new ObjectInputStream(bais)) {

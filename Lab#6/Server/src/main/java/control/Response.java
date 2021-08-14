@@ -18,5 +18,9 @@ public class Response implements Serializable{
     }
     public Response(){}
 
+    public void viewResponse(){
+        System.out.println(commandName + "\n" + commandStringArgument);
+    }
+
 
 }
