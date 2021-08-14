@@ -97,7 +97,7 @@ public class Server {
     }
 
     private DatagramPacket createServerResponsePacket(byte[] buffToSend){
-       return packetSend = new DatagramPacket(buffToSend,packetReceived.getLength(),packetReceived.getAddress(),packetReceived.getPort());
+       return packetSend = new DatagramPacket(buffToSend,buffToSend.length,packetReceived.getAddress(),packetReceived.getPort());
     }
     private byte[] serialization(Object responseObject) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();

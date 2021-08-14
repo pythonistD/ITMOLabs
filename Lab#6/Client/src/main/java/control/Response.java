@@ -3,6 +3,7 @@ package control;
 import java.io.Serializable;
 
 public class Response implements Serializable{
+    private static final long serialVersionUID = 1L;
     private String commandName;
     private String commandStringArgument;
     private Serializable commandObjectArgument;
@@ -19,7 +20,7 @@ public class Response implements Serializable{
     public Response(){}
 
     public void viewResponse(){
-        System.out.println(commandName + "\n" + commandStringArgument);
+        System.out.println(this.commandName + "\n" + this.commandStringArgument);
     }
 
 

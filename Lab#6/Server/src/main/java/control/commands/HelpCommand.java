@@ -3,7 +3,7 @@ package control.commands;
 import control.Response;
 
 public class HelpCommand extends Command{
-    private static final long serialVersionUID = 3947034539840505591L;
+    private static final long serialVersionUID = 4L;
     private Response response = null;
     /**
      * Запуск комманды
