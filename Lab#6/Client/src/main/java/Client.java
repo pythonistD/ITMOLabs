@@ -39,7 +39,6 @@ public class Client {
         processingStatus = true;
         serverAddress = new InetSocketAddress(hostName,port);
         connectToServer();
-
         while (processingStatus){
             try {
                 sendData(consoleMod.getDataFromKeyboard());
@@ -59,25 +58,23 @@ public class Client {
         } catch (IOException e) {
             System.out.println("Нет соединения с сервером");
         }
+        System.out.println("Соединение с сервером установлено");
     }
     /*
     Send data
      */
     public void sendData(Object o) throws IOException {
-//        try {
             // serialization
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos);
-            oos.writeObject(o);
             oos.flush();
+            oos.writeObject(o);
+            oos.close();
             // wrap and send data
             byte[] buff = baos.toByteArray();
             bufferedData = ByteBuffer.wrap(buff);
             channel.send(bufferedData,serverAddress);
             bufferedData.clear();
-//        } catch (IOException e) {
-//            System.out.println("Что то пошло не так:(");
-//        }
     }
     /*
     Server response

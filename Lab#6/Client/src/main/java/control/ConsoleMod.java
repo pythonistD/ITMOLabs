@@ -16,7 +16,6 @@ public class ConsoleMod {
     private DataReader dataReader = new DataReader();
     private CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
     private Validator validator = new Validator();
-    DataWriter dataWriter = new DataWriter();
     private Information information;
     private InfDeliverer infDeliverer;
 
@@ -40,6 +39,7 @@ public class ConsoleMod {
                     continue;
                 }
                 command = commandFactoryImpl.chooseCommand(information.getCommand());
+                break;
             }
             return command;
     }

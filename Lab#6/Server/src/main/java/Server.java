@@ -1,6 +1,7 @@
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import control.Response;
+import control.commands.Command;
+
+import java.io.*;
 import java.net.*;
 
 public class Server {
@@ -9,6 +10,7 @@ public class Server {
     private SocketAddress socketAddress;
     private DatagramSocket socket;
     private boolean processingStatus;
+    private Response response;
     private int clientCounter;
 
     private byte buffReceived[] = new byte[576];
@@ -23,18 +25,21 @@ public class Server {
     /*
     *Server operations
      */
-    public void run(){
+    public void run() throws Exception {
         socketAddress = new InetSocketAddress(port);
-        DatagramPacket packetClient = null;
-        Object clientObject;
+        DatagramPacket packetClient;
+        Command clientObject;
         openSocket();
         processingStatus=true;
         while (processingStatus){
             try {
-                packetClient = getClientRequest();
-                getClientAddress(packetClient);
-                clientObject = deSerialize(packetClient);
-                objectToString(clientObject);
+                socket.receive(packetReceived);
+                getClientAddress(packetReceived);
+                clientObject = deSerialize(packetReceived);
+                response=clientObject.execute();
+                buffSend = serialization(response);
+                packetSend = createServerResponsePacket(buffSend);
+                sendServerResponse(packetSend);
             } catch (IOException e) {
                 System.out.println("Ошибочка вышла... Соединение не установлено :(");
                 break;
@@ -57,29 +62,20 @@ public class Server {
             System.out.println("Произошла ошибка при подключении к порту:" + port);
         }
     }
-
-    /*
-    Client's request
-     */
-
-    private DatagramPacket getClientRequest() throws IOException {
-            socket.receive(packetReceived);
-            packetSend = new DatagramPacket(buffSend, buffSend.length, packetReceived.getAddress(), packetReceived.getPort());
-        return packetSend;
-    }
     /*
     Deserialize Data
      */
-    private Object deSerialize(DatagramPacket packet){
-        Object object = null;
+    private Command deSerialize(DatagramPacket packet){
+        Command object = null;
             ByteArrayInputStream bais = new ByteArrayInputStream(packet.getData());
             try(ObjectInputStream ois = new ObjectInputStream(bais)) {
-                object =ois.readObject();
+                object = (Command) ois.readObject();
                 System.out.println(object);
             } catch (ClassNotFoundException e) {
                 System.out.println("Класс не найден");
             } catch (IOException e) {
                 System.out.println("Ошибка десериализации");
+                e.printStackTrace();
             }
         return object;
     }
@@ -99,12 +95,24 @@ public class Server {
 
     }
 
-    private void objectToString(Object o){
-        try{
-            System.out.println(o);
-        }catch (NullPointerException e){
-
-        }
+    private DatagramPacket createServerResponsePacket(byte[] buffToSend){
+       return packetSend = new DatagramPacket(buffToSend,packetReceived.getLength(),packetReceived.getAddress(),packetReceived.getPort());
+    }
+    private byte[] serialization(Object responseObject) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+        oos.flush();
+        oos.writeObject(responseObject);
+        oos.close();
+        return baos.toByteArray();
     }
 
+    private void sendServerResponse(DatagramPacket serverResponsePacket){
+        try {
+            socket.send(serverResponsePacket);
+        } catch (IOException e) {
+            System.out.println("Упс, ошибочка, данные не отправлены на Клиент");
+        }
+        System.out.println("Данные успешно отправлены");
+    }
 }

@@ -1,5 +1,7 @@
 package control.commands;
 
+import java.io.Serializable;
+
 public class HelpCommand extends Command {
     /**
      * Запуск комманды

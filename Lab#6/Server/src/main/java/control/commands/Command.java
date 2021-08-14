@@ -1,9 +1,14 @@
 package control.commands;
 
-public class Command {
+import control.Response;
+
+import java.io.Serializable;
+
+public class Command implements Serializable {
 
 
-    public void execute() throws Exception {
+    public Response execute() throws Exception {
+        return new Response();
 
     }
 
