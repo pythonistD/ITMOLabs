@@ -43,6 +43,7 @@ public class Client {
                 serverAddress = channel.receive(bufferedDataReceive);
                 System.out.println(bufferedDataReceive);
                 serverResponse = deSerialize(bufferedDataReceive.array());
+                bufferedDataReceive.clear();
                 serverResponse.viewResponse();
             }catch (IOException e){
                 System.out.println("Ошибка. Данные не отправлены");
