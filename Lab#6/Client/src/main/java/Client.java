@@ -1,9 +1,7 @@
 import control.ConsoleMod;
 import control.Response;
-import control.commands.Command;
 
 import java.io.*;
-import java.net.DatagramPacket;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.nio.ByteBuffer;
@@ -17,17 +15,12 @@ public class Client {
     private boolean processingStatus;
     private SocketAddress serverAddress;
     private DatagramChannel channel;
-    private ObjectOutputStream objectOutputStream;
-    private ObjectInputStream objectInputStream;
-    private ByteBuffer bufferedData;
+    private ByteBuffer bufferedDataReceive = ByteBuffer.allocate(100000);
+    private ByteBuffer bufferedDataSend;
+
     private Response serverResponse;
+
     private ConsoleMod consoleMod = new ConsoleMod();
-
-
-    private byte buffReceived[] = new byte[576];
-    private byte buffSend[] = new byte[576];
-
-
     public Client(String hostName, int port, int reconnectionTime, int counfOfReconnAttempts){
         this.hostName = hostName;
         this.port = port;
@@ -44,13 +37,17 @@ public class Client {
         connectToServer();
         while (processingStatus){
             try {
-                sendData(consoleMod.getDataFromKeyboard());
-                buffReceived = getServerResponse();
-                serverResponse = deSerialize(buffReceived);
+                bufferedDataSend = serialize(consoleMod.getDataFromKeyboard());
+                channel.send(bufferedDataSend,serverAddress);
+                bufferedDataSend.clear();
+                serverAddress = channel.receive(bufferedDataReceive);
+                System.out.println(bufferedDataReceive);
+                serverResponse = deSerialize(bufferedDataReceive.array());
                 serverResponse.viewResponse();
-
             }catch (IOException e){
                 System.out.println("Ошибка. Данные не отправлены");
+            }catch (NullPointerException e1){
+                e1.printStackTrace();
             }
 
         }
@@ -61,7 +58,7 @@ public class Client {
     private void connectToServer(){
         try {
             channel = DatagramChannel.open();
-            channel.connect(serverAddress);
+            channel.socket().bind(null);
         } catch (IOException e) {
             System.out.println("Нет соединения с сервером");
         }
@@ -70,45 +67,27 @@ public class Client {
     /*
     Send data
      */
-    public void sendData(Object o) throws IOException {
-            // serialization
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);
+    private ByteBuffer serialize(Object o) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try(ObjectOutputStream oos = new ObjectOutputStream(baos)){
             oos.flush();
             oos.writeObject(o);
-            oos.close();
-            // wrap and send data
-            byte[] buff = baos.toByteArray();
-            bufferedData = ByteBuffer.wrap(buff);
-            channel.send(bufferedData,serverAddress);
-            bufferedData.clear();
-    }
-    /*
-    Server response
-     */
-    private byte[] getServerResponse() {
-        byte[] data = new byte[0];
-        try {
-            SocketAddress responseAddress =
-                    channel.receive(bufferedData);
-            data = bufferedData.array();
-        } catch (IOException e) {
-            System.out.println("Ошибка при получении данных от сервера");
         }
-        return data;
+        // wrap and send data
+        byte[] buff = baos.toByteArray();
+        return ByteBuffer.wrap(buff);
     }
         private Response deSerialize(byte[] buffer){
         Response object = null;
-        ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
-        try(ObjectInputStream ois = new ObjectInputStream(bais)) {
+        try(ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(buffer))) {
             object = (Response) ois.readObject();
-            System.out.println(object);
         } catch (ClassNotFoundException e) {
             System.out.println("Класс не найден");
         } catch (IOException e) {
-            System.out.println("Ошибка десериализации");
             e.printStackTrace();
+
         }
         return object;
     }
+
 }

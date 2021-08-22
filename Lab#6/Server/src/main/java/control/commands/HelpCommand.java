@@ -4,7 +4,7 @@ import control.Response;
 
 public class HelpCommand extends Command{
     private static final long serialVersionUID = 4L;
-    private Response response = null;
+    private Response response;
     /**
      * Запуск комманды
      * @throws Exception
@@ -26,5 +26,9 @@ public class HelpCommand extends Command{
                 "max_by_type : вывести любой объект из коллекции, значение поля type которого является максимальным\n" +
                 "print_ascending : вывести элементы коллекции в порядке возрастания\n" +
                 "print_unique_head : вывести уникальные значения поля head всех элементов в коллекции");
+    }
+    @Override
+    public Response getResponse(){
+        return this.response;
     }
 }

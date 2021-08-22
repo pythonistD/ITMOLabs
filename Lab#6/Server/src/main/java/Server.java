@@ -11,13 +11,13 @@ public class Server {
     private DatagramSocket socket;
     private boolean processingStatus;
     private Response response;
-    private int clientCounter;
+    private int clientCounter=0;
 
     private byte buffReceived[] = new byte[576];
     private byte buffSend[] = new byte[576];
 
     private DatagramPacket packetReceived =new DatagramPacket(buffReceived, buffReceived.length);
-    private DatagramPacket packetSend = new DatagramPacket(buffSend, buffSend.length);
+    private DatagramPacket packetSend;
     public Server(int port, int timeout){
         this.port = port;
         this.timeout = timeout;
@@ -27,7 +27,6 @@ public class Server {
      */
     public void run() throws Exception {
         socketAddress = new InetSocketAddress(port);
-        DatagramPacket packetClient;
         Command clientObject;
         openSocket();
         processingStatus=true;
@@ -49,7 +48,6 @@ public class Server {
         //stop();
         }
     }
-
     /*
     Open socket
      */
@@ -68,8 +66,7 @@ public class Server {
      */
     private Command deSerialize(DatagramPacket packet){
         Command object = null;
-            ByteArrayInputStream bais = new ByteArrayInputStream(packet.getData());
-            try(ObjectInputStream ois = new ObjectInputStream(bais)) {
+            try(ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(packet.getData()))) {
                 object = (Command) ois.readObject();
                 System.out.println(object);
             } catch (ClassNotFoundException e) {
@@ -90,7 +87,7 @@ public class Server {
     Who dropped the packet?
      */
     private void getClientAddress(DatagramPacket packet){
-        System.out.println("Клиент " + clientCounter);
+        System.out.println("Клиент " + clientCounter++);
         System.out.println("Хост Клиента: " + packet.getAddress());
         System.out.println("Порт Клиента: " + packet.getPort());
 
@@ -100,12 +97,14 @@ public class Server {
        return packetSend = new DatagramPacket(buffToSend,buffToSend.length,packetReceived.getAddress(),packetReceived.getPort());
     }
     private byte[] serialization(Object responseObject) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = new ObjectOutputStream(baos);
-        oos.flush();
-        oos.writeObject(responseObject);
-        oos.close();
-        return baos.toByteArray();
+        byte[] byteArr;
+        try(ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos)){
+            oos.flush();
+            oos.writeObject(responseObject);
+            byteArr = baos.toByteArray();
+        }
+        return byteArr;
     }
 
     private void sendServerResponse(DatagramPacket serverResponsePacket){

@@ -17,10 +17,37 @@ public class Response implements Serializable{
         this.commandName = commandName;
         this.commandStringArgument = commandStringArgument;
     }
+    public Response(String commandName) {
+        this.commandName = commandName;
+    }
     public Response(){}
 
     public void viewResponse(){
         System.out.println(commandName + "\n" + commandStringArgument);
+    }
+
+    public String getCommandName() {
+        return commandName;
+    }
+
+    public void setCommandName(String commandName) {
+        this.commandName = commandName;
+    }
+
+    public String getCommandStringArgument() {
+        return commandStringArgument;
+    }
+
+    public void setCommandStringArgument(String commandStringArgument) {
+        this.commandStringArgument = commandStringArgument;
+    }
+
+    public Serializable getCommandObjectArgument() {
+        return commandObjectArgument;
+    }
+
+    public void setCommandObjectArgument(Serializable commandObjectArgument) {
+        this.commandObjectArgument = commandObjectArgument;
     }
 
 
