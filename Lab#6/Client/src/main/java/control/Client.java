@@ -1,3 +1,5 @@
+package control;
+
 import control.ConsoleMod;
 import control.Response;
 import control.commands.Command;
@@ -13,7 +15,7 @@ public class Client {
     private int port;
     private int reconnectionTime;
     private int counfOfReconnAttempts;
-    private boolean processingStatus;
+    private static boolean processingStatus;
     private SocketAddress serverAddress;
     private DatagramChannel channel;
     private ByteBuffer bufferedDataReceive = ByteBuffer.allocate(100000);
@@ -30,7 +32,7 @@ public class Client {
     }
 
     /*
-    Start Client
+    Start control.Client
      */
     public void  run() throws Exception {
         Command command = new Command();
@@ -53,12 +55,18 @@ public class Client {
             }catch (NullPointerException e1){
                 e1.printStackTrace();
             }
-
+//            checkProcessingStatus();
         }
     }
     /*
     Connect to server
      */
+//    private void checkProcessingStatus(){
+//        if(serverResponse.getCommandName().equals("exit")){
+//            processingStatus = false;
+//        }
+//        processingStatus = true;
+//    }
     private void connectToServer(){
         try {
             channel = DatagramChannel.open();
@@ -94,4 +102,11 @@ public class Client {
         return object;
     }
 
+    public static boolean isProcessingStatus() {
+        return processingStatus;
+    }
+
+    public static void setProcessingStatus(boolean processingStatus) {
+        Client.processingStatus = processingStatus;
+    }
 }

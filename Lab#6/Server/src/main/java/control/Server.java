@@ -1,4 +1,5 @@
-import control.Response;
+package control;
+
 import control.commands.Command;
 
 import java.io.*;
@@ -9,7 +10,7 @@ public class Server {
     private int timeout;
     private SocketAddress socketAddress;
     private DatagramSocket socket;
-    private boolean processingStatus;
+    private static boolean processingStatus;
     private Response response;
     private int clientCounter=0;
 
@@ -26,7 +27,7 @@ public class Server {
         this.timeout = timeout;
     }
     /*
-    *Server operations
+    *control.Server operations
      */
     public void run() throws Exception {
         socketAddress = new InetSocketAddress(port);
@@ -132,5 +133,13 @@ public class Server {
         }
 
         return false;
+    }
+
+    public static boolean isProcessingStatus() {
+        return processingStatus;
+    }
+
+    public static void setProcessingStatus(boolean processingStatus) {
+        Server.processingStatus = processingStatus;
     }
 }

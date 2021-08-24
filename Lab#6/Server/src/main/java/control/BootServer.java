@@ -1,3 +1,5 @@
+package control;
+
 import control.CollectionManager;
 import control.DataReader;
 
