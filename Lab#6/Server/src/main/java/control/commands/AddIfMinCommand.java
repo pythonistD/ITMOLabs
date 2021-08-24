@@ -6,7 +6,8 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 public class AddIfMinCommand extends Command {
-    AddCommand addCommand = new AddCommand();
+    private static final long serialVersionUID = 7L;
+    AddCommand addCommand;
     DragonComparator dragonComparator = new DragonComparator();
     /**
      * Запуск команды

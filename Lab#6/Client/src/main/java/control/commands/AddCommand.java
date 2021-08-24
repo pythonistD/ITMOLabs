@@ -12,6 +12,17 @@ import java.time.LocalDateTime;
 import java.util.ListIterator;
 
 public class AddCommand extends Command {
+    private static final long serialVersionUID = 5L;
+    private long id;
+    private String name;
+    private Long age;
+    private Double wingspan;
+    private Boolean speaking;
+    private Double x;
+    private Double y;
+    private Double tooth;
+    private DragonType dragonType;
+
     /**
      * Запуск команды
      * @throws Exception
@@ -19,9 +30,7 @@ public class AddCommand extends Command {
     @Override
     public void execute() throws Exception {
         try {
-            Dragon dragon = createDragon();
-            Dragon.getDragonsCollection().add(dragon);
-            System.out.println("Дракон успешно добавлен");
+            createDragon();
         } catch (Exception e) {
             System.out.println("Введённые данные не корректны");
         }
@@ -33,36 +42,31 @@ public class AddCommand extends Command {
      * @throws Exception
      */
 
-    public Dragon createDragon() throws Exception {
+    public void createDragon() throws Exception {
         ListIterator<String> promptsiterator = Utility.promptsListtocreate().listIterator();
         String promptToChange = promptsiterator.next();
-        long id = Dragon.getDragonsCollection().getLast().getId() + 1;
         System.out.println(promptToChange);
-        String name = ValidateFields.checkNameInteractive(promptToChange);
+        name = ValidateFields.checkNameInteractive(promptToChange);
         promptToChange = promptsiterator.next();
         System.out.println(promptToChange);
-        Long age = ValidateFields.checkAgeInteractive(promptToChange);
+        age = ValidateFields.checkAgeInteractive(promptToChange);
         promptToChange = promptsiterator.next();
         System.out.println(promptToChange);
-        Double wingspan = ValidateFields.checkWingSpanInteractive(promptToChange);
+        wingspan = ValidateFields.checkWingSpanInteractive(promptToChange);
         promptToChange = promptsiterator.next();
         System.out.println(promptToChange);
-        Boolean speaking = ValidateFields.checkSpeakingInteractive(promptToChange);
+        speaking = ValidateFields.checkSpeakingInteractive(promptToChange);
         promptToChange = promptsiterator.next();
         System.out.println(promptToChange);
-        Double x = ValidateFields.checkXInteractive(promptToChange);
+        x = ValidateFields.checkXInteractive(promptToChange);
         promptToChange = promptsiterator.next();
         System.out.println(promptToChange);
-        Double y = ValidateFields.checkYInteractive(promptToChange);
+        y = ValidateFields.checkYInteractive(promptToChange);
         promptToChange = promptsiterator.next();
         System.out.println(promptToChange);
-        Double tooth = ValidateFields.checkToothCountInteractive(promptToChange);
+        tooth = ValidateFields.checkToothCountInteractive(promptToChange);
         promptToChange = promptsiterator.next();
         System.out.println(promptToChange);
-        DragonType dragonType = ValidateFields.checkDragonTypeInteractive(promptToChange);
-        Dragon dragon =
-                new Dragon(id,name, age, wingspan, speaking, new Coordinates(x, y), new DragonHead(tooth), dragonType);
-        dragon.setEndDate(LocalDateTime.now());
-        return dragon;
+        dragonType = ValidateFields.checkDragonTypeInteractive(promptToChange);
     }
 }

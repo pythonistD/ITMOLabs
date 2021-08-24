@@ -6,6 +6,7 @@ import java.util.ListIterator;
  * Забирает информацию из строки, введёной пользователем
  */
 public class Information {
+    private static final long serialVersionUID = 9L;
     Validator validator = new Validator();
     Parser parser = new Parser();
     String modleType;

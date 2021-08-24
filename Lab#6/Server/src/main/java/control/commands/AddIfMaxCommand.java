@@ -6,8 +6,9 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 public class AddIfMaxCommand extends Command {
-    AddCommand addCommand = new AddCommand();
-    DragonComparator dragonComparator = new DragonComparator();
+    private static final long serialVersionUID = 6L;
+    private AddCommand addCommand;
+    private DragonComparator dragonComparator = new DragonComparator();
     /**
      * Запуск команды
      * @throws Exception

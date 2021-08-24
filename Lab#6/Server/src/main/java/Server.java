@@ -13,8 +13,11 @@ public class Server {
     private Response response;
     private int clientCounter=0;
 
-    private byte buffReceived[] = new byte[576];
-    private byte buffSend[] = new byte[576];
+    private InetAddress clientIp;
+    private int clientPort;
+
+    private byte buffReceived[] = new byte[100000];
+    private byte buffSend[] = new byte[10000];
 
     private DatagramPacket packetReceived =new DatagramPacket(buffReceived, buffReceived.length);
     private DatagramPacket packetSend;
@@ -87,10 +90,13 @@ public class Server {
     Who dropped the packet?
      */
     private void getClientAddress(DatagramPacket packet){
-        System.out.println("Клиент " + clientCounter++);
-        System.out.println("Хост Клиента: " + packet.getAddress());
-        System.out.println("Порт Клиента: " + packet.getPort());
-
+        if(!isInfFromTheSameClient(clientIp,clientPort)){
+            System.out.println("Клиент " + clientCounter);
+            System.out.println("Хост Клиента: " + clientIp);
+            System.out.println("Порт Клиента: " + clientPort);
+        }
+        clientIp = packet.getAddress();
+        clientPort = packet.getPort();
     }
 
     private DatagramPacket createServerResponsePacket(byte[] buffToSend){
@@ -114,5 +120,17 @@ public class Server {
             System.out.println("Упс, ошибочка, данные не отправлены на Клиент");
         }
         System.out.println("Данные успешно отправлены");
+    }
+    private boolean isInfFromTheSameClient(InetAddress ip, int port){
+
+        try {
+            if(clientIp.equals(ip) && clientPort == port) {
+                return true;
+            }
+        }catch (NullPointerException e){
+            return false;
+        }
+
+        return false;
     }
 }

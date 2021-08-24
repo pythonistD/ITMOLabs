@@ -1,5 +1,6 @@
 import control.ConsoleMod;
 import control.Response;
+import control.commands.Command;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -31,17 +32,19 @@ public class Client {
     /*
     Start Client
      */
-    public void  run() {
+    public void  run() throws Exception {
+        Command command = new Command();
         processingStatus = true;
         serverAddress = new InetSocketAddress(hostName,port);
         connectToServer();
         while (processingStatus){
             try {
-                bufferedDataSend = serialize(consoleMod.getDataFromKeyboard());
+                command = consoleMod.getDataFromKeyboard();
+                command.execute();
+                bufferedDataSend = serialize(command);
                 channel.send(bufferedDataSend,serverAddress);
                 bufferedDataSend.clear();
                 serverAddress = channel.receive(bufferedDataReceive);
-                System.out.println(bufferedDataReceive);
                 serverResponse = deSerialize(bufferedDataReceive.array());
                 bufferedDataReceive.clear();
                 serverResponse.viewResponse();
