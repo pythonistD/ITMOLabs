@@ -6,10 +6,10 @@ import control.Information;
 import control.Validator;
 
 import java.io.BufferedReader;
+import java.io.Serializable;
 
-public class ExecuteScriptCommand extends Command {
-    private Validator validator = new Validator();
-    private CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
+public class ExecuteScriptCommand extends Command{
+    private static final long serialVersionUID = 14L;
     private Information information = new Information();
 
     /**
@@ -18,29 +18,8 @@ public class ExecuteScriptCommand extends Command {
      */
     public void execute() throws Exception {
         information = InfDeliverer.infDeliver();
-        BufferedReader bufferedReader = DataReader.getData(information.getSecField());
-        String command = "1";
-        boolean flag = true;
-        while (true) {
-            command = bufferedReader.readLine();
-            if (command == null) {
-                System.out.println("Скрипт выполнен успешно");
-                break;
 
-            }
-            try {
-                information.takeInformation(command);
-                if(information.getCommand().equals("execute_script")){
-                    throw new IllegalArgumentException();
-                }
-                validator.checkLine(information);
-            } catch (Exception e) {
-                System.out.println("В скрипте ошибка" + "\n" + "Выполнение сценария прервано");
-                break;
-            }
-            commandFactoryImpl.chooseCommand(information.getCommand()).execute();
 
-        }
     }
 
 }

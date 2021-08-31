@@ -2,12 +2,14 @@ package control.commands;
 
 import model.Dragon;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  * Компаратор Драконов
  */
-public class DragonComparator implements Comparator<Dragon> {
+public class DragonComparator implements Comparator<Dragon> , Serializable {
+    private static final long serialVersionUID = 11L;
     /**
      * Метод сравнения Драконов
      * @param o1

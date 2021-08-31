@@ -1,5 +1,6 @@
 package control.commands;
 
+import control.Response;
 import model.Dragon;
 
 import java.time.LocalDateTime;
@@ -7,8 +8,9 @@ import java.util.Collections;
 
 public class AddIfMaxCommand extends Command {
     private static final long serialVersionUID = 6L;
+    private Response response;
     private AddCommand addCommand;
-    private DragonComparator dragonComparator = new DragonComparator();
+    private DragonComparator dragonComparator;
     /**
      * Запуск команды
      * @throws Exception
@@ -21,7 +23,7 @@ public class AddIfMaxCommand extends Command {
             dragonNew.inctCounter();
             dragonNew.setEndDate(LocalDateTime.now());
             Dragon.getDragonsCollection().add(dragonNew);
-            System.out.println("Дракон максимален, поэтому успешно добавлен");
+            response = new Response("addIfMax","Дракон максимален, поэтому успешно добавлен");
         }
 
     }
@@ -33,6 +35,10 @@ public class AddIfMaxCommand extends Command {
 
     protected Dragon findDragonMax() {
         return Collections.max(Dragon.getDragonsCollection(), dragonComparator);
+    }
+    @Override
+    public Response getResponse() {
+        return response;
     }
 
 }

@@ -1,6 +1,5 @@
 package control.commands;
 
-import control.Application;
 import control.Response;
 import control.Server;
 

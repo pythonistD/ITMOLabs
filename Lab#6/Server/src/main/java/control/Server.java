@@ -9,7 +9,7 @@ public class Server {
     private int port;
     private int timeout;
     private SocketAddress socketAddress;
-    private DatagramSocket socket;
+    private static DatagramSocket socket;
     private static boolean processingStatus;
     private Response response;
     private int clientCounter=0;
@@ -17,10 +17,10 @@ public class Server {
     private InetAddress clientIp;
     private int clientPort;
 
-    private byte buffReceived[] = new byte[100000];
+    private static byte[] buffReceived = new byte[100000];
     private byte buffSend[] = new byte[10000];
 
-    private DatagramPacket packetReceived =new DatagramPacket(buffReceived, buffReceived.length);
+    private static DatagramPacket packetReceived =new DatagramPacket(buffReceived, buffReceived.length);
     private DatagramPacket packetSend;
     public Server(int port, int timeout){
         this.port = port;
@@ -100,10 +100,11 @@ public class Server {
         clientPort = packet.getPort();
     }
 
-    private DatagramPacket createServerResponsePacket(byte[] buffToSend){
-       return packetSend = new DatagramPacket(buffToSend,buffToSend.length,packetReceived.getAddress(),packetReceived.getPort());
+    public static DatagramPacket createServerResponsePacket(byte[] buffToSend){
+        DatagramPacket packetSend = new DatagramPacket(buffToSend,buffToSend.length,packetReceived.getAddress(),packetReceived.getPort());
+        return packetSend;
     }
-    private byte[] serialization(Object responseObject) throws IOException {
+    public static byte[] serialization(Object responseObject) throws IOException {
         byte[] byteArr;
         try(ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(baos)){
@@ -114,7 +115,7 @@ public class Server {
         return byteArr;
     }
 
-    private void sendServerResponse(DatagramPacket serverResponsePacket){
+    public static void sendServerResponse(DatagramPacket serverResponsePacket){
         try {
             socket.send(serverResponsePacket);
         } catch (IOException e) {

@@ -44,12 +44,14 @@ public class Client {
                 command = consoleMod.getDataFromKeyboard();
                 command.execute();
                 bufferedDataSend = serialize(command);
-                channel.send(bufferedDataSend,serverAddress);
+                channel.send(bufferedDataSend, serverAddress);
                 bufferedDataSend.clear();
                 serverAddress = channel.receive(bufferedDataReceive);
                 serverResponse = deSerialize(bufferedDataReceive.array());
                 bufferedDataReceive.clear();
                 serverResponse.viewResponse();
+            }catch (NotSerializableException e){
+                System.out.println("Один из классов не имплементирует интерфейс Serializable");
             }catch (IOException e){
                 System.out.println("Ошибка. Данные не отправлены");
             }catch (NullPointerException e1){

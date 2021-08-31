@@ -7,7 +7,8 @@ import java.util.Collections;
 
 public class AddIfMinCommand extends Command {
     private static final long serialVersionUID = 7L;
-    AddCommand addCommand = new AddCommand();
+    private AddCommand addCommand = new AddCommand();
+    private DragonComparator dragonComparator = new DragonComparator();
     /**
      * Запуск команды
      * @throws Exception

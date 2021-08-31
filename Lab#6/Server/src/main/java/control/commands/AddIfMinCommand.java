@@ -1,5 +1,6 @@
 package control.commands;
 
+import control.Response;
 import model.Dragon;
 
 import java.time.LocalDateTime;
@@ -7,8 +8,9 @@ import java.util.Collections;
 
 public class AddIfMinCommand extends Command {
     private static final long serialVersionUID = 7L;
-    AddCommand addCommand;
-    DragonComparator dragonComparator = new DragonComparator();
+    private Response response;
+    private AddCommand addCommand;
+    private DragonComparator dragonComparator;
     /**
      * Запуск команды
      * @throws Exception
@@ -21,7 +23,7 @@ public class AddIfMinCommand extends Command {
             dragonNew.inctCounter();
             dragonNew.setEndDate(LocalDateTime.now());
             Dragon.getDragonsCollection().add(dragonNew);
-            System.out.println("Дракон минимален, поэтому успешно добавлен");
+            response = new Response("addIfMin","Дракон минимален, поэтому успешно добавлен");
         }
 
     }
@@ -34,4 +36,8 @@ public class AddIfMinCommand extends Command {
         return Collections.min(Dragon.getDragonsCollection(), dragonComparator);
     }
 
+    @Override
+    public Response getResponse() {
+        return response;
+    }
 }

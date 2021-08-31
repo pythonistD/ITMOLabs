@@ -6,6 +6,7 @@ public class Response implements Serializable{
     private static final long serialVersionUID = 1L;
     private String commandName;
     private String commandStringArgument;
+    private Serializable commandObjectArgument;
 
     public String getCommandName() {
         return commandName;
@@ -22,8 +23,6 @@ public class Response implements Serializable{
     public void setCommandStringArgument(String commandStringArgument) {
         this.commandStringArgument = commandStringArgument;
     }
-
-    private Serializable commandObjectArgument;
 
     public Response(String commandName, String commandStringArgument, Serializable commandObjectArgument) {
         this.commandName = commandName;

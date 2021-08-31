@@ -3,6 +3,7 @@ package control;
 import control.commands.*;
 import model.Dragon;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -10,7 +11,8 @@ import java.util.LinkedList;
 /**
  * Различные полезные методы
  */
-public class Utility {
+public class Utility implements Serializable {
+    private static final long serialVersionUID = 19L;
     private static final ArrayList<String> promtstochange = new ArrayList<>();
     private static final ArrayList<String> promptstocreate = new ArrayList<>();
     private static final HashMap<String, Command> availableCommandsMap = new HashMap<>();

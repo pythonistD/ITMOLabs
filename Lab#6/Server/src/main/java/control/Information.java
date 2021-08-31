@@ -1,11 +1,12 @@
 package control;
 
+import java.io.Serializable;
 import java.util.ListIterator;
 
 /**
  * Забирает информацию из строки, введёной пользователем
  */
-public class Information {
+public class Information implements Serializable {
     private static final long serialVersionUID = 9L;
     Validator validator = new Validator();
     Parser parser = new Parser();

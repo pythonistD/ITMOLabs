@@ -1,12 +1,14 @@
 package control;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 
 /**
  * Валидация данных
  */
-public class Validator {
+public class Validator implements Serializable {
+    private static final long serialVersionUID = 15L;
     private static long id;
     private static String filename;
     private final Parser parser = new Parser();

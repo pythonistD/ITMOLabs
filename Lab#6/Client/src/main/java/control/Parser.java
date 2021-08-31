@@ -11,13 +11,14 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * Содержит методы для извелчения информации
  */
-public class Parser {
-
+public class Parser implements Serializable {
+    private static final long serialVersionUID = 18L;
     public static String getExtension(String fullFileName){
         // Подключил библиотеку, чтобы автоматически искала расширение файла org.apache.commons.io.FilenameUtils;
         return FilenameUtils.getExtension(fullFileName);

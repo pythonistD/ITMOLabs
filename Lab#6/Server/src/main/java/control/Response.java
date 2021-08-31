@@ -22,6 +22,10 @@ public class Response implements Serializable{
     }
     public Response(){}
 
+    public void sendResponse(Response response){
+
+    }
+
     public void viewResponse(){
         System.out.println(commandName + "\n" + commandStringArgument);
     }
