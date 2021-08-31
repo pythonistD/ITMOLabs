@@ -1,12 +1,16 @@
 package control;
 
 import java.io.Serializable;
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.LinkedList;
 
 public class Response implements Serializable{
     private static final long serialVersionUID = 1L;
     private String commandName;
     private String commandStringArgument;
     private Serializable commandObjectArgument;
+    private Deque<Response> responseDeque = new ArrayDeque<>();
 
     public Response(String commandName, String commandStringArgument, Serializable commandObjectArgument) {
         this.commandName = commandName;
@@ -22,6 +26,9 @@ public class Response implements Serializable{
     }
     public Response(){}
 
+    public void addNewResponse(Response response){
+        this.responseDeque.add(response);
+    }
     public void sendResponse(Response response){
 
     }
@@ -54,5 +61,7 @@ public class Response implements Serializable{
         this.commandObjectArgument = commandObjectArgument;
     }
 
-
+    public Deque<Response> getResponseDeque() {
+        return responseDeque;
+    }
 }

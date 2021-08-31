@@ -48,6 +48,11 @@ public class Client {
                 bufferedDataSend.clear();
                 serverAddress = channel.receive(bufferedDataReceive);
                 serverResponse = deSerialize(bufferedDataReceive.array());
+                if(serverResponse.isHardResponse()){
+                    serverResponse.extractResponses();
+                    bufferedDataReceive.clear();
+                    continue;
+                }
                 bufferedDataReceive.clear();
                 serverResponse.viewResponse();
             }catch (NotSerializableException e){
