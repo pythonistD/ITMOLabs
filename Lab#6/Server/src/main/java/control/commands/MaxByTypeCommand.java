@@ -1,10 +1,13 @@
 package control.commands;
 
+import control.Response;
 import model.Dragon;
 
 import java.util.ListIterator;
 
 public class MaxByTypeCommand extends Command{
+    private static final long serialVersionUID = 20L;
+    private Response response;
     /**
      * Запуск комманды
      * @throws Exception
@@ -20,6 +23,11 @@ public class MaxByTypeCommand extends Command{
                 dragon1 = dragon;
             }
         }
-        System.out.println(dragon.toString());
+        response = new Response("maxByType",dragon.toString());
+    }
+
+    @Override
+    public Response getResponse() {
+        return response;
     }
 }
