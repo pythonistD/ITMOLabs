@@ -92,12 +92,13 @@ public class Server {
      */
     private void getClientAddress(DatagramPacket packet){
         if(!isInfFromTheSameClient(clientIp,clientPort)){
+            clientIp = packet.getAddress();
+            clientPort = packet.getPort();
             System.out.println("Клиент " + clientCounter);
             System.out.println("Хост Клиента: " + clientIp);
             System.out.println("Порт Клиента: " + clientPort);
         }
-        clientIp = packet.getAddress();
-        clientPort = packet.getPort();
+
     }
 
     public static DatagramPacket createServerResponsePacket(byte[] buffToSend){

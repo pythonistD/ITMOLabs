@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
  * @throws Exception
  */
 public class ClearCommand extends Command {
+
     public void execute() throws Exception {
         Dragon.setEndDate(LocalDateTime.now());
         Dragon.getDragonsCollection().clear();

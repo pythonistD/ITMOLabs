@@ -68,12 +68,7 @@ public class Client {
     /*
     Connect to server
      */
-//    private void checkProcessingStatus(){
-//        if(serverResponse.getCommandName().equals("exit")){
-//            processingStatus = false;
-//        }
-//        processingStatus = true;
-//    }
+
     private void connectToServer(){
         try {
             channel = DatagramChannel.open();
