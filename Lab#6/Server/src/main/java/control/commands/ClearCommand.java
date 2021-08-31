@@ -1,5 +1,6 @@
 package control.commands;
 
+import control.Response;
 import model.Dragon;
 
 import java.time.LocalDateTime;
@@ -9,10 +10,16 @@ import java.time.LocalDateTime;
  * @throws Exception
  */
 public class ClearCommand extends Command {
-
+    private static final long serialVersionUID = 20L;
+    private Response response;
     public void execute() throws Exception {
         Dragon.setEndDate(LocalDateTime.now());
         Dragon.getDragonsCollection().clear();
-        System.out.println("Список успешно отчищен");
+        response = new Response("clear","Список успешно отчищен");
+    }
+
+    @Override
+    public Response getResponse() {
+        return response;
     }
 }
