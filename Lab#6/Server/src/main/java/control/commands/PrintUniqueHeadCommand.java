@@ -1,8 +1,11 @@
 package control.commands;
 
+import control.Response;
 import model.Dragon;
 
 public class PrintUniqueHeadCommand extends Command{
+    private static final long serialVersionUID = 25L;
+    private Response response;
     /**
      * Запуск комманды
      * @throws Exception
@@ -10,8 +13,13 @@ public class PrintUniqueHeadCommand extends Command{
     @Override
     public void execute(){
         for (Dragon dragon : Dragon.getDragonsCollection()) {
-            System.out.println(dragon.getName() + " toothCount:" + dragon.getHead().getToothCount());
+            response = new Response("printUniqueHead","name: " + dragon.getName() + " toothCount:" + dragon.getHead().getToothCount());
         }
 
+    }
+
+    @Override
+    public Response getResponse() {
+        return response;
     }
 }
