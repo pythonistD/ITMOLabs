@@ -35,7 +35,8 @@ public class Client {
     Start control.Client
      */
     public void  run() throws Exception {
-        Command command = new Command();
+        Command command;
+        Request request;
         processingStatus = true;
         serverAddress = new InetSocketAddress(hostName,port);
         connectToServer();
@@ -43,7 +44,8 @@ public class Client {
             try {
                 command = consoleMod.getDataFromKeyboard();
                 command.execute();
-                bufferedDataSend = serialize(command);
+                request = new Request(command);
+                bufferedDataSend = serialize(request);
                 channel.send(bufferedDataSend, serverAddress);
                 bufferedDataSend.clear();
                 serverAddress = channel.receive(bufferedDataReceive);
@@ -81,7 +83,7 @@ public class Client {
     /*
     Send data
      */
-    private ByteBuffer serialize(Object o) throws IOException {
+    private ByteBuffer serialize(Serializable o) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try(ObjectOutputStream oos = new ObjectOutputStream(baos)){
             oos.flush();

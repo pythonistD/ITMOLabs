@@ -27,7 +27,12 @@ public class DataReader {
     }
 
     public static BufferedReader getData(String file) throws Exception {
-        return readFile = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
+        try {
+            readFile = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
+        }catch (NullPointerException e){
+            System.out.println("Нет пути к файлу");
+        }
+        return readFile;
     }
 
     public static BufferedReader getTreat() {

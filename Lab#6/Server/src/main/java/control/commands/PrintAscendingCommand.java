@@ -16,10 +16,12 @@ public class PrintAscendingCommand extends Command {
     public void execute() throws Exception{
         DragonComparator dragonComparator = new DragonComparator();
         ShowCommand show = new ShowCommand();
-           Collections.sort(Dragon.getDragonsCollection(),dragonComparator);
-           response = new Response("printAscending", "Список успешно отсортирован");
-//           show.execute();
-//           response.addNewResponse(show.getResponse());
+        SaveCommand save = new SaveCommand();
+        Collections.sort(Dragon.getDragonsCollection(),dragonComparator);
+        response = new Response("printAscending", "Список успешно отсортирован");
+        save.execute();
+        show.execute();
+        response.addNewResponse(show.getResponse());
     }
     @Override
     public Response getResponse() {

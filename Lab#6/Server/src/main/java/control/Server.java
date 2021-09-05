@@ -31,16 +31,18 @@ public class Server {
      */
     public void run() throws Exception {
         socketAddress = new InetSocketAddress(port);
-        Command clientObject;
+        Request clientRequest;
+        Command command;
         openSocket();
         processingStatus=true;
         while (processingStatus){
             try {
                 socket.receive(packetReceived);
                 getClientAddress(packetReceived);
-                clientObject = deSerialize(packetReceived);
-                clientObject.execute();
-                response=clientObject.getResponse();
+                clientRequest = deSerialize(packetReceived);
+                command = clientRequest.getCommandObjectArgument();
+                command.execute();
+                response=command.getResponse();
                 buffSend = serialization(response);
                 packetSend = createServerResponsePacket(buffSend);
                 sendServerResponse(packetSend);
@@ -68,10 +70,10 @@ public class Server {
     /*
     Deserialize Data
      */
-    private Command deSerialize(DatagramPacket packet){
-        Command object = null;
+    private Request deSerialize(DatagramPacket packet){
+        Request object = null;
             try(ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(packet.getData()))) {
-                object = (Command) ois.readObject();
+                object = (Request) ois.readObject();
                 System.out.println(object);
             } catch (ClassNotFoundException e) {
                 System.out.println("Класс не найден");

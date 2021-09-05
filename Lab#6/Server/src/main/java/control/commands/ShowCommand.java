@@ -15,12 +15,12 @@ public class ShowCommand extends Command {
     @Override
      public void execute() throws Exception {
         response = new Response("show");
-        String field = new String();
+        StringBuilder field = new StringBuilder();
         ListIterator<Dragon> itr = Dragon.getDragonsCollection().listIterator();
         while (itr.hasNext()) {
-            field += itr.next().toString();
+            field.append(itr.next().toString());
         }
-        response.setCommandStringArgument(field);
+        response.setCommandStringArgument(field.toString());
     }
     @Override
     public Response getResponse(){
