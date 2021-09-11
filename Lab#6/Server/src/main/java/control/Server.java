@@ -1,5 +1,7 @@
 package control;
 
+import MyExceptions.ServerReceiveException;
+import MyExceptions.ServerSendResponseException;
 import control.commands.Command;
 
 import java.io.*;
@@ -37,15 +39,17 @@ public class Server {
         processingStatus=true;
         while (processingStatus){
             try {
-                socket.receive(packetReceived);
+                receiveClientRequest(packetReceived);
                 getClientAddress(packetReceived);
                 clientRequest = deSerialize(packetReceived);
                 command = clientRequest.getCommandObjectArgument();
                 command.execute();
-                response=command.getResponse();
+                response = command.getResponse();
                 buffSend = serialization(response);
                 packetSend = createServerResponsePacket(buffSend);
                 sendServerResponse(packetSend);
+            }catch (ServerReceiveException | ServerSendResponseException e){
+                System.out.println(e.getMessage());
             } catch (IOException e) {
                 System.out.println("Ошибочка вышла... Соединение не установлено :(");
                 break;
@@ -66,6 +70,14 @@ public class Server {
         } catch (SocketException e) {
             System.out.println("Произошла ошибка при подключении к порту:" + port);
         }
+    }
+    public static void receiveClientRequest(DatagramPacket packetReceived) throws ServerSendResponseException {
+        try {
+            socket.receive(packetReceived);
+        } catch (IOException e) {
+            throw new ServerSendResponseException("Что-то пошло не так, данные не отправлены клиенту");
+        }
+        System.out.println("Данные успешно отправлены");
     }
     /*
     Deserialize Data
@@ -118,11 +130,11 @@ public class Server {
         return byteArr;
     }
 
-    public static void sendServerResponse(DatagramPacket serverResponsePacket){
+    public static void sendServerResponse(DatagramPacket serverResponsePacket) throws ServerSendResponseException {
         try {
             socket.send(serverResponsePacket);
         } catch (IOException e) {
-            System.out.println("Упс, ошибочка, данные не отправлены на Клиент");
+            throw new ServerSendResponseException("Что-то пошло не так, данные не отправлены клиенту");
         }
         System.out.println("Данные успешно отправлены");
     }

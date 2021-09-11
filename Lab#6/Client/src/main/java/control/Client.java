@@ -1,7 +1,9 @@
 package control;
 
-import control.ConsoleMod;
-import control.Response;
+import MyExceptions.ClientReceiveResponseException;
+import MyExceptions.ClientSendRequestException;
+import com.sun.xml.internal.ws.encoding.soap.DeserializationException;
+import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 import control.commands.Command;
 
 import java.io.*;
@@ -46,25 +48,26 @@ public class Client {
                 command.execute();
                 request = new Request(command);
                 bufferedDataSend = serialize(request);
-                channel.send(bufferedDataSend, serverAddress);
+                sendClientRequest(bufferedDataSend, serverAddress);
                 bufferedDataSend.clear();
-                serverAddress = channel.receive(bufferedDataReceive);
+                receiveServerResponse(bufferedDataReceive);
                 serverResponse = deSerialize(bufferedDataReceive.array());
-                if(serverResponse.isHardResponse()){
+                if (serverResponse.isHardResponse()) {
                     serverResponse.extractResponses();
                     bufferedDataReceive.clear();
                     continue;
                 }
                 bufferedDataReceive.clear();
                 serverResponse.viewResponse();
-            }catch (NotSerializableException e){
+            }catch (SerializationException | DeserializationException serEx){
+                System.out.println(serEx.getMessage());
+            }catch (ClientSendRequestException | ClientReceiveResponseException e){
+                System.out.println(e.getMessage());
+            } catch (NotSerializableException e){
                 System.out.println("Один из классов не имплементирует интерфейс Serializable");
-            }catch (IOException e){
-                System.out.println("Ошибка. Данные не отправлены");
-            }catch (NullPointerException e1){
-                e1.printStackTrace();
+            }catch (NullPointerException e){
+                e.printStackTrace();
             }
-//            checkProcessingStatus();
         }
     }
     /*
@@ -78,30 +81,50 @@ public class Client {
         } catch (IOException e) {
             System.out.println("Нет соединения с сервером");
         }
-        System.out.println("Соединение с сервером установлено");
+        System.out.println("Client запущен, ожидание команд");
     }
     /*
     Send data
      */
-    private ByteBuffer serialize(Serializable o) throws IOException {
+    private ByteBuffer serialize(Serializable o) throws SerializationException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try(ObjectOutputStream oos = new ObjectOutputStream(baos)){
             oos.flush();
             oos.writeObject(o);
+        }catch (IOException e){
+            throw new SerializationException("Ошибка сериализации");
         }
         // wrap and send data
         byte[] buff = baos.toByteArray();
         return ByteBuffer.wrap(buff);
     }
-        private Response deSerialize(byte[] buffer){
+
+    private void sendClientRequest(ByteBuffer bufferedDataSend,SocketAddress serverAddress) throws ClientSendRequestException {
+        try{
+            channel.send(bufferedDataSend, serverAddress);
+        }catch (IOException e){
+            throw new ClientSendRequestException("Что-то пошло не так, данные не отправлены серверу");
+        }
+    }
+
+    private void receiveServerResponse(ByteBuffer bufferedDataReceive) throws ClientReceiveResponseException {
+        try{
+            serverAddress = channel.receive(bufferedDataReceive);
+        }catch (IOException e){
+            throw new ClientReceiveResponseException("Что-то пошло не так, данные не получены от сервера");
+        }
+    }
+
+        private Response deSerialize(byte[] buffer) throws DeserializationException{
         Response object = null;
         try(ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(buffer))) {
             object = (Response) ois.readObject();
+        }catch (InvalidClassException e){
+            throw new DeserializationException("Ошибка десериализации, id десериализируемых объектов не соответствуют");
         } catch (ClassNotFoundException e) {
-            System.out.println("Класс не найден");
+            throw new DeserializationException("Ошибка десериализации,класс не найден");
         } catch (IOException e) {
-            e.printStackTrace();
-
+            throw new DeserializationException("Ошибка десериализации");
         }
         return object;
     }
