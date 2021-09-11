@@ -91,7 +91,11 @@ public class Client {
         try(ObjectOutputStream oos = new ObjectOutputStream(baos)){
             oos.flush();
             oos.writeObject(o);
-        }catch (IOException e){
+        }catch (NotSerializableException e){
+            throw new SerializationException("Ошибка сериализации, один из объектов не реализует интефейс Serializable");
+        }catch (InvalidClassException e){
+            throw new SerializationException("Ошибка сериализации, id десериализируемых объектов не соответствуют");
+        } catch (IOException e) {
             throw new SerializationException("Ошибка сериализации");
         }
         // wrap and send data
