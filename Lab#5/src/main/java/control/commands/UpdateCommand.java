@@ -36,11 +36,12 @@ public class UpdateCommand extends Command {
 
     private void changeDragon(Dragon dragon, long id){
         AddCommand addCommand = new AddCommand();
+        int pos = Dragon.getDragonsCollection().indexOf(dragon);
         Dragon.getDragonsCollection().remove(dragon);
         Dragon updatedDragon = addCommand.createDragon();
         updatedDragon.setId(id);
         updatedDragon.setEndDate(LocalDateTime.now());
-        Dragon.getDragonsCollection().add(updatedDragon);
+        Dragon.getDragonsCollection().add(pos,updatedDragon);
     }
 
 }
