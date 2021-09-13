@@ -5,6 +5,7 @@ import model.Dragon;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -14,6 +15,16 @@ public class Utility {
     private static final ArrayList<String> promtstochange = new ArrayList<>();
     private static final ArrayList<String> promptstocreate = new ArrayList<>();
     private static final HashMap<String, Command> availableCommandsMap = new HashMap<>();
+
+    public static void reDefIds(LinkedList<Dragon> collection){
+        Dragon dragon;
+        Iterator<Dragon> dragonIterator = collection.listIterator();
+        while (dragonIterator.hasNext()) {
+            dragon = dragonIterator.next();
+            long id = collection.indexOf(dragon) + 1;
+            dragon.setId(id);
+        }
+    }
 
     public static ArrayList<String> promptsListtocreate() {
         promptstocreate.add("Введите имя дракона");

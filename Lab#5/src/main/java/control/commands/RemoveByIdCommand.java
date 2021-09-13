@@ -2,6 +2,7 @@ package control.commands;
 
 import control.InfDeliverer;
 import control.Information;
+import control.Utility;
 import model.Dragon;
 
 import java.util.ListIterator;
@@ -21,6 +22,7 @@ public class RemoveByIdCommand extends Command {
                 System.out.print(dragon);
                 System.out.println("Удаление прошло успешно");
                 Dragon.getDragonsCollection().remove(dragon);
+                Utility.reDefIds(Dragon.getDragonsCollection());
                 break;
             }
         }
