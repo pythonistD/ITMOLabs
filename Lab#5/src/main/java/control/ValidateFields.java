@@ -35,7 +35,7 @@ public class ValidateFields {
         while (true) {
             try {
                 inData = in.readLine();
-                if (inData == null && inData.trim().isEmpty()) {
+                if (inData == null | inData.trim().isEmpty()) {
                     throw new IllegalArgumentException("Неправильно введено Name");
                 }
             } catch (Exception e) {
@@ -205,6 +205,9 @@ public class ValidateFields {
     }
 
     public static Double checkTooth(String field) throws IllegalArgumentException {
+        if(Double.parseDouble(field) < 0){
+            throw new IllegalArgumentException();
+        }
         return Double.parseDouble(field);
     }
 
@@ -217,6 +220,9 @@ public class ValidateFields {
             try {
                 inData = in.readLine();
                 t = Double.parseDouble(inData);
+                if(t < 0){
+                    throw new IllegalArgumentException();
+                }
             } catch (NullPointerException e) {
                 t = null;
             } catch (Exception e) {
