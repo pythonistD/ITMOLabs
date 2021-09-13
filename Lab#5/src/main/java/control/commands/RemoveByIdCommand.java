@@ -6,18 +6,18 @@ import model.Dragon;
 
 import java.util.ListIterator;
 
-public class RemoveByIdCommand extends Command{
+public class RemoveByIdCommand extends Command {
     /**
-     * Запуск команды
+     * Запуск команды remove by id
      */
-    public void execute(){
+    public void execute() {
         Information information = InfDeliverer.infDeliver();
-        ListIterator<Dragon > dragonListIterator = Dragon.getDragonsCollection().listIterator();
+        ListIterator<Dragon> dragonListIterator = Dragon.getDragonsCollection().listIterator();
         long currentId;
-        while (dragonListIterator.hasNext()){
+        while (dragonListIterator.hasNext()) {
             Dragon dragon = dragonListIterator.next();
             currentId = dragon.getId();
-            if(currentId == information.getId()){
+            if (currentId == information.getId()) {
                 System.out.print(dragon);
                 System.out.println("Удаление прошло успешно");
                 Dragon.getDragonsCollection().remove(dragon);

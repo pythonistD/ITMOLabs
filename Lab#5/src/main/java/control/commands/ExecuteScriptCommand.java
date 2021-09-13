@@ -18,6 +18,7 @@ public class ExecuteScriptCommand extends Command {
     public void execute() throws CommandException {
         String command;
         Information information = InfDeliverer.infDeliver();
+        Information scriptsCommandsInf;
         BufferedReader bufferedReader;
         try {
             bufferedReader = DataReader.getData(information.getSecField());
@@ -31,12 +32,13 @@ public class ExecuteScriptCommand extends Command {
                     System.out.println("Скрипт выполнен успешно");
                     break;
                 }
-                information.takeInformation(command);
-                if (information.getCommand().equals("execute_script")) {
+                scriptsCommandsInf = new Information();
+                scriptsCommandsInf.takeInformation(command);
+                if (scriptsCommandsInf.getCommand().equals("execute_script")) {
                     throw new IllegalArgumentException("Рекурсивный вызов в script запрещён");
                 }
                 validator.checkLine(information);
-                commandFactoryImpl.chooseCommand(information.getCommand()).execute();
+                commandFactoryImpl.chooseCommand(scriptsCommandsInf.getCommand()).execute();
             }catch (IncorrectInputException | IllegalArgumentException | IOException e){
                 throw  CommandException.createExceptionChain(e,"ошибка во время исполнения команды execute_script");
             }
