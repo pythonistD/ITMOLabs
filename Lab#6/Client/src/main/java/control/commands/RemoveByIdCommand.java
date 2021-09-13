@@ -11,7 +11,6 @@ public class RemoveByIdCommand extends Command{
     private Information information = new Information();
     /**
      * Запуск комманды
-     * @throws Exception
      */
     public void execute(){
         information = InfDeliverer.infDeliver();

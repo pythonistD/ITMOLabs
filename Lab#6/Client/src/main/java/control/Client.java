@@ -13,19 +13,19 @@ import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 
 public class Client {
-    private String hostName;
-    private int port;
-    private int reconnectionTime;
-    private int counfOfReconnAttempts;
+    private final String hostName;
+    private final int port;
+    private final int reconnectionTime;
+    private final int counfOfReconnAttempts;
     private static boolean processingStatus;
     private SocketAddress serverAddress;
     private DatagramChannel channel;
-    private ByteBuffer bufferedDataReceive = ByteBuffer.allocate(100000);
+    private final ByteBuffer bufferedDataReceive = ByteBuffer.allocate(100000);
     private ByteBuffer bufferedDataSend;
 
     private Response serverResponse;
 
-    private ConsoleMod consoleMod = new ConsoleMod();
+    private final ConsoleMod consoleMod = new ConsoleMod();
     public Client(String hostName, int port, int reconnectionTime, int counfOfReconnAttempts){
         this.hostName = hostName;
         this.port = port;

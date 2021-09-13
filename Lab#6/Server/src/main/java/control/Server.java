@@ -1,5 +1,6 @@
 package control;
 
+import MyExceptions.CommandException;
 import MyExceptions.ServerReceiveException;
 import MyExceptions.ServerSendResponseException;
 import com.sun.xml.internal.ws.encoding.soap.DeserializationException;
@@ -50,16 +51,13 @@ public class Server {
                 buffSend = serialization(response);
                 packetSend = createServerResponsePacket(buffSend);
                 sendServerResponse(packetSend);
+            }catch (CommandException comEx){
+                System.out.println(comEx.getCause());
             }catch (SerializationException | DeserializationException e){
                 System.out.println(e.getMessage());
             }catch (ServerReceiveException | ServerSendResponseException e){
                 System.out.println(e.getMessage());
-            } catch (IOException e) {
-                System.out.println("Ошибочка вышла... Соединение не установлено :(");
-                break;
             }
-
-        //stop();
         }
     }
     /*
@@ -75,11 +73,11 @@ public class Server {
             System.out.println("Произошла ошибка при подключении к порту:" + port);
         }
     }
-    public static void receiveClientRequest(DatagramPacket packetReceived) throws ServerSendResponseException {
+    public static void receiveClientRequest(DatagramPacket packetReceived) throws ServerReceiveException {
         try {
             socket.receive(packetReceived);
         } catch (IOException e) {
-            throw new ServerSendResponseException("Что-то пошло не так, данные не отправлены клиенту");
+            throw new ServerReceiveException("Что-то пошло не так, данные не отправлены клиенту");
         }
         System.out.println("Данные успешно отправлены");
     }

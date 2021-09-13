@@ -11,7 +11,7 @@ public class Request implements Serializable {
     private String commandName;
     private String commandStringArgument;
     private Serializable commandObjectArgument;
-    private Deque<Command> commandsDeque = new ArrayDeque<>();
+    private final Deque<Command> commandsDeque = new ArrayDeque<>();
 
     public Request(String commandName, Serializable commandObjectArgument){
         this.commandName=commandName;

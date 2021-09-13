@@ -9,10 +9,9 @@ public class ShowCommand extends Command {
     private static final long serialVersionUID = 2L;
     /**
      * Запуск комманды
-     * @throws Exception
      */
     @Override
-    public void execute() throws Exception {
+    public void execute(){
         ListIterator<Dragon> itr = Dragon.getDragonsCollection().listIterator();
         while (itr.hasNext()) {
             System.out.print(itr.next().toString());

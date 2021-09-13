@@ -1,11 +1,8 @@
 package control;
 
-import MyExceptions.IncorrectIdException;
+import MyExceptions.CommandException;
 import control.commands.Command;
 import control.commands.CommandFactoryImpl;
-
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
 import java.util.NoSuchElementException;
 
 /**
@@ -13,9 +10,9 @@ import java.util.NoSuchElementException;
  */
 public class ConsoleMod {
     private static boolean loop = true;
-    private DataReader dataReader = new DataReader();
-    private CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
-    private Validator validator = new Validator();
+    private final DataReader dataReader = new DataReader();
+    private final CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
+    private final Validator validator = new Validator();
     private Information information;
     private InfDeliverer infDeliverer;
 
@@ -30,6 +27,8 @@ public class ConsoleMod {
                     information.takeInformation(line);
                     infDeliverer = new InfDeliverer(information);
                     validator.checkLine(information);
+                }catch (CommandException e){
+                    System.out.println(e.getCause());
                 } catch (IllegalArgumentException badArgument) {
                     System.out.print(badArgument.getMessage());
                 } catch (NoSuchElementException | IllegalStateException e) {

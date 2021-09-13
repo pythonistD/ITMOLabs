@@ -14,7 +14,7 @@ public class InfoCommand extends Command{
      * @throws Exception
      */
     @Override
-    public void execute() throws Exception{
+    public void execute(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         response =new Response("info","Тип коллекции:Linked list" + "\n"
                 + "Дата создания коллекции: " + formatter.format(Dragon.getStartDate()) + "\n"

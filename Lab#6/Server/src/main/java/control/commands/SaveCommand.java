@@ -1,12 +1,10 @@
 package control.commands;
 
+import MyExceptions.CommandException;
 import control.Response;
 import model.Dragon;
 
-import java.io.BufferedWriter;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.ListIterator;
@@ -19,21 +17,44 @@ public class SaveCommand extends Command {
      * @throws Exception
      */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws CommandException{
         ListIterator<Dragon> dragonListIterator = Dragon.getDragonsCollection().listIterator();
-        Writer out =
-                new BufferedWriter(
-                        new OutputStreamWriter(
-                                new FileOutputStream("C:\\Users\\Professional\\IdeaProjects\\ITMOLabs\\CSV\\Dragon.csv"), StandardCharsets.UTF_8));
-                Dragon dragonNext;
+        Writer out = openFile("C:\\Users\\Professional\\IdeaProjects\\ITMOLabs\\CSV\\Dragon.csv");
+        Dragon dragonNext;
         while (dragonListIterator.hasNext()) {
             dragonNext = dragonListIterator.next();
             dragonNext.setEndDate(LocalDateTime.now());
-            out.write(dragonNext.toString());
+            writeDragonToTheFile(out,dragonNext.toString());
         }
         response = new Response("save","Изменения успешно сохранены");
-        out.close();
+        closeWritingToTheFile(out);
     }
+
+    private Writer openFile(String path) throws CommandException {
+        try {
+            return new BufferedWriter(
+                    new OutputStreamWriter(
+                            new FileOutputStream(path), StandardCharsets.UTF_8));
+        }catch(FileNotFoundException e) {
+            throw  CommandException.createExceptionChain(e,"ошибка во время выполнения команды save, файл не найден");
+        }
+    }
+    private void writeDragonToTheFile(Writer out, String dragon) throws CommandException {
+        try{
+            out.write(dragon);
+        }catch (IOException e){
+            throw  CommandException.createExceptionChain(e,"ошибка во время выполнения команды save, проблемы с записью в файл");
+        }
+    }
+    private void closeWritingToTheFile(Writer out) throws CommandException {
+        try{
+            out.close();
+        }catch (IOException e){
+            throw  CommandException.createExceptionChain(e,"ошибка во время выполнения команды save, проблемы с закрытием потока");
+        }
+    }
+
+
     @Override
     public Response getResponse() {
         return response;

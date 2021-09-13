@@ -12,10 +12,9 @@ public class UpdateCommand extends Command {
     private Information information;
     /**
      * Запуск комманды
-     * @throws Exception
      */
     @Override
-    public void execute() throws Exception {
+    public void execute(){
         information = InfDeliverer.infDeliver();
     }
 }

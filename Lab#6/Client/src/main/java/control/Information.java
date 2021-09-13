@@ -17,8 +17,8 @@ public class Information  implements Serializable {
     private long id;
     private String secField;
 
-    public boolean takeInformation(String line) throws Exception {
-        String[] parsedLine = parser.parseInputLine(line);
+    public boolean takeInformation(String line){
+        String[] parsedLine = Parser.parseInputLine(line);
         command = parsedLine[0];
         isHard(command);
         isSimple(command);

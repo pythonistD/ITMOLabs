@@ -24,25 +24,18 @@ public class AddCommand extends Command {
     private DragonType dragonType;
 
     /**
-     * Запуск команды
-     * @throws Exception
+     * Запуск команды add {Dragon}
      */
     @Override
-    public void execute() throws Exception {
-        try {
-            createDragon();
-        } catch (Exception e) {
-            System.out.println("Введённые данные не корректны");
-        }
+    public void execute(){
+        createDragon();
     }
 
     /**
      * Интерактивный режим создания нового элемента коллекции(Dragon)
-     * @return
-     * @throws Exception
      */
 
-    public void createDragon() throws Exception {
+    public void createDragon() {
         ListIterator<String> promptsiterator = Utility.promptsListtocreate().listIterator();
         String promptToChange = promptsiterator.next();
         System.out.println(promptToChange);
