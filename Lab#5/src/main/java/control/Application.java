@@ -1,9 +1,11 @@
 package control;
 
+import MyExceptions.CommandException;
 import MyExceptions.IncorrectIdException;
 import control.commands.CommandFactoryImpl;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.NoSuchElementException;
 
@@ -12,25 +14,25 @@ import java.util.NoSuchElementException;
  */
 public class Application {
     private static boolean loop = true;
-    private DataReader dataReader = new DataReader();
-    private CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
-    private Validator validator = new Validator();
+    private final DataReader dataReader = new DataReader();
+    private final CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
+    private final Validator validator = new Validator();
     DataWriter dataWriter = new DataWriter();
-    private Information information;
-    private InfDeliverer infDeliverer;
+//    private InfDeliverer infDeliverer;
 
-    public void consoleMod() throws Exception {
+    public void consoleMod(){
         try {
             Utility.createAvailableCommandsMap();
             DataReader.getCollectionData();
             dataWriter.writeCollectionData(DataReader.getCollectionData());
             String line;
             while (loop) {
-                information = new Information();
+                Information information = new Information();
                 try {
                     line = dataReader.getConsoleData();
                     information.takeInformation(line);
-                    infDeliverer = new InfDeliverer(information);
+                    InfDeliverer.setInf(information);
+//                    infDeliverer = new InfDeliverer(information);
                     validator.checkLine(information);
                 } catch (IllegalArgumentException badArgument) {
                     System.out.print(badArgument.getMessage());
@@ -42,8 +44,10 @@ public class Application {
                 }
                 commandFactoryImpl.chooseCommand(information.getCommand()).execute();
             }
-        } catch (FileNotFoundException | UnsupportedEncodingException | IncorrectIdException noFile) {
-            System.out.print(noFile.getMessage());
+        }catch (CommandException e){
+            System.out.println(e.getCause());
+        } catch (IncorrectIdException |IOException e) {
+            System.out.print(e.getMessage());
         }
     }
 

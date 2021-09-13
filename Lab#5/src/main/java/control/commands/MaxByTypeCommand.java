@@ -1,16 +1,14 @@
 package control.commands;
 
 import model.Dragon;
-
 import java.util.ListIterator;
 
 public class MaxByTypeCommand extends Command{
     /**
      * Запуск комманды
-     * @throws Exception
      */
     @Override
-    public void execute() throws Exception{
+    public void execute(){
         ListIterator<Dragon> itr = Dragon.getDragonsCollection().listIterator();
         Dragon dragon = new Dragon();
         Dragon dragon1=itr.next();

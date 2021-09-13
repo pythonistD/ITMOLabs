@@ -15,7 +15,7 @@ public class Information {
     private long id;
     private String secField;
 
-    public boolean takeInformation(String line) throws Exception {
+    public boolean takeInformation(String line){
         String[] parsedLine = parser.parseInputLine(line);
         command = parsedLine[0];
         isHard(command);

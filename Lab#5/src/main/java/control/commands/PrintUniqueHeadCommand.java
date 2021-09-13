@@ -4,8 +4,7 @@ import model.Dragon;
 
 public class PrintUniqueHeadCommand extends Command{
     /**
-     * Запуск комманды
-     * @throws Exception
+     * Запуск команды print unique head
      */
     @Override
     public void execute(){

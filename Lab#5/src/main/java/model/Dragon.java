@@ -69,7 +69,7 @@ public class Dragon implements Comparable<Dragon> {
         this.creationDate = LocalDate.now(clock);
     }
 
-    public Dragon(Long id, String name, Long age, Double wingspan, Boolean speaking, Coordinates coordinates, DragonHead dragonHead, DragonType type) throws IncorrectIdException {
+    public Dragon(Long id, String name, Long age, Double wingspan, Boolean speaking, Coordinates coordinates, DragonHead dragonHead, DragonType type){
         this.name = name;
         this.age = age;
         this.id = id;

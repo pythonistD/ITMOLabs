@@ -8,14 +8,12 @@ import java.time.LocalDateTime;
 import java.util.ListIterator;
 
 public class UpdateCommand extends Command {
-    private Information information = new Information();
     /**
-     * Запуск комманды
-     * @throws Exception
+     * Запуск команды update
      */
     @Override
-    public void execute() throws Exception {
-        information = InfDeliverer.infDeliver();
+    public void execute(){
+        Information information = InfDeliverer.infDeliver();
         ListIterator<Dragon> dragonListIterator = Dragon.getDragonsCollection().listIterator();
         Dragon dragon = new Dragon();
         boolean flag = false;
@@ -26,7 +24,7 @@ public class UpdateCommand extends Command {
                 break;
             }
         }
-        if (flag == true) {
+        if (flag) {
             System.out.println(dragon);
             changeDragon(dragon, information.getId());
             System.out.println("Дракон успешно изменён");
@@ -36,9 +34,9 @@ public class UpdateCommand extends Command {
 
     }
 
-    private void changeDragon(Dragon dragon, long id) throws Exception {
-        Dragon.getDragonsCollection().remove(dragon);
+    private void changeDragon(Dragon dragon, long id){
         AddCommand addCommand = new AddCommand();
+        Dragon.getDragonsCollection().remove(dragon);
         Dragon updatedDragon = addCommand.createDragon();
         updatedDragon.setId(id);
         updatedDragon.setEndDate(LocalDateTime.now());

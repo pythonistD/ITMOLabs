@@ -61,7 +61,7 @@ public class Validator {
         return false;
     }
 
-    public void checkLine(Information inf) throws Exception {
+    public void checkLine(Information inf) throws IncorrectInputException{
         if(!checkCommand(inf.getCommand())){
             throw new IncorrectInputException("wrong command");
         }

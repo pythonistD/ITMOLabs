@@ -7,13 +7,11 @@ import model.Dragon;
 import java.util.ListIterator;
 
 public class RemoveByIdCommand extends Command{
-    private Information information = new Information();
     /**
-     * Запуск комманды
-     * @throws Exception
+     * Запуск команды
      */
     public void execute(){
-        information = InfDeliverer.infDeliver();
+        Information information = InfDeliverer.infDeliver();
         ListIterator<Dragon > dragonListIterator = Dragon.getDragonsCollection().listIterator();
         long currentId;
         while (dragonListIterator.hasNext()){

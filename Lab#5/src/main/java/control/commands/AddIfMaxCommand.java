@@ -10,10 +10,9 @@ public class AddIfMaxCommand extends Command {
     DragonComparator dragonComparator = new DragonComparator();
     /**
      * Запуск команды
-     * @throws Exception
      */
     @Override
-    public void execute() throws Exception {
+    public void execute(){
         Dragon dragonMax = findDragonMax();
         Dragon dragonNew = addCommand.createDragon();
         if (dragonComparator.compare(dragonMax, dragonNew) < 0) {
@@ -27,7 +26,7 @@ public class AddIfMaxCommand extends Command {
 
     /**
      * Поиск макимального Дракона
-     * @return
+     * @return Dragon
      */
 
     protected Dragon findDragonMax() {

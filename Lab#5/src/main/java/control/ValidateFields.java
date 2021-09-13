@@ -112,7 +112,7 @@ public class ValidateFields {
         return speaking;
     }
 
-    public static Boolean checkSpeakingInteractive(String promptToChange) throws Exception {
+    public static Boolean checkSpeakingInteractive(String promptToChange){
         Boolean t = null;
         String inData;
         BufferedReader in = DataReader.getTreat();

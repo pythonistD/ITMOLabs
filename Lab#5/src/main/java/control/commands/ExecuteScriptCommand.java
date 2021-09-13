@@ -1,46 +1,46 @@
 package control.commands;
 
-import control.DataReader;
-import control.InfDeliverer;
-import control.Information;
-import control.Validator;
+import MyExceptions.CommandException;
+import control.*;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class ExecuteScriptCommand extends Command {
-    private Validator validator = new Validator();
-    private CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
-    private Information information = new Information();
+    private final Validator validator = new Validator();
+    private final CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
 
     /**
      * Выполняет запуск скрипта
-     * @throws Exception
+     * @throws CommandException
      */
-    public void execute() throws Exception {
-        information = InfDeliverer.infDeliver();
-        BufferedReader bufferedReader = DataReader.getData(information.getSecField());
-        String command = "1";
-        boolean flag = true;
+    public void execute() throws CommandException {
+        String command;
+        Information information = InfDeliverer.infDeliver();
+        BufferedReader bufferedReader;
+        try {
+            bufferedReader = DataReader.getData(information.getSecField());
+        }catch (FileNotFoundException e){
+            throw CommandException.createExceptionChain(e,"Ошибка в выполнении скрипта, файл не найден");
+        }
         while (true) {
-            command = bufferedReader.readLine();
-            if (command == null) {
-                System.out.println("Скрипт выполнен успешно");
-                break;
-
-            }
             try {
+                command = bufferedReader.readLine();
+                if (command == null) {
+                    System.out.println("Скрипт выполнен успешно");
+                    break;
+                }
                 information.takeInformation(command);
-                if(information.getCommand().equals("execute_script")){
-                    throw new IllegalArgumentException();
+                if (information.getCommand().equals("execute_script")) {
+                    throw new IllegalArgumentException("Рекурсивный вызов в script запрещён");
                 }
                 validator.checkLine(information);
-            } catch (Exception e) {
-                System.out.println("В скрипте ошибка" + "\n" + "Выполнение сценария прервано");
-                break;
+                commandFactoryImpl.chooseCommand(information.getCommand()).execute();
+            }catch (IncorrectInputException | IllegalArgumentException | IOException e){
+                throw  CommandException.createExceptionChain(e,"ошибка во время исполнения команды execute_script");
             }
-            commandFactoryImpl.chooseCommand(information.getCommand()).execute();
-
         }
-    }
 
+    }
 }

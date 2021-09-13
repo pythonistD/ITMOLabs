@@ -23,7 +23,7 @@ public class Parser {
         return FilenameUtils.getExtension(fullFileName);
     }
 
-    public static void csvparser(String currentline) throws IOException, IllegalArgumentException, IncorrectIdException {
+    public static void csvparser(String currentline)throws IOException, IncorrectIdException{
         CSVParser parser = CSVParser.parse(currentline, CSVFormat.EXCEL);
         for (CSVRecord csvRecord : parser) {
              long id = Long.parseLong(csvRecord.get(0));

@@ -2,8 +2,7 @@ package control.commands;
 
 public class HelpCommand extends Command {
     /**
-     * Запуск комманды
-     * @throws Exception
+     * Запуск команды help
      */
     @Override
     public void execute() {

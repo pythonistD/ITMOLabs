@@ -4,8 +4,7 @@ import control.Application;
 
 public class ExitCommand extends Command{
     /**
-     * Запуск комманды
-     * @throws Exception
+     * Запуск команды exit
      */
     @Override
     public void execute() {

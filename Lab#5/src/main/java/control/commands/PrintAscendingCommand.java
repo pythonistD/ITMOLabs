@@ -1,5 +1,6 @@
 package control.commands;
 
+import MyExceptions.CommandException;
 import model.Dragon;
 
 import java.util.Collections;
@@ -9,11 +10,10 @@ public class PrintAscendingCommand extends Command {
     SaveCommand save = new SaveCommand();
     ShowCommand show = new ShowCommand();
     /**
-     * Запуск комманды
-     * @throws Exception
+     * Запуск команды print ascending
      */
     @Override
-    public void execute() throws Exception{
+    public void execute() throws CommandException {
            Collections.sort(Dragon.getDragonsCollection(),dragonComparator);
            System.out.println("Список успешно отсортирован");
            save.execute();

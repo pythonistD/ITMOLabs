@@ -25,9 +25,9 @@ public class ExecuteScriptCommand extends Command {
         Command commandObj;
         CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
         information = InfDeliverer.infDeliver();
+        Utility.createAvailableCommandsMap();
         try {
             bufferedReader = DataReader.getData(information.getSecField());
-            Utility.createAvailableCommandsMap();
         } catch (FileNotFoundException e) {
             throw new CommandException("Ошибка в выполении скрипта, файл не найден");
         }

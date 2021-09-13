@@ -9,8 +9,7 @@ import java.io.IOException;
  * Запись данных из файла в коллекцию
  */
 public class DataWriter {
-
-    public void writeCollectionData(BufferedReader collectionData) throws IOException, IllegalArgumentException, IncorrectIdException {
+    public void writeCollectionData(BufferedReader collectionData) throws IncorrectIdException, IOException {
         String currentline;
         while ((currentline = collectionData.readLine()) != null) {
             Parser.csvparser(currentline);

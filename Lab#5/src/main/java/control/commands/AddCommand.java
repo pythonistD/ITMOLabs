@@ -14,26 +14,20 @@ import java.util.ListIterator;
 public class AddCommand extends Command {
     /**
      * Запуск команды
-     * @throws Exception
      */
     @Override
-    public void execute() throws Exception {
-        try {
-            Dragon dragon = createDragon();
-            Dragon.getDragonsCollection().add(dragon);
-            System.out.println("Дракон успешно добавлен");
-        } catch (Exception e) {
-            System.out.println("Введённые данные не корректны");
-        }
+    public void execute() {
+        Dragon dragon = createDragon();
+        Dragon.getDragonsCollection().add(dragon);
+        System.out.println("Дракон успешно добавлен");
     }
 
     /**
      * Интерактивный режим создания нового элемента коллекции(Dragon)
-     * @return
-     * @throws Exception
+     * @return Dragon
      */
 
-    public Dragon createDragon() throws Exception {
+    public Dragon createDragon() {
         ListIterator<String> promptsiterator = Utility.promptsListtocreate().listIterator();
         String promptToChange = promptsiterator.next();
         long id = Dragon.getDragonsCollection().getLast().getId() + 1;
@@ -61,7 +55,7 @@ public class AddCommand extends Command {
         System.out.println(promptToChange);
         DragonType dragonType = ValidateFields.checkDragonTypeInteractive(promptToChange);
         Dragon dragon =
-                new Dragon(id,name, age, wingspan, speaking, new Coordinates(x, y), new DragonHead(tooth), dragonType);
+                new Dragon(id, name, age, wingspan, speaking, new Coordinates(x, y), new DragonHead(tooth), dragonType);
         dragon.setEndDate(LocalDateTime.now());
         return dragon;
     }

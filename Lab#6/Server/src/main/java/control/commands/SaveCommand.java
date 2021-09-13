@@ -14,7 +14,7 @@ public class SaveCommand extends Command {
     private Response response;
     /**
      * Запуск комманды
-     * @throws Exception
+     * @throws CommandException
      */
     @Override
     public void execute() throws CommandException{

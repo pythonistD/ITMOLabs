@@ -10,7 +10,6 @@ public class ShowCommand extends Command {
     private Response response;
     /**
      * Запуск комманды
-     * @throws Exception
      */
     @Override
      public void execute(){

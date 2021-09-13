@@ -2,6 +2,7 @@ package control;
 
 import MyExceptions.ClientReceiveResponseException;
 import MyExceptions.ClientSendRequestException;
+import MyExceptions.CommandException;
 import com.sun.xml.internal.ws.encoding.soap.DeserializationException;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 import control.commands.Command;
@@ -59,13 +60,13 @@ public class Client {
                 }
                 bufferedDataReceive.clear();
                 serverResponse.viewResponse();
+            }catch (CommandException e){
+                System.out.println(e.getCause());
             }catch (SerializationException | DeserializationException serEx){
                 System.out.println(serEx.getMessage());
             }catch (ClientSendRequestException | ClientReceiveResponseException e){
                 System.out.println(e.getMessage());
-            } catch (NotSerializableException e){
-                System.out.println("Один из классов не имплементирует интерфейс Serializable");
-            }catch (NullPointerException e){
+            } catch (NullPointerException e){
                 e.printStackTrace();
             }
         }

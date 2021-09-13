@@ -6,14 +6,12 @@ import java.util.ListIterator;
 
 public class ShowCommand extends Command {
     /**
-     * Запуск комманды
-     * @throws Exception
+     * Запуск команды show
      */
     @Override
-    public void execute() throws Exception {
-        ListIterator<Dragon> itr = Dragon.getDragonsCollection().listIterator();
-        while (itr.hasNext()) {
-            System.out.print(itr.next().toString());
+    public void execute(){
+        for (Dragon dragon : Dragon.getDragonsCollection()) {
+            System.out.print(dragon.toString());
         }
     }
 }

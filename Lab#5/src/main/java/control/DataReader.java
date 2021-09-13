@@ -26,7 +26,7 @@ public class DataReader {
             return readFile = new BufferedReader(new InputStreamReader(new FileInputStream(inputfileCollection), StandardCharsets.UTF_8));
     }
 
-    public static BufferedReader getData(String file) throws Exception {
+    public static BufferedReader getData(String file) throws FileNotFoundException {
         return readFile = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
     }
 
