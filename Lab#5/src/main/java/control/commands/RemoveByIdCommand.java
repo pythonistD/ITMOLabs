@@ -18,8 +18,8 @@ public class RemoveByIdCommand extends Command{
             Dragon dragon = dragonListIterator.next();
             currentId = dragon.getId();
             if(currentId == information.getId()){
-                System.out.println(dragon.toString());
-                System.out.print("Удаление прошло успешно");
+                System.out.print(dragon);
+                System.out.println("Удаление прошло успешно");
                 Dragon.getDragonsCollection().remove(dragon);
                 break;
             }

@@ -12,7 +12,7 @@ public class UpdateCommand extends Command {
      * Запуск команды update
      */
     @Override
-    public void execute(){
+    public void execute() {
         Information information = InfDeliverer.infDeliver();
         ListIterator<Dragon> dragonListIterator = Dragon.getDragonsCollection().listIterator();
         Dragon dragon = new Dragon();
@@ -34,14 +34,14 @@ public class UpdateCommand extends Command {
 
     }
 
-    private void changeDragon(Dragon dragon, long id){
+    private void changeDragon(Dragon dragon, long id) {
         AddCommand addCommand = new AddCommand();
         int pos = Dragon.getDragonsCollection().indexOf(dragon);
         Dragon.getDragonsCollection().remove(dragon);
         Dragon updatedDragon = addCommand.createDragon();
         updatedDragon.setId(id);
         updatedDragon.setEndDate(LocalDateTime.now());
-        Dragon.getDragonsCollection().add(pos,updatedDragon);
+        Dragon.getDragonsCollection().add(pos, updatedDragon);
     }
 
 }
