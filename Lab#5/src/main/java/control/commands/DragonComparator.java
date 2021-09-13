@@ -10,21 +10,21 @@ import java.util.Comparator;
 public class DragonComparator implements Comparator<Dragon> {
     /**
      * Метод сравнения Драконов
-     * @param o1
-     * @param o2
-     * @return
+     *
+     * @param o1 - первый дракон
+     * @param o2 - следующий за первым
+     * @return результат сравнения
      */
     @Override
     public int compare(Dragon o1, Dragon o2) {
+        int result = 2;
         if ((o1.getAge() - o2.getAge()) < 0) {
-            return -1;
+            result = -1;
+        } else if ((o1.getAge() - o2.getAge()) > 0) {
+            result = 1;
+        } else if ((o1.getAge() - o2.getAge()) == 0) {
+            result = 0;
         }
-        if ((o1.getAge() - o2.getAge()) > 0) {
-            return 1;
-        }
-        if ((o1.getAge() - o2.getAge()) == 0) {
-            return 0;
-        }
-        return 2;
+        return result;
     }
 }

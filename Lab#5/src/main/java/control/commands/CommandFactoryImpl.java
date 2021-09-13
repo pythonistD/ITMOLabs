@@ -8,8 +8,9 @@ import control.Utility;
 public class CommandFactoryImpl implements control.interfaces.CommandFactory {
     /**
      * Выбирает нужную комманду из списка команд
-     * @param commandLine
-     * @return
+     *
+     * @param commandLine - название команды
+     * @return - объект, представляющий введённую команду
      */
     public Command chooseCommand(String commandLine) {
         return Utility.getAvailableCommandsMap().get(commandLine);

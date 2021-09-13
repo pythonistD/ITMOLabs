@@ -24,6 +24,7 @@ public class AddCommand extends Command {
 
     /**
      * Интерактивный режим создания нового элемента коллекции(Dragon)
+     *
      * @return Dragon
      */
 

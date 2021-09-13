@@ -11,7 +11,8 @@ import java.util.ListIterator;
 public class SaveCommand extends Command {
     /**
      * Запуск команды save
-     * @throws CommandException
+     *
+     * @throws CommandException выбрасывается, если возникла ошибка во время сохранения данных
      */
     @Override
     public void execute() throws CommandException {
@@ -21,7 +22,7 @@ public class SaveCommand extends Command {
         while (dragonListIterator.hasNext()) {
             dragonNext = dragonListIterator.next();
             dragonNext.setEndDate(LocalDateTime.now());
-            writeDragonToTheFile(out,dragonNext.toString());
+            writeDragonToTheFile(out, dragonNext.toString());
         }
         System.out.println("Изменения успешно сохранены");
         closeWritingToTheFile(out);

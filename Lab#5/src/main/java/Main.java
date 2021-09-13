@@ -2,13 +2,13 @@ import control.Application;
 import control.DataReader;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args){
         try {
             Application app = new Application();
             DataReader.setInputfileCollection(args[0]);
 
             app.consoleMod();
-        }catch (ArrayIndexOutOfBoundsException e){
+        } catch (ArrayIndexOutOfBoundsException e) {
             System.out.print("CSV файл не найден");
         }
     }

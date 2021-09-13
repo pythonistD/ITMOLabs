@@ -5,12 +5,12 @@ import model.Dragon;
 
 import java.time.format.DateTimeFormatter;
 
-public class InfoCommand extends Command{
+public class InfoCommand extends Command {
     /**
      * Запуск команды info
      */
     @Override
-    public void execute(){
+    public void execute() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         System.out.println("Тип коллекции:Linked list" + "\n"
                 + "Дата создания коллекции: " + formatter.format(Dragon.getStartDate()) + "\n"

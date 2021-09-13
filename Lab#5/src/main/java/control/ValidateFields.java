@@ -23,7 +23,7 @@ public class ValidateFields {
     }
 
     public static String checkName(String field) throws IllegalArgumentException {
-        if (field == null | field.trim().isEmpty()) {
+        if (field.trim().isEmpty()) {
             throw new IllegalArgumentException("Неправильно введено Name");
         }
         return field;
@@ -57,7 +57,7 @@ public class ValidateFields {
     }
 
     public static Long checkAgeInteractive(String promptToChange) {
-        Long t;
+        long t;
         String inData;
         BufferedReader in = DataReader.getTreat();
         while (true) {
@@ -87,7 +87,7 @@ public class ValidateFields {
     }
 
     public static Double checkWingSpanInteractive(String promptToChange) {
-        Double t = null;
+        Double t;
         String inData;
         BufferedReader in = DataReader.getTreat();
         while (true) {
@@ -108,23 +108,21 @@ public class ValidateFields {
     }
 
     public static boolean checkSpeaking(String field) throws NullPointerException {
-        boolean speaking = Boolean.parseBoolean(field);
-        return speaking;
+        return Boolean.parseBoolean(field);
     }
 
-    public static Boolean checkSpeakingInteractive(String promptToChange){
-        Boolean t = null;
+    public static Boolean checkSpeakingInteractive(String promptToChange) {
+        Boolean t;
         String inData;
         BufferedReader in = DataReader.getTreat();
         while (true) {
             try {
                 inData = in.readLine();
-                if(inData.equals("TRUE")){
+                if (inData.equals("TRUE")) {
                     t = true;
-                }
-                else if(inData.equals("FALSE")){
+                } else if (inData.equals("FALSE")) {
                     t = false;
-                }else{
+                } else {
                     throw new IllegalArgumentException();
                 }
             } catch (Exception e) {
@@ -138,7 +136,7 @@ public class ValidateFields {
     }
 
     public static DragonType checkDragonTypeInteractive(String promptToChange) {
-        DragonType t = null;
+        DragonType t;
         String inData;
         BufferedReader in = DataReader.getTreat();
         while (true) {
@@ -154,13 +152,13 @@ public class ValidateFields {
         }
         return t;
     }
+
     public static Double checkX(String field) throws IllegalArgumentException {
-        double x = Double.parseDouble(field);
-        return x;
+        return Double.parseDouble(field);
     }
 
     public static Double checkXInteractive(String promptToChange) {
-        Double t = null;
+        Double t;
         String inData;
         BufferedReader in = DataReader.getTreat();
         while (true) {
@@ -176,6 +174,7 @@ public class ValidateFields {
         }
         return t;
     }
+
     public static Double checkY(String field) throws IllegalArgumentException {
         double y = Double.parseDouble(field);
         if (y <= -923) {
@@ -185,7 +184,7 @@ public class ValidateFields {
     }
 
     public static Double checkYInteractive(String promptToChange) {
-        Double t = null;
+        Double t;
         String inData;
         BufferedReader in = DataReader.getTreat();
         while (true) {
@@ -204,14 +203,14 @@ public class ValidateFields {
         }
         return t;
     }
+
     public static Double checkTooth(String field) throws IllegalArgumentException {
-        double toothcount = Double.parseDouble(field);
-        return toothcount;
+        return Double.parseDouble(field);
     }
 
 
     public static Double checkToothCountInteractive(String promptToChange) {
-        Double t = null;
+        Double t;
         String inData;
         BufferedReader in = DataReader.getTreat();
         while (true) {

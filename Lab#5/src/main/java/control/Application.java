@@ -16,12 +16,11 @@ public class Application {
     private final CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
     private final Validator validator = new Validator();
     DataWriter dataWriter = new DataWriter();
-//    private InfDeliverer infDeliverer;
 
     /**
      * Отвечает за остановку цикла(программы)
      *
-     * @param loop
+     * @param loop если значение false, то остановка цикла
      */
     public static void setTreat(boolean loop) {
         Application.loop = loop;
@@ -42,7 +41,6 @@ public class Application {
                 line = dataReader.getConsoleData();
                 information.takeInformation(line);
                 InfDeliverer.setInf(information);
-//                    infDeliverer = new InfDeliverer(information);
                 validator.checkLine(information);
                 commandFactoryImpl.chooseCommand(information.getCommand()).execute();
             } catch (CommandException e) {
@@ -54,7 +52,6 @@ public class Application {
                 System.exit(0);
             } catch (Exception e) {
                 System.out.println("Комманда введена неверно" + "\n" + "Попробуйте ввести ещё раз" + "\n" + "Чтобы получить список доступных команд напишите help");
-                continue;
             }
 
         }

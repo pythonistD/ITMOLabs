@@ -8,7 +8,6 @@ import java.util.Collections;
 
 public class PrintAscendingCommand extends Command {
     DragonComparator dragonComparator = new DragonComparator();
-    SaveCommand save = new SaveCommand();
     ShowCommand show = new ShowCommand();
 
     /**
@@ -16,7 +15,7 @@ public class PrintAscendingCommand extends Command {
      */
     @Override
     public void execute() throws CommandException {
-        Collections.sort(Dragon.getDragonsCollection(), dragonComparator);
+        Dragon.getDragonsCollection().sort(dragonComparator);
         Utility.reDefIds(Dragon.getDragonsCollection());
         System.out.println("Список успешно отсортирован");
         show.execute();

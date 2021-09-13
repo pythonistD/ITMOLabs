@@ -14,16 +14,15 @@ public class DataReader {
 
     /**
      * Интерфейс класса
-     * @return
-     * @throws FileNotFoundException
-     * @throws UnsupportedEncodingException
+     *
+     * @return Reader, который позволяет читать данные из исходного файла по строчно
+     * @throws FileNotFoundException файл по указанному пути не найден
+     * @throws UnsupportedEncodingException кодировка файла не CSV
      */
     public static BufferedReader getCollectionData() throws FileNotFoundException, UnsupportedEncodingException {
-        //Проверка правильности пути файла
         Validator.checkFileExist(inputfileCollection);
-        // Проверка расширения файла, выкинет ошибку, если расширение не CSV
         Validator.checkFileExtension(inputfileCollection);
-            return readFile = new BufferedReader(new InputStreamReader(new FileInputStream(inputfileCollection), StandardCharsets.UTF_8));
+        return readFile = new BufferedReader(new InputStreamReader(new FileInputStream(inputfileCollection), StandardCharsets.UTF_8));
     }
 
     public static BufferedReader getData(String file) throws FileNotFoundException {

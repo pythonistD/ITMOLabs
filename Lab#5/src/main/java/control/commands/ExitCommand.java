@@ -2,7 +2,7 @@ package control.commands;
 
 import control.Application;
 
-public class ExitCommand extends Command{
+public class ExitCommand extends Command {
     /**
      * Запуск команды exit
      */

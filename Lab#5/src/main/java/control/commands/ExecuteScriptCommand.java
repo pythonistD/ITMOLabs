@@ -13,7 +13,8 @@ public class ExecuteScriptCommand extends Command {
 
     /**
      * Выполняет запуск скрипта
-     * @throws CommandException
+     *
+     * @throws CommandException ошибка работы скрипта
      */
     public void execute() throws CommandException {
         String command;
@@ -22,8 +23,8 @@ public class ExecuteScriptCommand extends Command {
         BufferedReader bufferedReader;
         try {
             bufferedReader = DataReader.getData(information.getSecField());
-        }catch (FileNotFoundException e){
-            throw CommandException.createExceptionChain(e,"Ошибка в выполнении скрипта, файл не найден");
+        } catch (FileNotFoundException e) {
+            throw CommandException.createExceptionChain(e, "Ошибка в выполнении скрипта, файл не найден");
         }
         while (true) {
             try {
@@ -39,8 +40,8 @@ public class ExecuteScriptCommand extends Command {
                 }
                 validator.checkLine(information);
                 commandFactoryImpl.chooseCommand(scriptsCommandsInf.getCommand()).execute();
-            }catch (IncorrectInputException | IllegalArgumentException | IOException e){
-                throw  CommandException.createExceptionChain(e,"ошибка во время исполнения команды execute_script");
+            } catch (IncorrectInputException | IllegalArgumentException | IOException e) {
+                throw CommandException.createExceptionChain(e, "ошибка во время исполнения команды execute_script");
             }
         }
 

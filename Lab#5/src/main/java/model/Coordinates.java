@@ -1,4 +1,5 @@
 package model;
+
 /**
  * Координаты Дракона
  */
@@ -10,24 +11,13 @@ public class Coordinates {
         this.x = x;
         this.y = y;
     }
-
-    public Coordinates() {
-    }
-
-
     public double getX() {
         return x;
     }
 
-    public void setX(Double x) {
-        this.x = x;
-    }
 
     public double getY() {
         return y;
     }
 
-    public void setY(Double y) {
-        this.y = y;
-    }
 }
