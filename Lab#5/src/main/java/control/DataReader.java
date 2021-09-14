@@ -37,9 +37,13 @@ public class DataReader {
         DataReader.inputfileCollection = inputfileCollection;
     }
 
-    public String getConsoleData() throws Exception {
+    public static String getInputfileCollection() {
+        return inputfileCollection;
+    }
+
+    public String getConsoleData() throws IOException {
         String line;
-        line = consoleInput.readLine();
+            line = consoleInput.readLine();
         return line;
     }
 }

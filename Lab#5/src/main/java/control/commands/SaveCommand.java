@@ -1,6 +1,7 @@
 package control.commands;
 
 import MyExceptions.CommandException;
+import control.DataReader;
 import model.Dragon;
 
 import java.io.*;
@@ -17,7 +18,7 @@ public class SaveCommand extends Command {
     @Override
     public void execute() throws CommandException {
         ListIterator<Dragon> dragonListIterator = Dragon.getDragonsCollection().listIterator();
-        Writer out = openFile("C:\\Users\\Professional\\IdeaProjects\\ITMOLabs\\CSV\\Dragon.csv");
+        Writer out = openFile(DataReader.getInputfileCollection());
         Dragon dragonNext;
         while (dragonListIterator.hasNext()) {
             dragonNext = dragonListIterator.next();

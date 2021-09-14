@@ -13,7 +13,12 @@ public class Information {
     private String secField;
 
     public boolean takeInformation(String line) {
-        String[] parsedLine = Parser.parseInputLine(line);
+        String[] parsedLine = null;
+        try {
+            parsedLine = Parser.parseInputLine(line);
+        }catch (NullPointerException e){
+            System.exit(0);
+        }
         command = parsedLine[0];
         isHard(command);
         isSimple(command);

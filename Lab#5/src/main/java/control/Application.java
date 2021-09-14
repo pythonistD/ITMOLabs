@@ -4,6 +4,7 @@ import MyExceptions.CommandException;
 import MyExceptions.IncorrectIdException;
 import control.commands.CommandFactoryImpl;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
@@ -34,6 +35,7 @@ public class Application {
             dataWriter.writeCollectionData(DataReader.getCollectionData());
         } catch (IOException | IncorrectIdException e) {
             System.err.println(e);
+            System.exit(0);
         }
         while (loop) {
             Information information = new Information();
@@ -43,17 +45,17 @@ public class Application {
                 InfDeliverer.setInf(information);
                 validator.checkLine(information);
                 commandFactoryImpl.chooseCommand(information.getCommand()).execute();
+            }catch (NoSuchElementException | IllegalStateException | IOException e) {
+                System.exit(0);
             } catch (CommandException e) {
                 System.err.println(e);
                 System.err.println(e.getCause());
             } catch (IllegalArgumentException badArgument) {
                 System.out.print(badArgument.getMessage());
-            } catch (NoSuchElementException | IllegalStateException e) {
-                System.exit(0);
-            } catch (Exception e) {
+            }catch (IncorrectInputException e){
                 System.out.println("Комманда введена неверно" + "\n" + "Попробуйте ввести ещё раз" + "\n" + "Чтобы получить список доступных команд напишите help");
-            }
 
+            }
         }
     }
 
