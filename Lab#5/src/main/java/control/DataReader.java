@@ -15,7 +15,7 @@ public class DataReader {
     /**
      * Интерфейс класса
      *
-     * @return Reader, который позволяет читать данные из исходного файла по строчно
+     * @return Reader, который позволяет читать данные из исходного файла построчно
      * @throws FileNotFoundException файл по указанному пути не найден
      * @throws UnsupportedEncodingException кодировка файла не CSV
      */

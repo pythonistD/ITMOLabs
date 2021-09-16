@@ -18,5 +18,6 @@ public class UpdateCommand extends Command {
     public void execute(){
         information = InfDeliverer.infDeliver();
         addCommand = new AddCommand();
+        addCommand.execute();
     }
 }
