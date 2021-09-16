@@ -1,5 +1,6 @@
 package control.commands;
 
+import MyExceptions.CommandException;
 import control.Response;
 import model.Dragon;
 
@@ -13,7 +14,7 @@ public class PrintAscendingCommand extends Command {
      * @throws Exception
      */
     @Override
-    public void execute() throws Exception{
+    public void execute() throws CommandException {
         DragonComparator dragonComparator = new DragonComparator();
         ShowCommand show = new ShowCommand();
         SaveCommand save = new SaveCommand();

@@ -9,7 +9,6 @@ public class HelpCommand extends Command {
     private Response response = null;
     /**
      * Запуск комманды
-     * @throws Exception
      */
     @Override
     public void execute() {

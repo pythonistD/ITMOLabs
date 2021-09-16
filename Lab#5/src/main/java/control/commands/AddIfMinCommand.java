@@ -8,12 +8,12 @@ import java.util.Collections;
 public class AddIfMinCommand extends Command {
     AddCommand addCommand = new AddCommand();
     DragonComparator dragonComparator = new DragonComparator();
+
     /**
      * Запуск команды
-     * @throws Exception
      */
     @Override
-    public void execute() throws Exception {
+    public void execute() {
         Dragon dragonMin = findDragonMin();
         Dragon dragonNew = addCommand.createDragon();
         if (dragonComparator.compare(dragonMin, dragonNew) > 0) {
@@ -27,7 +27,8 @@ public class AddIfMinCommand extends Command {
 
     /**
      * Поиск минимального Дракона
-     * @return
+     *
+     * @return Dragon
      */
     protected Dragon findDragonMin() {
         return Collections.min(Dragon.getDragonsCollection(), dragonComparator);

@@ -1,6 +1,8 @@
 package control.commands;
 
 
+import MyExceptions.CommandException;
+import MyExceptions.IncorrectIdException;
 import control.Response;
 import control.Utility;
 import control.ValidateFields;
@@ -26,22 +28,21 @@ public class AddCommand extends Command {
     private DragonType dragonType;
     /**
      * Запуск команды
-     * @throws Exception
+     * @throws CommandException
      */
     @Override
-    public void execute() throws Exception {
+    public void execute() throws CommandException {
         try {
             Dragon dragon = createDragon();
             Dragon.getDragonsCollection().add(dragon);
         } catch (Exception e) {
-            System.out.println("Ошибка при добавлении в коллекцию");
+            throw new CommandException("ошибка при добавлении");
         }
         response = new Response("add", "Дракон:" + name + " успешно добавлен");
     }
-    public Dragon createDragon() throws Exception {
+    public Dragon createDragon() throws IncorrectIdException {
         id = Dragon.getDragonsCollection().getLast().getId() + 1;
-       Dragon dragon = new Dragon(id,name,age,wingspan,speaking,new Coordinates(x,y),new DragonHead(tooth),dragonType);
-        return dragon;
+        return new Dragon(id,name,age,wingspan,speaking,new Coordinates(x,y),new DragonHead(tooth),dragonType);
     }
     public Response getResponse(){
         return this.response;

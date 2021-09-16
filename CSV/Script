@@ -1,4 +1,5 @@
 show
 help
 info
-add {Dragon}
+execute_script C:\Users\Professional\IdeaProjects\ITMOLabs\CSV\Script
+

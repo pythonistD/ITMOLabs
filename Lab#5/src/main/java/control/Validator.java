@@ -1,5 +1,4 @@
 package control;
-import model.ModelTypes;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
@@ -33,7 +32,7 @@ public class Validator {
     }
 
     public static void checkFileExist(String filePath) throws FileNotFoundException {
-        if (filePath.equals(null)) {
+        if (filePath == null) {
             throw new FileNotFoundException("Не правильно указан путь до CSV файла или не ввели его в аргументе коммандной строки");
         }
     }
@@ -52,6 +51,7 @@ public class Validator {
         }
         return false;
     }
+
     public boolean checkCommand(String command) {
         for (String s : utility.avalibleCommandList()) {
             if (s.equals(command)) {
@@ -61,17 +61,17 @@ public class Validator {
         return false;
     }
 
-    public void checkLine(Information inf) throws Exception {
-        if(!checkCommand(inf.getCommand())){
+    public void checkLine(Information inf) throws IncorrectInputException {
+        if (!checkCommand(inf.getCommand())) {
             throw new IncorrectInputException("wrong command");
         }
-        if(inf.getIsSimple()){
-            if(inf.getSecField() != null){
+        if (inf.getIsSimple()) {
+            if (inf.getSecField() != null) {
                 throw new IncorrectInputException("To long command");
             }
         }
-        if(inf.getIsHard()){
-            if(inf.getCommand().equals("add") | inf.getCommand().equals("add_if_max") | inf.getCommand().equals("add_if_min")){
+        if (inf.getIsHard()) {
+            if (inf.getCommand().equals("add") | inf.getCommand().equals("add_if_max") | inf.getCommand().equals("add_if_min")) {
                 checkModelType(inf.getSecField());
             }
 
@@ -79,7 +79,7 @@ public class Validator {
     }
 
     public void checkModelType(String modeltype) throws IncorrectInputException, NullPointerException {
-        if(!modeltype.equals("{Dragon}")){
+        if (!modeltype.equals("{Dragon}")) {
             throw new IncorrectInputException("wrong model type");
         }
 
@@ -88,7 +88,6 @@ public class Validator {
     public String getCommand() {
         return Command;
     }
-
 
 
 }

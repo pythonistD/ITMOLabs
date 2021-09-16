@@ -10,10 +10,9 @@ public class ShowCommand extends Command {
     private Response response;
     /**
      * Запуск комманды
-     * @throws Exception
      */
     @Override
-     public void execute() throws Exception {
+     public void execute(){
         response = new Response("show");
         StringBuilder field = new StringBuilder();
         ListIterator<Dragon> itr = Dragon.getDragonsCollection().listIterator();

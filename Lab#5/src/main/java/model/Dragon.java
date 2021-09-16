@@ -1,13 +1,8 @@
 package model;
 
-import MyExceptions.IncorrectIdException;
-import control.ValidateFields;
-import control.Validator;
-
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -15,6 +10,10 @@ import java.util.Objects;
  * Объетк коллекции
  */
 public class Dragon implements Comparable<Dragon> {
+    private static LinkedList<Dragon> dragons = new LinkedList<>();
+    private static long counter;
+    private static LocalDateTime startDate;
+    private static LocalDateTime endDate;
     private long id;  //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -24,35 +23,7 @@ public class Dragon implements Comparable<Dragon> {
     private Boolean speaking; //Поле не может быть null
     private DragonType type; //Поле не может быть null
     private DragonHead dragonHead;
-    private static LinkedList<Dragon> dragons = new LinkedList<>();
-    private static long counter;
     private Clock clock = Clock.systemUTC();
-    private static LocalDateTime startDate;
-    private static LocalDateTime endDate;
-
-    public static void setStartDate(LocalDateTime startDate) {
-        Dragon.startDate = startDate;
-    }
-
-    public static void setEndDate(LocalDateTime endDate) {
-        Dragon.endDate = endDate;
-    }
-
-    public static LocalDateTime getStartDate() {
-        return Dragon.startDate;
-    }
-
-    public static LocalDateTime getEndDate() {
-        return Dragon.endDate;
-    }
-
-    public long inctCounter() {
-        return counter++;
-    }
-
-    public static LinkedList<Dragon> getDragonsCollection() {
-        return Dragon.dragons;
-    }
 
     public Dragon() {
 
@@ -69,7 +40,7 @@ public class Dragon implements Comparable<Dragon> {
         this.creationDate = LocalDate.now(clock);
     }
 
-    public Dragon(Long id, String name, Long age, Double wingspan, Boolean speaking, Coordinates coordinates, DragonHead dragonHead, DragonType type) throws IncorrectIdException {
+    public Dragon(Long id, String name, Long age, Double wingspan, Boolean speaking, Coordinates coordinates, DragonHead dragonHead, DragonType type) {
         this.name = name;
         this.age = age;
         this.id = id;
@@ -81,6 +52,29 @@ public class Dragon implements Comparable<Dragon> {
         this.creationDate = LocalDate.now(clock);
     }
 
+    public static LocalDateTime getStartDate() {
+        return Dragon.startDate;
+    }
+
+    public static void setStartDate(LocalDateTime startDate) {
+        Dragon.startDate = startDate;
+    }
+
+    public static LocalDateTime getEndDate() {
+        return Dragon.endDate;
+    }
+
+    public static void setEndDate(LocalDateTime endDate) {
+        Dragon.endDate = endDate;
+    }
+
+    public static LinkedList<Dragon> getDragonsCollection() {
+        return Dragon.dragons;
+    }
+
+    public long inctCounter() {
+        return counter++;
+    }
 
     public long getId() {
         return id;

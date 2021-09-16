@@ -5,15 +5,24 @@ import model.Dragon;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
  * Различные полезные методы
  */
 public class Utility {
-    private static final ArrayList<String> promtstochange = new ArrayList<>();
     private static final ArrayList<String> promptstocreate = new ArrayList<>();
     private static final HashMap<String, Command> availableCommandsMap = new HashMap<>();
+
+    public static void reDefIds(LinkedList<Dragon> collection) {
+        Dragon dragon;
+        for (Dragon value : collection) {
+            dragon = value;
+            long id = collection.indexOf(dragon) + 1;
+            dragon.setId(id);
+        }
+    }
 
     public static ArrayList<String> promptsListtocreate() {
         promptstocreate.add("Введите имя дракона");
@@ -32,28 +41,8 @@ public class Utility {
         return elements.size();
     }
 
-    public ArrayList<String> avalibleCommandList() {
-        ArrayList<String> avalibleCommand = new ArrayList<>();
-        avalibleCommand.add("help");
-        avalibleCommand.add("info");
-        avalibleCommand.add("show");
-        avalibleCommand.add("add");
-        avalibleCommand.add("update");
-        avalibleCommand.add("remove_by_id");
-        avalibleCommand.add("clear");
-        avalibleCommand.add("save");
-        avalibleCommand.add("execute_script");
-        avalibleCommand.add("exit");
-        avalibleCommand.add("remove_head");
-        avalibleCommand.add("add_if_max");
-        avalibleCommand.add("add_if_min");
-        avalibleCommand.add("max_by_type");
-        avalibleCommand.add("print_ascending");
-        avalibleCommand.add("print_unique_head");
-        return avalibleCommand;
-    }
-    public static ArrayList<String> avalibleSimpleCommands(){
-        ArrayList<String> avalibleSimpleCommands = new ArrayList<String>();
+    public static ArrayList<String> avalibleSimpleCommands() {
+        ArrayList<String> avalibleSimpleCommands = new ArrayList<>();
         avalibleSimpleCommands.add("help");
         avalibleSimpleCommands.add("info");
         avalibleSimpleCommands.add("clear");
@@ -65,8 +54,9 @@ public class Utility {
         avalibleSimpleCommands.add("print_unique_head");
         return avalibleSimpleCommands;
     }
-    public static ArrayList<String> avalibleHardCommands(){
-        ArrayList<String> avalibleHardCommands = new ArrayList<String>();
+
+    public static ArrayList<String> avalibleHardCommands() {
+        ArrayList<String> avalibleHardCommands = new ArrayList<>();
         avalibleHardCommands.add("add");
         avalibleHardCommands.add("remove_by_id");
         avalibleHardCommands.add("execute_script");
@@ -97,5 +87,26 @@ public class Utility {
 
     public static HashMap<String, Command> getAvailableCommandsMap() {
         return availableCommandsMap;
+    }
+
+    public ArrayList<String> avalibleCommandList() {
+        ArrayList<String> avalibleCommand = new ArrayList<>();
+        avalibleCommand.add("help");
+        avalibleCommand.add("info");
+        avalibleCommand.add("show");
+        avalibleCommand.add("add");
+        avalibleCommand.add("update");
+        avalibleCommand.add("remove_by_id");
+        avalibleCommand.add("clear");
+        avalibleCommand.add("save");
+        avalibleCommand.add("execute_script");
+        avalibleCommand.add("exit");
+        avalibleCommand.add("remove_head");
+        avalibleCommand.add("add_if_max");
+        avalibleCommand.add("add_if_min");
+        avalibleCommand.add("max_by_type");
+        avalibleCommand.add("print_ascending");
+        avalibleCommand.add("print_unique_head");
+        return avalibleCommand;
     }
 }

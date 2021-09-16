@@ -7,7 +7,6 @@ public class HelpCommand extends Command{
     private Response response;
     /**
      * Запуск комманды
-     * @throws Exception
      */
     @Override
     public void execute() {

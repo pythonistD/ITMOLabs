@@ -25,10 +25,7 @@ public class Response implements Serializable{
         }
     }
     public boolean isHardResponse(){
-        if(responseDeque.size() == 0){
-            return false;
-        }
-        return true;
+        return responseDeque.size() != 0;
     }
 
     public String getCommandStringArgument() {

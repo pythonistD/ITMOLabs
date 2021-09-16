@@ -1,10 +1,11 @@
 package control;
 
+import MyExceptions.CommandException;
 import MyExceptions.IncorrectIdException;
 import control.commands.CommandFactoryImpl;
 
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
+import java.io.EOFException;
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 /**
@@ -12,48 +13,50 @@ import java.util.NoSuchElementException;
  */
 public class Application {
     private static boolean loop = true;
-    private DataReader dataReader = new DataReader();
-    private CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
-    private Validator validator = new Validator();
+    private final DataReader dataReader = new DataReader();
+    private final CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
+    private final Validator validator = new Validator();
     DataWriter dataWriter = new DataWriter();
-    private Information information;
-    private InfDeliverer infDeliverer;
-
-    public void consoleMod() throws Exception {
-        try {
-            Utility.createAvailableCommandsMap();
-            DataReader.getCollectionData();
-            dataWriter.writeCollectionData(DataReader.getCollectionData());
-            String line;
-            while (loop) {
-                information = new Information();
-                try {
-                    line = dataReader.getConsoleData();
-                    information.takeInformation(line);
-                    infDeliverer = new InfDeliverer(information);
-                    validator.checkLine(information);
-                } catch (IllegalArgumentException badArgument) {
-                    System.out.print(badArgument.getMessage());
-                } catch (NoSuchElementException | IllegalStateException e) {
-                    System.exit(0);
-                } catch (Exception e) {
-                    System.out.println("Комманда введена неверно" + "\n" + "Попробуйте ввести ещё раз" + "\n" + "Чтобы получить список доступных команд напишите help");
-                    continue;
-                }
-                commandFactoryImpl.chooseCommand(information.getCommand()).execute();
-            }
-        } catch (FileNotFoundException | UnsupportedEncodingException | IncorrectIdException noFile) {
-            System.out.print(noFile.getMessage());
-        }
-    }
 
     /**
      * Отвечает за остановку цикла(программы)
-     * @param loop
+     *
+     * @param loop если значение false, то остановка цикла
      */
     public static void setTreat(boolean loop) {
         Application.loop = loop;
     }
 
+    public void consoleMod() {
+        String line;
+        try {
+            Utility.createAvailableCommandsMap();
+            DataReader.getCollectionData();
+            dataWriter.writeCollectionData(DataReader.getCollectionData());
+        } catch (IOException | IncorrectIdException e) {
+            System.err.println(e);
+            System.exit(0);
+        }
+        while (loop) {
+            Information information = new Information();
+            try {
+                line = dataReader.getConsoleData();
+                information.takeInformation(line);
+                InfDeliverer.setInf(information);
+                validator.checkLine(information);
+                commandFactoryImpl.chooseCommand(information.getCommand()).execute();
+            }catch (NoSuchElementException | IllegalStateException | IOException e) {
+                System.exit(0);
+            } catch (CommandException e) {
+                System.err.println(e);
+                System.err.println(e.getCause());
+            } catch (IllegalArgumentException badArgument) {
+                System.out.print(badArgument.getMessage());
+            }catch (IncorrectInputException e){
+                System.out.println("Комманда введена неверно" + "\n" + "Попробуйте ввести ещё раз" + "\n" + "Чтобы получить список доступных команд напишите help");
+
+            }
+        }
+    }
 
 }

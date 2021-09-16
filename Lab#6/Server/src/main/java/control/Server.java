@@ -1,5 +1,10 @@
 package control;
 
+import MyExceptions.CommandException;
+import MyExceptions.ServerReceiveException;
+import MyExceptions.ServerSendResponseException;
+import com.sun.xml.internal.ws.encoding.soap.DeserializationException;
+import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 import control.commands.Command;
 
 import java.io.*;
@@ -37,21 +42,22 @@ public class Server {
         processingStatus=true;
         while (processingStatus){
             try {
-                socket.receive(packetReceived);
+                receiveClientRequest(packetReceived);
                 getClientAddress(packetReceived);
                 clientRequest = deSerialize(packetReceived);
                 command = clientRequest.getCommandObjectArgument();
                 command.execute();
-                response=command.getResponse();
+                response = command.getResponse();
                 buffSend = serialization(response);
                 packetSend = createServerResponsePacket(buffSend);
                 sendServerResponse(packetSend);
-            } catch (IOException e) {
-                System.out.println("Ошибочка вышла... Соединение не установлено :(");
-                break;
+            }catch (CommandException comEx){
+                System.out.println(comEx.getCause());
+            }catch (SerializationException | DeserializationException e){
+                System.out.println(e.getMessage());
+            }catch (ServerReceiveException | ServerSendResponseException e){
+                System.out.println(e.getMessage());
             }
-
-        //stop();
         }
     }
     /*
@@ -67,19 +73,28 @@ public class Server {
             System.out.println("Произошла ошибка при подключении к порту:" + port);
         }
     }
+    public static void receiveClientRequest(DatagramPacket packetReceived) throws ServerReceiveException {
+        try {
+            socket.receive(packetReceived);
+        } catch (IOException e) {
+            throw new ServerReceiveException("Что-то пошло не так, данные не отправлены клиенту");
+        }
+        System.out.println("Данные успешно отправлены");
+    }
     /*
     Deserialize Data
      */
-    private Request deSerialize(DatagramPacket packet){
+    private Request deSerialize(DatagramPacket packet)throws DeserializationException{
         Request object = null;
             try(ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(packet.getData()))) {
                 object = (Request) ois.readObject();
                 System.out.println(object);
+            }catch (InvalidClassException e){
+                throw new DeserializationException("Ошибка десериализации, id десериализируемых объектов не соответствуют");
             } catch (ClassNotFoundException e) {
-                System.out.println("Класс не найден");
+                throw new DeserializationException("Ошибка десериализации,класс не найден");
             } catch (IOException e) {
-                System.out.println("Ошибка десериализации");
-                e.printStackTrace();
+                throw new DeserializationException("Ошибка десериализации");
             }
         return object;
     }
@@ -107,22 +122,28 @@ public class Server {
         DatagramPacket packetSend = new DatagramPacket(buffToSend,buffToSend.length,packetReceived.getAddress(),packetReceived.getPort());
         return packetSend;
     }
-    public static byte[] serialization(Object responseObject) throws IOException {
+    public static byte[] serialization(Object responseObject) throws SerializationException {
         byte[] byteArr;
         try(ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos)){
+            ObjectOutputStream oos = new ObjectOutputStream(baos)) {
             oos.flush();
             oos.writeObject(responseObject);
             byteArr = baos.toByteArray();
+        }catch (NotSerializableException e){
+            throw new SerializationException("Ошибка сериализации, один из объектов не реализует интефейс Serializable");
+        }catch (InvalidClassException e){
+            throw new SerializationException("Ошибка сериализации, id десериализируемых объектов не соответствуют");
+        } catch (IOException e) {
+            throw new SerializationException("Ошибка сериализации");
         }
         return byteArr;
     }
 
-    public static void sendServerResponse(DatagramPacket serverResponsePacket){
+    public static void sendServerResponse(DatagramPacket serverResponsePacket) throws ServerSendResponseException {
         try {
             socket.send(serverResponsePacket);
         } catch (IOException e) {
-            System.out.println("Упс, ошибочка, данные не отправлены на Клиент");
+            throw new ServerSendResponseException("Что-то пошло не так, данные не отправлены клиенту");
         }
         System.out.println("Данные успешно отправлены");
     }

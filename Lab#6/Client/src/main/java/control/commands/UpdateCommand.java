@@ -10,12 +10,14 @@ import java.util.ListIterator;
 public class UpdateCommand extends Command {
     private static final long serialVersionUID = 8L;
     private Information information;
+    private AddCommand addCommand;
     /**
      * Запуск комманды
-     * @throws Exception
      */
     @Override
-    public void execute() throws Exception {
+    public void execute(){
         information = InfDeliverer.infDeliver();
+        addCommand = new AddCommand();
+        addCommand.execute();
     }
 }

@@ -15,7 +15,7 @@ public class Application {
     private DataReader dataReader = new DataReader();
     private CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
     private Validator validator = new Validator();
-    DataWriter dataWriter = new DataWriter();
+    private DataWriter dataWriter = new DataWriter();
     private Information information;
     private InfDeliverer infDeliverer;
 
@@ -37,7 +37,7 @@ public class Application {
                 } catch (NoSuchElementException | IllegalStateException e) {
                     System.exit(0);
                 } catch (Exception e) {
-                    System.out.println("Комманда введена неверно" + "\n" + "Попробуйте ввести ещё раз" + "\n" + "Чтобы получить список доступных команд напишите help");
+                    System.out.println("Команда введена неверно" + "\n" + "Попробуйте ввести ещё раз" + "\n" + "Чтобы получить список доступных команд напишите help");
                     continue;
                 }
                 commandFactoryImpl.chooseCommand(information.getCommand()).execute();

@@ -10,10 +10,9 @@ public class MaxByTypeCommand extends Command{
     private Response response;
     /**
      * Запуск комманды
-     * @throws Exception
      */
     @Override
-    public void execute() throws Exception{
+    public void execute(){
         ListIterator<Dragon> itr = Dragon.getDragonsCollection().listIterator();
         Dragon dragon = new Dragon();
         Dragon dragon1=itr.next();

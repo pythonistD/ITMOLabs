@@ -1,5 +1,7 @@
 package control.commands;
 
+import MyExceptions.CommandException;
+import MyExceptions.IncorrectIdException;
 import control.Response;
 import model.Dragon;
 
@@ -13,17 +15,23 @@ public class AddIfMinCommand extends Command {
     private DragonComparator dragonComparator;
     /**
      * Запуск команды
-     * @throws Exception
+     * @throws CommandException
      */
     @Override
-    public void execute() throws Exception {
-        Dragon dragonMin = findDragonMin();
-        Dragon dragonNew = addCommand.createDragon();
-        if (dragonComparator.compare(dragonMin, dragonNew) > 0) {
-            dragonNew.inctCounter();
-            dragonNew.setEndDate(LocalDateTime.now());
-            Dragon.getDragonsCollection().add(dragonNew);
-            response = new Response("addIfMin","Дракон минимален, поэтому успешно добавлен");
+    public void execute() throws CommandException {
+        try {
+            Dragon dragonMin = findDragonMin();
+            Dragon dragonNew = addCommand.createDragon();
+            if (dragonComparator.compare(dragonMin, dragonNew) > 0) {
+                dragonNew.inctCounter();
+                dragonNew.setEndDate(LocalDateTime.now());
+                Dragon.getDragonsCollection().add(dragonNew);
+                response = new Response("addIfMin", "Дракон минимален, поэтому успешно добавлен");
+            }
+        }catch (IncorrectIdException e){
+            CommandException commandException = new CommandException("ошибка при выполнении команды addIfMax");
+            commandException.initCause(e);
+            throw commandException;
         }
 
     }

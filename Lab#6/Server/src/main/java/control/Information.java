@@ -11,7 +11,7 @@ public class Information implements Serializable {
     Validator validator = new Validator();
     Parser parser = new Parser();
     String modleType;
-    String command;
+    private String command;
     private boolean isSimeple=false;
     private boolean isHard=false;
     private long id;

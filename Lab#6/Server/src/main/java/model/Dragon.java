@@ -80,7 +80,7 @@ public class Dragon implements Comparable<Dragon> {
 
 
     public long getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(long id) {

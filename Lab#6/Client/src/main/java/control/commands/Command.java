@@ -1,5 +1,7 @@
 package control.commands;
 
+import MyExceptions.CommandException;
+
 import java.io.Serializable;
 
 public class Command implements Serializable {
@@ -8,7 +10,7 @@ public class Command implements Serializable {
 
 
 
-    public void execute() throws Exception {
+    public void execute() throws CommandException {
 
     }
 

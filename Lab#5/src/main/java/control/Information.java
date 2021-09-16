@@ -1,22 +1,24 @@
 package control;
 
-import java.util.ListIterator;
-
 /**
  * Забирает информацию из строки, введёной пользователем
  */
 public class Information {
     Validator validator = new Validator();
-    Parser parser = new Parser();
     String modleType;
     String command;
-    private boolean isSimeple=false;
-    private boolean isHard=false;
+    private boolean isSimeple = false;
+    private boolean isHard = false;
     private long id;
     private String secField;
 
-    public boolean takeInformation(String line) throws Exception {
-        String[] parsedLine = parser.parseInputLine(line);
+    public boolean takeInformation(String line) {
+        String[] parsedLine = null;
+        try {
+            parsedLine = Parser.parseInputLine(line);
+        }catch (NullPointerException e){
+            System.exit(0);
+        }
         command = parsedLine[0];
         isHard(command);
         isSimple(command);
@@ -30,25 +32,25 @@ public class Information {
             secField = parsedLine[1];
         }
         if (parsedLine.length == 3) {
-            modleType = parser.deleteBrackets(parsedLine[2]);
+            modleType = Parser.deleteBrackets(parsedLine[2]);
         }
         return true;
 
     }
-    public boolean isSimple(String command){
-        ListIterator<String> itr = Utility.avalibleSimpleCommands().listIterator();
-        while (itr.hasNext()){
-            if(command.equals(itr.next())){
-                isSimeple=true;
+
+    public boolean isSimple(String command) {
+        for (String s : Utility.avalibleSimpleCommands()) {
+            if (command.equals(s)) {
+                isSimeple = true;
                 break;
             }
         }
         return isSimeple;
     }
-    public boolean isHard(String command){
-        ListIterator<String> itr = Utility.avalibleHardCommands().listIterator();
-        while (itr.hasNext()){
-            if(command.equals(itr.next())){
+
+    public boolean isHard(String command) {
+        for (String s : Utility.avalibleHardCommands()) {
+            if (command.equals(s)) {
                 return isHard = true;
             }
         }
@@ -67,14 +69,11 @@ public class Information {
         return id;
     }
 
-    public String getModleType() {
-        return modleType;
-    }
-
     public String getSecField() {
         return secField;
     }
-    public boolean getIsSimple(){
+
+    public boolean getIsSimple() {
         return isSimeple;
     }
 

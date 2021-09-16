@@ -16,17 +16,12 @@ public class RemoveByIdCommand extends Command{
      * @throws Exception
      */
     public void execute(){
-        ListIterator<Dragon > dragonListIterator = Dragon.getDragonsCollection().listIterator();
-        long currentId;
-        while (dragonListIterator.hasNext()){
-            Dragon dragon = dragonListIterator.next();
-            currentId = dragon.getId();
-            if(currentId == information.getId()){
-                response = new Response("removeById",dragon.toString() + "Удаление прошло успешно");
-                Dragon.getDragonsCollection().remove(dragon);
-                break;
-            }
+        Dragon dragon = getById(information.getId());
+        response = new Response("removeById",dragon.toString() + "Удаление прошло успешно");
+        Dragon.getDragonsCollection().remove(dragon);
         }
+    public Dragon getById(long id) {
+        return Dragon.getDragonsCollection().stream().filter(dragon -> dragon.getId() == id).findFirst().orElse(null);
     }
 
     @Override

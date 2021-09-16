@@ -21,9 +21,9 @@ public class Dragon implements Comparable<Dragon> {
     private Boolean speaking; //Поле не может быть null
     private DragonType type; //Поле не может быть null
     private DragonHead dragonHead;
-    private static LinkedList<Dragon> dragons = new LinkedList<>();
+    private static final LinkedList<Dragon> dragons = new LinkedList<>();
     private static long counter;
-    private Clock clock = Clock.systemUTC();
+    private final Clock clock = Clock.systemUTC();
     private static LocalDateTime startDate;
     private static LocalDateTime endDate;
 
