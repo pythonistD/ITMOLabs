@@ -17,6 +17,14 @@ public class Utility implements Serializable {
     private static final ArrayList<String> promptstocreate = new ArrayList<>();
     private static final HashMap<String, Command> availableCommandsMap = new HashMap<>();
 
+    public static void reDefIds(LinkedList<Dragon> collection) {
+        Dragon dragon;
+        for (Dragon value : collection) {
+            dragon = value;
+            long id = collection.indexOf(dragon) + 1;
+            dragon.setId(id);
+        }
+    }
     public static ArrayList<String> promptsListtocreate() {
         promptstocreate.add("Введите имя дракона");
         promptstocreate.add("Сколько лет дракону");
@@ -55,7 +63,7 @@ public class Utility implements Serializable {
         return avalibleCommand;
     }
     public static ArrayList<String> avalibleSimpleCommands(){
-        ArrayList<String> avalibleSimpleCommands = new ArrayList<String>();
+        ArrayList<String> avalibleSimpleCommands = new ArrayList<>();
         avalibleSimpleCommands.add("help");
         avalibleSimpleCommands.add("info");
         avalibleSimpleCommands.add("clear");
@@ -68,7 +76,7 @@ public class Utility implements Serializable {
         return avalibleSimpleCommands;
     }
     public static ArrayList<String> avalibleHardCommands(){
-        ArrayList<String> avalibleHardCommands = new ArrayList<String>();
+        ArrayList<String> avalibleHardCommands = new ArrayList<>();
         avalibleHardCommands.add("add");
         avalibleHardCommands.add("remove_by_id");
         avalibleHardCommands.add("execute_script");

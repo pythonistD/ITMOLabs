@@ -14,9 +14,9 @@ public class DataReader {
 
     /**
      * Интерфейс класса
-     * @return
-     * @throws FileNotFoundException
-     * @throws UnsupportedEncodingException
+     * @return BufferedReader для построчного чтения файла
+     * @throws FileNotFoundException файл не найден
+     * @throws UnsupportedEncodingException расширение файла не CSV
      */
     public static BufferedReader getCollectionData() throws FileNotFoundException, UnsupportedEncodingException {
         //Проверка правильности пути файла
@@ -47,5 +47,9 @@ public class DataReader {
         String line;
         line = consoleInput.readLine();
         return line;
+    }
+
+    public static String getInputfileCollection() {
+        return inputfileCollection;
     }
 }
