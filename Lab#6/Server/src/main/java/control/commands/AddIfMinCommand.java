@@ -13,8 +13,10 @@ public class AddIfMinCommand extends Command {
     private Response response;
     private AddCommand addCommand;
     private DragonComparator dragonComparator;
+
     /**
      * Запуск команды
+     *
      * @throws CommandException
      */
     @Override
@@ -28,7 +30,7 @@ public class AddIfMinCommand extends Command {
                 Dragon.getDragonsCollection().add(dragonNew);
                 response = new Response("addIfMin", "Дракон минимален, поэтому успешно добавлен");
             }
-        }catch (IncorrectIdException e){
+        } catch (IncorrectIdException e) {
             CommandException commandException = new CommandException("ошибка при выполнении команды addIfMax");
             commandException.initCause(e);
             throw commandException;
@@ -38,6 +40,7 @@ public class AddIfMinCommand extends Command {
 
     /**
      * Поиск минимального Дракона
+     *
      * @return
      */
     protected Dragon findDragonMin() {

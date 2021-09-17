@@ -1,5 +1,6 @@
 package control.commands;
 
+import MyExceptions.CommandException;
 import control.InfDeliverer;
 import control.Information;
 import model.Dragon;
@@ -12,10 +13,10 @@ public class UpdateCommand extends Command {
     private Information information;
     private AddCommand addCommand;
     /**
-     * Запуск комманды
+     * Запуск команды
      */
     @Override
-    public void execute(){
+    public void execute() throws CommandException{
         information = InfDeliverer.infDeliver();
         addCommand = new AddCommand();
         addCommand.execute();

@@ -14,6 +14,7 @@ public class DataReader {
 
     /**
      * Интерфейс класса
+     *
      * @return BufferedReader для построчного чтения файла
      * @throws FileNotFoundException файл не найден
      * @throws UnsupportedEncodingException расширение файла не CSV
@@ -23,13 +24,13 @@ public class DataReader {
         Validator.checkFileExist(inputfileCollection);
         // Проверка расширения файла, выкинет ошибку, если расширение не CSV
         Validator.checkFileExtension(inputfileCollection);
-            return readFile = new BufferedReader(new InputStreamReader(new FileInputStream(inputfileCollection), StandardCharsets.UTF_8));
+        return readFile = new BufferedReader(new InputStreamReader(new FileInputStream(inputfileCollection), StandardCharsets.UTF_8));
     }
 
     public static BufferedReader getData(String file) throws Exception {
         try {
             readFile = new BufferedReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("Нет пути к файлу");
         }
         return readFile;
@@ -37,6 +38,10 @@ public class DataReader {
 
     public static BufferedReader getTreat() {
         return DataReader.consoleInput;
+    }
+
+    public static String getInputfileCollection() {
+        return inputfileCollection;
     }
 
     public static void setInputfileCollection(String inputfileCollection) {
@@ -47,9 +52,5 @@ public class DataReader {
         String line;
         line = consoleInput.readLine();
         return line;
-    }
-
-    public static String getInputfileCollection() {
-        return inputfileCollection;
     }
 }

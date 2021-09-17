@@ -10,8 +10,7 @@ public class InfoCommand extends Command{
     private static final long serialVersionUID = 13L;
     private Response response;
     /**
-     * Запуск комманды
-     * @throws Exception
+     * Запуск команды
      */
     @Override
     public void execute(){

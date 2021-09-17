@@ -19,6 +19,15 @@ public class Application {
     private Information information;
     private InfDeliverer infDeliverer;
 
+    /**
+     * Отвечает за остановку цикла(программы)
+     *
+     * @param loop
+     */
+    public static void setTreat(boolean loop) {
+        Application.loop = loop;
+    }
+
     public void consoleMod() throws Exception {
         try {
             Utility.createAvailableCommandsMap();
@@ -45,14 +54,6 @@ public class Application {
         } catch (FileNotFoundException | UnsupportedEncodingException | IncorrectIdException noFile) {
             System.out.print(noFile.getMessage());
         }
-    }
-
-    /**
-     * Отвечает за остановку цикла(программы)
-     * @param loop
-     */
-    public static void setTreat(boolean loop) {
-        Application.loop = loop;
     }
 
 

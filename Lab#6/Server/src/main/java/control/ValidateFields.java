@@ -119,12 +119,11 @@ public class ValidateFields {
         while (true) {
             try {
                 inData = in.readLine();
-                if(inData.equals("TRUE")){
+                if (inData.equals("TRUE")) {
                     t = true;
-                }
-                else if(inData.equals("FALSE")){
+                } else if (inData.equals("FALSE")) {
                     t = false;
-                }else{
+                } else {
                     throw new IllegalArgumentException();
                 }
             } catch (Exception e) {
@@ -154,6 +153,7 @@ public class ValidateFields {
         }
         return t;
     }
+
     public static Double checkX(String field) throws IllegalArgumentException {
         double x = Double.parseDouble(field);
         return x;
@@ -176,6 +176,7 @@ public class ValidateFields {
         }
         return t;
     }
+
     public static Double checkY(String field) throws IllegalArgumentException {
         double y = Double.parseDouble(field);
         if (y <= -923) {
@@ -204,6 +205,7 @@ public class ValidateFields {
         }
         return t;
     }
+
     public static Double checkTooth(String field) throws IllegalArgumentException {
         double toothcount = Double.parseDouble(field);
         return toothcount;

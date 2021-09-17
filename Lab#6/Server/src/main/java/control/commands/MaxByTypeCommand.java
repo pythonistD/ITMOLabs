@@ -9,7 +9,7 @@ public class MaxByTypeCommand extends Command{
     private static final long serialVersionUID = 20L;
     private Response response;
     /**
-     * Запуск комманды
+     * Запуск команды
      */
     @Override
     public void execute(){

@@ -19,7 +19,8 @@ import java.time.LocalDateTime;
  */
 public class Parser implements Serializable {
     private static final long serialVersionUID = 18L;
-    public static String getExtension(String fullFileName){
+
+    public static String getExtension(String fullFileName) {
         // Подключил библиотеку, чтобы автоматически искала расширение файла org.apache.commons.io.FilenameUtils;
         return FilenameUtils.getExtension(fullFileName);
     }
@@ -27,9 +28,9 @@ public class Parser implements Serializable {
     public static void csvparser(String currentline) throws IOException, IllegalArgumentException, IncorrectIdException {
         CSVParser parser = CSVParser.parse(currentline, CSVFormat.EXCEL);
         for (CSVRecord csvRecord : parser) {
-             long id = Long.parseLong(csvRecord.get(0));
-             ValidateFields.checkId(id);
-            String name =ValidateFields.checkName(csvRecord.get(1));
+            long id = Long.parseLong(csvRecord.get(0));
+            ValidateFields.checkId(id);
+            String name = ValidateFields.checkName(csvRecord.get(1));
             Long age = ValidateFields.checkAge(csvRecord.get(2));
             double wingspan = ValidateFields.checkWingSpan(csvRecord.get(3));
             boolean speaking = ValidateFields.checkSpeaking(csvRecord.get(4));
@@ -38,14 +39,14 @@ public class Parser implements Serializable {
             Coordinates coordinates = new Coordinates(x, y);
             double tooth = ValidateFields.checkTooth(csvRecord.get(7));
             DragonHead dragonHead = new DragonHead(tooth);
-            Dragon dragon = new Dragon(id,name, age, wingspan, speaking, coordinates, dragonHead, DragonType.valueOf(csvRecord.get(8)));
+            Dragon dragon = new Dragon(id, name, age, wingspan, speaking, coordinates, dragonHead, DragonType.valueOf(csvRecord.get(8)));
             dragon.setStartDate(LocalDateTime.now());
             dragon.setEndDate(LocalDateTime.now());
             Dragon.getDragonsCollection().add(dragon);
         }
     }
 
-    public static String[] parseInputLine(String command) throws NullPointerException{
+    public static String[] parseInputLine(String command) throws NullPointerException {
         String[] partsOfCommand;
         partsOfCommand = command.split(" ");
         return partsOfCommand;
@@ -55,7 +56,6 @@ public class Parser implements Serializable {
         String data = field.replaceAll("[{}]", "");
         return data;
     }
-
 
 
 }

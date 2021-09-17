@@ -27,6 +27,10 @@ public class ConsoleMod {
                     information.takeInformation(line);
                     infDeliverer = new InfDeliverer(information);
                     validator.checkLine(information);
+                    if(information.getCommand().equals("exit")){
+                        System.out.print("Работа клиента завершена");
+                        System.exit(0);
+                    }
                 }catch (CommandException e){
                     System.out.println(e.getCause());
                 } catch (IllegalArgumentException badArgument) {

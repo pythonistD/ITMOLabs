@@ -3,7 +3,6 @@ package control;
 import MyExceptions.ClientReceiveResponseException;
 import MyExceptions.ClientSendRequestException;
 import MyExceptions.CommandException;
-import com.sun.corba.se.impl.orbutil.threadpool.TimeoutException;
 import com.sun.xml.internal.ws.encoding.soap.DeserializationException;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 import control.commands.Command;
@@ -76,7 +75,8 @@ public class Client {
                 bufferedDataReceive.clear();
                 serverResponse.viewResponse();
             } catch (CommandException e) {
-                System.out.println(e.getCause());
+                System.out.println(e);
+                System.exit(0);
             } catch (SerializationException | DeserializationException serEx) {
                 System.out.println(serEx.getMessage());
             } catch (ClientSendRequestException | ClientReceiveResponseException e) {
@@ -147,8 +147,8 @@ public class Client {
         return object;
     }
 
-    private Thread isServerWorks(){
-        Runnable task = ()  -> {
+    private Thread isServerWorks() {
+        Runnable task = () -> {
             int time = 1000;
             try {
                 Thread.sleep(time);

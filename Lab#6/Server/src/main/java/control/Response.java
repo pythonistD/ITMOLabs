@@ -7,7 +7,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
 
-public class Response implements Serializable{
+public class Response implements Serializable {
     private static final long serialVersionUID = 1L;
     private String commandName;
     private String commandStringArgument;
@@ -19,23 +19,28 @@ public class Response implements Serializable{
         this.commandStringArgument = commandStringArgument;
         this.commandObjectArgument = commandObjectArgument;
     }
+
     public Response(String commandName, String commandStringArgument) {
         this.commandName = commandName;
         this.commandStringArgument = commandStringArgument;
     }
+
     public Response(String commandName) {
         this.commandName = commandName;
     }
-    public Response(){}
 
-    public void addNewResponse(Response response){
+    public Response() {
+    }
+
+    public void addNewResponse(Response response) {
         this.responseDeque.add(response);
     }
-    public void sendResponse(Response response){
+
+    public void sendResponse(Response response) {
 
     }
 
-    public void viewResponse(){
+    public void viewResponse() {
         System.out.println(commandName + "\n" + commandStringArgument);
     }
 
@@ -62,14 +67,15 @@ public class Response implements Serializable{
     public void setCommandObjectArgument(Serializable commandObjectArgument) {
         this.commandObjectArgument = commandObjectArgument;
     }
+
     public Response extractHardRequest(Request req) throws Exception {
         Response response = new Response();
         Command command;
         Iterator<Command> commandIterator = req.getCommandsDeque().iterator();
-        while (commandIterator.hasNext()){
-                command = commandIterator.next();
-                command.execute();
-                response.addNewResponse(command.getResponse());
+        while (commandIterator.hasNext()) {
+            command = commandIterator.next();
+            command.execute();
+            response.addNewResponse(command.getResponse());
         }
         return response;
     }

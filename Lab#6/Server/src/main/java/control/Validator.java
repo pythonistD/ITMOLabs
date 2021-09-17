@@ -53,6 +53,7 @@ public class Validator implements Serializable {
         }
         return false;
     }
+
     public boolean checkCommand(String command) {
         for (String s : utility.avalibleCommandList()) {
             if (s.equals(command)) {
@@ -63,16 +64,16 @@ public class Validator implements Serializable {
     }
 
     public void checkLine(Information inf) throws Exception {
-        if(!checkCommand(inf.getCommand())){
+        if (!checkCommand(inf.getCommand())) {
             throw new IncorrectInputException("wrong command");
         }
-        if(inf.getIsSimple()){
-            if(inf.getSecField() != null){
+        if (inf.getIsSimple()) {
+            if (inf.getSecField() != null) {
                 throw new IncorrectInputException("To long command");
             }
         }
-        if(inf.getIsHard()){
-            if(inf.getCommand().equals("add") | inf.getCommand().equals("add_if_max") | inf.getCommand().equals("add_if_min")){
+        if (inf.getIsHard()) {
+            if (inf.getCommand().equals("add") | inf.getCommand().equals("add_if_max") | inf.getCommand().equals("add_if_min")) {
                 checkModelType(inf.getSecField());
             }
 
@@ -80,7 +81,7 @@ public class Validator implements Serializable {
     }
 
     public void checkModelType(String modeltype) throws IncorrectInputException, NullPointerException {
-        if(!modeltype.equals("{Dragon}")){
+        if (!modeltype.equals("{Dragon}")) {
             throw new IncorrectInputException("wrong model type");
         }
 
@@ -89,7 +90,6 @@ public class Validator implements Serializable {
     public String getCommand() {
         return Command;
     }
-
 
 
 }

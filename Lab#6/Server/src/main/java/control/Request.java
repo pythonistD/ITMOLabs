@@ -12,8 +12,8 @@ public class Request implements Serializable {
     private Command commandObjectArgument;
     private Deque<Command> commandsDeque;
 
-    public boolean isHardRequest(){
-        if(commandsDeque.size() == 0){
+    public boolean isHardRequest() {
+        if (commandsDeque.size() == 0) {
             return false;
         }
         return true;

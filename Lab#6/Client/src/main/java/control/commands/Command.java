@@ -1,6 +1,7 @@
 package control.commands;
 
 import MyExceptions.CommandException;
+import model.Dragon;
 
 import java.io.Serializable;
 
@@ -13,5 +14,6 @@ public class Command implements Serializable {
     public void execute() throws CommandException {
 
     }
+
 
 }

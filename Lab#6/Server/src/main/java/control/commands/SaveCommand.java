@@ -13,21 +13,23 @@ import java.util.ListIterator;
 public class SaveCommand extends Command {
     private static final long serialVersionUID = 20L;
     private Response response;
+
     /**
      * Запуск команды
+     *
      * @throws CommandException ошибка во время исполнения команды save
      */
     @Override
-    public void execute() throws CommandException{
+    public void execute() throws CommandException {
         ListIterator<Dragon> dragonListIterator = Dragon.getDragonsCollection().listIterator();
         Writer out = openFile(DataReader.getInputfileCollection());
         Dragon dragonNext;
         while (dragonListIterator.hasNext()) {
             dragonNext = dragonListIterator.next();
             dragonNext.setEndDate(LocalDateTime.now());
-            writeDragonToTheFile(out,dragonNext.toString());
+            writeDragonToTheFile(out, dragonNext.toString());
         }
-        response = new Response("save","Изменения успешно сохранены");
+        response = new Response("save", "Изменения успешно сохранены");
         closeWritingToTheFile(out);
     }
 
@@ -36,22 +38,24 @@ public class SaveCommand extends Command {
             return new BufferedWriter(
                     new OutputStreamWriter(
                             new FileOutputStream(path), StandardCharsets.UTF_8));
-        }catch(FileNotFoundException e) {
-            throw  CommandException.createExceptionChain(e,"ошибка во время выполнения команды save, файл не найден");
+        } catch (FileNotFoundException e) {
+            throw CommandException.createExceptionChain(e, "ошибка во время выполнения команды save, файл не найден");
         }
     }
+
     private void writeDragonToTheFile(Writer out, String dragon) throws CommandException {
-        try{
+        try {
             out.write(dragon);
-        }catch (IOException e){
-            throw  CommandException.createExceptionChain(e,"ошибка во время выполнения команды save, проблемы с записью в файл");
+        } catch (IOException e) {
+            throw CommandException.createExceptionChain(e, "ошибка во время выполнения команды save, проблемы с записью в файл");
         }
     }
+
     private void closeWritingToTheFile(Writer out) throws CommandException {
-        try{
+        try {
             out.close();
-        }catch (IOException e){
-            throw  CommandException.createExceptionChain(e,"ошибка во время выполнения команды save, проблемы с закрытием потока");
+        } catch (IOException e) {
+            throw CommandException.createExceptionChain(e, "ошибка во время выполнения команды save, проблемы с закрытием потока");
         }
     }
 

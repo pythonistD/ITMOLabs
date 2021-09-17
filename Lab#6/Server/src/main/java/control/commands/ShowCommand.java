@@ -8,11 +8,12 @@ import java.util.ListIterator;
 public class ShowCommand extends Command {
     private static final long serialVersionUID = 2L;
     private Response response;
+
     /**
-     * Запуск комманды
+     * Запуск команды
      */
     @Override
-     public void execute(){
+    public void execute() {
         response = new Response("show");
         StringBuilder field = new StringBuilder();
         ListIterator<Dragon> itr = Dragon.getDragonsCollection().listIterator();
@@ -21,8 +22,9 @@ public class ShowCommand extends Command {
         }
         response.setCommandStringArgument(field.toString());
     }
+
     @Override
-    public Response getResponse(){
+    public Response getResponse() {
         return this.response;
     }
 }

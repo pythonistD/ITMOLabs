@@ -6,7 +6,7 @@ public class HelpCommand extends Command{
     private static final long serialVersionUID = 4L;
     private Response response;
     /**
-     * Запуск комманды
+     * Запуск команды
      */
     @Override
     public void execute() {
