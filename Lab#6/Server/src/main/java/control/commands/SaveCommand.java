@@ -2,7 +2,6 @@ package control.commands;
 
 import MyExceptions.CommandException;
 import control.DataReader;
-import control.Response;
 import model.Dragon;
 
 import java.io.*;
@@ -12,7 +11,6 @@ import java.util.ListIterator;
 
 public class SaveCommand extends Command {
     private static final long serialVersionUID = 20L;
-    private Response response;
 
     /**
      * Запуск команды
@@ -29,7 +27,7 @@ public class SaveCommand extends Command {
             dragonNext.setEndDate(LocalDateTime.now());
             writeDragonToTheFile(out, dragonNext.toString());
         }
-        response = new Response("save", "Изменения успешно сохранены");
+        System.out.println("Saved");
         closeWritingToTheFile(out);
     }
 
@@ -59,10 +57,5 @@ public class SaveCommand extends Command {
         }
     }
 
-
-    @Override
-    public Response getResponse() {
-        return response;
-    }
 
 }

@@ -35,7 +35,7 @@ public class ValidateFields {
         while (true) {
             try {
                 inData = in.readLine();
-                if (inData == null && inData.trim().isEmpty()) {
+                if (inData.trim().isEmpty()) {
                     throw new IllegalArgumentException("Неправильно введено Name");
                 }
             } catch (Exception e) {
