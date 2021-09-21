@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>control</OriginalElement>
+  <nodes>
+    <node x="372.00000000000006" y="1819.0">control.InfDeliverer</node>
+    <node x="1043.1666666666667" y="386.0">control.Request</node>
+    <node x="1039.6887658227852" y="1854.5">control.commands</node>
+    <node x="1249.4387658227852" y="1148.0">control.Server</node>
+    <node x="21.5" y="2493.0">control.DataWriter</node>
+    <node x="594.0" y="2107.5">control.IncorrectInputException</node>
+    <node x="549.9887658227851" y="2789.0">control.Application</node>
+    <node x="1453.7603902953574" y="3098.0">control.BootServer</node>
+    <node x="957.161972573839" y="751.0">control.Response</node>
+    <node x="313.52705696202406" y="828.5">control.Parser</node>
+    <node x="264.02705696202406" y="265.0">control.ValidateFields</node>
+    <node x="921.161972573839" y="1985.0">control.Utility</node>
+    <node x="1073.4387658227852" y="1426.0">control.interfaces</node>
+    <node x="34.32679324894639" y="2866.5">control.CollectionManager</node>
+    <node x="353.00000000000006" y="2360.0">control.Validator</node>
+    <node x="1336.161972573839" y="2084.5">control.SaveData</node>
+    <node x="358.5687236286907" y="1258.0">control.Information</node>
+    <node x="277.375" y="0.0">control.DataReader</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="control.Application" target="control.DataReader" relationship="CREATE">
+      <point x="-96.0" y="-128.5" />
+      <point x="597.9887658227851" y="2767.0" />
+      <point x="301.4887658227852" y="2767.0" />
+      <point x="301.4887658227852" y="2737.0" />
+      <point x="0.0" y="2737.0" />
+      <point x="0.0" y="234.0" />
+      <point x="313.20833333333326" y="234.0" />
+      <point x="-71.66666666666674" y="106.5" />
+    </edge>
+    <edge source="control.Application" target="control.InfDeliverer" relationship="CREATE">
+      <point x="-96.0" y="-128.5" />
+      <point x="597.9887658227851" y="2767.0" />
+      <point x="301.4887658227852" y="2767.0" />
+      <point x="301.4887658227852" y="2737.0" />
+      <point x="342.50000000000006" y="2737.0" />
+      <point x="342.50000000000006" y="1963.0" />
+      <point x="417.50000000000006" y="1963.0" />
+      <point x="-45.5" y="51.0" />
+    </edge>
+    <edge source="control.Server" target="control.Response" relationship="TO_ONE">
+      <point x="-108.33333333333331" y="-293.5" />
+      <point x="1303.605432489452" y="1106.0" />
+      <point x="978.5786392405056" y="1106.0" />
+      <point x="978.5786392405056" y="1096.0" />
+      <point x="999.9953059071722" y="1096.0" />
+      <point x="-85.66666666666667" y="161.5" />
+    </edge>
+    <edge source="control.Application" target="control.commands" relationship="TO_ONE">
+      <point x="0.0" y="-128.5" />
+      <point x="693.9887658227851" y="2727.0" />
+      <point x="1314.661972573839" y="2727.0" />
+      <point x="1314.661972573839" y="1963.0" />
+      <point x="1143.7387658227851" y="1963.0" />
+      <point x="1143.7387658227851" y="1953.0" />
+      <point x="1154.4887658227851" y="1953.0" />
+      <point x="32.799999999999955" y="15.5" />
+    </edge>
+    <edge source="control.Application" target="control.DataWriter" relationship="TO_ONE">
+      <point x="0.0" y="-128.5" />
+      <point x="693.9887658227851" y="2747.0" />
+      <point x="156.16197257383897" y="2747.0" />
+      <point x="156.16197257383897" y="2727.0" />
+      <point x="221.0" y="2727.0" />
+      <point x="66.5" y="39.5" />
+    </edge>
+    <edge source="control.BootServer" target="control.DataReader" relationship="DEPENDENCY">
+      <point x="36.75" y="-39.5" />
+      <point x="1564.0103902953574" y="3077.0" />
+      <point x="1634.1916666666666" y="3077.0" />
+      <point x="1634.1916666666666" y="244.0" />
+      <point x="384.875" y="244.0" />
+      <point x="0.0" y="106.5" />
+    </edge>
+    <edge source="control.Utility" target="control.commands" relationship="TO_MANY">
+      <point x="0.0" y="-150.5" />
+      <point x="1112.661972573839" y="1963.0" />
+      <point x="1143.7387658227851" y="1963.0" />
+      <point x="1143.7387658227851" y="1953.0" />
+      <point x="1154.4887658227851" y="1953.0" />
+      <point x="32.799999999999955" y="15.5" />
+    </edge>
+    <edge source="control.Validator" target="control.Parser" relationship="TO_ONE">
+      <point x="73.33333333333326" y="-172.5" />
+      <point x="536.3333333333333" y="2338.0" />
+      <point x="910.661972573839" y="2338.0" />
+      <point x="910.661972573839" y="2308.0" />
+      <point x="833.6700421940945" y="2308.0" />
+      <point x="833.6700421940945" y="1126.0" />
+      <point x="573.9437236286907" y="1126.0" />
+      <point x="573.9437236286907" y="1116.0" />
+      <point x="485.19372362869075" y="1116.0" />
+      <point x="68.66666666666669" y="84.0" />
+    </edge>
+    <edge source="control.Request" target="control.commands" relationship="TO_MANY">
+      <point x="-63.25" y="95.0" />
+      <point x="1106.4166666666667" y="719.0" />
+      <point x="946.661972573839" y="719.0" />
+      <point x="946.661972573839" y="1797.0" />
+      <point x="1060.1887658227852" y="1797.0" />
+      <point x="-61.5" y="-15.5" />
+    </edge>
+    <edge source="control.Application" target="control.DataWriter" relationship="CREATE">
+      <point x="-96.0" y="-128.5" />
+      <point x="597.9887658227851" y="2767.0" />
+      <point x="301.4887658227852" y="2767.0" />
+      <point x="301.4887658227852" y="2757.0" />
+      <point x="146.16197257383897" y="2757.0" />
+      <point x="146.16197257383897" y="2727.0" />
+      <point x="88.0" y="2727.0" />
+      <point x="-66.5" y="39.5" />
+    </edge>
+    <edge source="control.CollectionManager" target="control.DataWriter" relationship="TO_ONE">
+      <point x="58.0" y="-51.0" />
+      <point x="179.3267932489464" y="2767.0" />
+      <point x="156.16197257383897" y="2767.0" />
+      <point x="156.16197257383897" y="2727.0" />
+      <point x="221.0" y="2727.0" />
+      <point x="66.5" y="39.5" />
+    </edge>
+    <edge source="control.Information" target="control.Utility" relationship="DEPENDENCY">
+      <point x="0.0" y="183.5" />
+      <point x="468.0687236286907" y="1757.0" />
+      <point x="422.4887658227852" y="1757.0" />
+      <point x="422.4887658227852" y="1797.0" />
+      <point x="309.25000000000006" y="1797.0" />
+      <point x="309.25000000000006" y="1953.0" />
+      <point x="1009.0786392405055" y="1953.0" />
+      <point x="1009.0786392405055" y="1963.0" />
+      <point x="984.9953059071722" y="1963.0" />
+      <point x="-127.66666666666669" y="-150.5" />
+    </edge>
+    <edge source="control.commands" target="control.Utility" relationship="DEPENDENCY">
+      <point x="0.0" y="15.5" />
+      <point x="1121.6887658227852" y="1953.0" />
+      <point x="1009.0786392405055" y="1953.0" />
+      <point x="1009.0786392405055" y="1963.0" />
+      <point x="984.9953059071722" y="1963.0" />
+      <point x="-127.66666666666669" y="-150.5" />
+    </edge>
+    <edge source="control.DataReader" target="control.Validator" relationship="DEPENDENCY">
+      <point x="0.0" y="106.5" />
+      <point x="384.875" y="244.0" />
+      <point x="69.73876582278513" y="244.0" />
+      <point x="69.73876582278513" y="2328.0" />
+      <point x="309.00000000000006" y="2328.0" />
+      <point x="309.00000000000006" y="2338.0" />
+      <point x="389.6666666666668" y="2338.0" />
+      <point x="-73.33333333333326" y="-172.5" />
+    </edge>
+    <edge source="control.Server" target="control.Response" relationship="CREATE">
+      <point x="0.0" y="-293.5" />
+      <point x="1411.9387658227852" y="1126.0" />
+      <point x="1239.4166666666667" y="1126.0" />
+      <point x="1239.4166666666667" y="1096.0" />
+      <point x="1171.3286392405057" y="1096.0" />
+      <point x="85.66666666666669" y="161.5" />
+    </edge>
+    <edge source="control.Response" target="control.commands" relationship="DEPENDENCY">
+      <point x="0.0" y="161.5" />
+      <point x="1085.661972573839" y="1116.0" />
+      <point x="1044.1054324894517" y="1116.0" />
+      <point x="1044.1054324894517" y="1757.0" />
+      <point x="1163.6200421940944" y="1757.0" />
+      <point x="1163.6200421940944" y="1797.0" />
+      <point x="1142.1887658227852" y="1797.0" />
+      <point x="20.5" y="-15.5" />
+    </edge>
+    <edge source="control.Application" target="control.Validator" relationship="CREATE">
+      <point x="-96.0" y="-128.5" />
+      <point x="597.9887658227851" y="2767.0" />
+      <point x="301.4887658227852" y="2767.0" />
+      <point x="301.4887658227852" y="2737.0" />
+      <point x="408.00000000000006" y="2737.0" />
+      <point x="-55.0" y="172.5" />
+    </edge>
+    <edge source="control.Application" target="control.DataReader" relationship="TO_ONE">
+      <point x="0.0" y="-128.5" />
+      <point x="693.9887658227851" y="2727.0" />
+      <point x="1645.1916666666666" y="2727.0" />
+      <point x="1645.1916666666666" y="234.0" />
+      <point x="456.54166666666674" y="234.0" />
+      <point x="71.66666666666674" y="106.5" />
+    </edge>
+    <edge source="control.Parser" target="control.ValidateFields" relationship="DEPENDENCY">
+      <point x="0.0" y="-84.0" />
+      <point x="0.0" y="216.0" />
+    </edge>
+    <edge source="control.Validator" target="control.Utility" relationship="CREATE">
+      <point x="0.0" y="-172.5" />
+      <point x="463.00000000000006" y="2318.0" />
+      <point x="984.9953059071722" y="2318.0" />
+      <point x="-127.66666666666669" y="150.5" />
+    </edge>
+    <edge source="control.Information" target="control.Validator" relationship="TO_ONE">
+      <point x="73.0" y="183.5" />
+      <point x="541.0687236286907" y="1757.0" />
+      <point x="731.3267932489464" y="1757.0" />
+      <point x="731.3267932489464" y="1797.0" />
+      <point x="824.75" y="1797.0" />
+      <point x="824.75" y="2308.0" />
+      <point x="910.661972573839" y="2308.0" />
+      <point x="910.661972573839" y="2338.0" />
+      <point x="536.3333333333333" y="2338.0" />
+      <point x="73.33333333333326" y="-172.5" />
+    </edge>
+    <edge source="control.BootServer" target="control.CollectionManager" relationship="CREATE">
+      <point x="-36.75" y="-39.5" />
+      <point x="1490.5103902953574" y="3077.0" />
+      <point x="1345.7387658227851" y="3077.0" />
+      <point x="1345.7387658227851" y="3067.0" />
+      <point x="121.32679324894639" y="3067.0" />
+      <point x="0.0" y="51.0" />
+    </edge>
+    <edge source="control.SaveData" target="control.commands" relationship="CREATE">
+      <point x="0.0" y="-51.0" />
+      <point x="1415.661972573839" y="1953.0" />
+      <point x="1325.411972573839" y="1953.0" />
+      <point x="1325.411972573839" y="1943.0" />
+      <point x="1187.288765822785" y="1943.0" />
+      <point x="65.60000000000002" y="15.5" />
+    </edge>
+    <edge source="control.Request" target="control.commands" relationship="DEPENDENCY">
+      <point x="63.25" y="95.0" />
+      <point x="1232.9166666666667" y="719.0" />
+      <point x="1424.1666666666667" y="719.0" />
+      <point x="1424.1666666666667" y="729.0" />
+      <point x="1584.9387658227852" y="729.0" />
+      <point x="1584.9387658227852" y="1757.0" />
+      <point x="1163.6200421940944" y="1757.0" />
+      <point x="1163.6200421940944" y="1797.0" />
+      <point x="1142.1887658227852" y="1797.0" />
+      <point x="20.5" y="-15.5" />
+    </edge>
+    <edge source="control.commands" target="control.Request" relationship="DEPENDENCY">
+      <point x="20.5" y="-15.5" />
+      <point x="1142.1887658227852" y="1797.0" />
+      <point x="1163.6200421940944" y="1797.0" />
+      <point x="1163.6200421940944" y="1757.0" />
+      <point x="1584.9387658227852" y="1757.0" />
+      <point x="1584.9387658227852" y="729.0" />
+      <point x="1424.1666666666667" y="729.0" />
+      <point x="1424.1666666666667" y="719.0" />
+      <point x="1232.9166666666667" y="719.0" />
+      <point x="63.25" y="95.0" />
+    </edge>
+    <edge source="control.Validator" target="control.Parser" relationship="CREATE">
+      <point x="0.0" y="-172.5" />
+      <point x="463.00000000000006" y="2318.0" />
+      <point x="227.91197257383897" y="2318.0" />
+      <point x="227.91197257383897" y="1126.0" />
+      <point x="387.6937236286907" y="1126.0" />
+      <point x="387.6937236286907" y="1116.0" />
+      <point x="416.52705696202406" y="1116.0" />
+      <point x="0.0" y="84.0" />
+    </edge>
+    <edge source="control.Information" target="control.Parser" relationship="TO_ONE">
+      <point x="54.75" y="-183.5" />
+      <point x="522.8187236286907" y="1126.0" />
+      <point x="573.9437236286907" y="1126.0" />
+      <point x="573.9437236286907" y="1116.0" />
+      <point x="485.19372362869075" y="1116.0" />
+      <point x="68.66666666666669" y="84.0" />
+    </edge>
+    <edge source="control.commands" target="control.Information" relationship="TO_ONE">
+      <point x="-61.5" y="-15.5" />
+      <point x="1060.1887658227852" y="1797.0" />
+      <point x="946.661972573839" y="1797.0" />
+      <point x="946.661972573839" y="1777.0" />
+      <point x="731.3267932489464" y="1777.0" />
+      <point x="731.3267932489464" y="1757.0" />
+      <point x="541.0687236286907" y="1757.0" />
+      <point x="73.0" y="183.5" />
+    </edge>
+    <edge source="control.Validator" target="control.IncorrectInputException" relationship="CREATE">
+      <point x="0.0" y="-172.5" />
+      <point x="463.00000000000006" y="2318.0" />
+      <point x="701.5" y="2318.0" />
+      <point x="0.0" y="28.0" />
+    </edge>
+    <edge source="control.Utility" target="control.commands" relationship="CREATE">
+      <point x="127.66666666666663" y="-150.5" />
+      <point x="1240.3286392405055" y="1953.0" />
+      <point x="1325.411972573839" y="1953.0" />
+      <point x="1325.411972573839" y="1943.0" />
+      <point x="1187.288765822785" y="1943.0" />
+      <point x="65.60000000000002" y="15.5" />
+    </edge>
+    <edge source="control.Information" target="control.Parser" relationship="CREATE">
+      <point x="-54.75" y="-183.5" />
+      <point x="413.3187236286907" y="1126.0" />
+      <point x="387.6937236286907" y="1126.0" />
+      <point x="387.6937236286907" y="1116.0" />
+      <point x="416.52705696202406" y="1116.0" />
+      <point x="0.0" y="84.0" />
+    </edge>
+    <edge source="control.Application" target="control.commands" relationship="CREATE">
+      <point x="-96.0" y="-128.5" />
+      <point x="597.9887658227851" y="2767.0" />
+      <point x="301.4887658227852" y="2767.0" />
+      <point x="301.4887658227852" y="2737.0" />
+      <point x="1325.661972573839" y="2737.0" />
+      <point x="1325.411972573839" y="1943.0" />
+      <point x="1187.288765822785" y="1943.0" />
+      <point x="65.60000000000002" y="15.5" />
+    </edge>
+    <edge source="control.CollectionManager" target="control.DataWriter" relationship="CREATE">
+      <point x="0.0" y="-51.0" />
+      <point x="121.32679324894639" y="2767.0" />
+      <point x="146.16197257383897" y="2767.0" />
+      <point x="146.16197257383897" y="2727.0" />
+      <point x="88.0" y="2727.0" />
+      <point x="-66.5" y="39.5" />
+    </edge>
+    <edge source="control.commands" target="control.Server" relationship="DEPENDENCY">
+      <point x="20.5" y="-15.5" />
+      <point x="1142.1887658227852" y="1797.0" />
+      <point x="1163.6200421940944" y="1797.0" />
+      <point x="1163.6200421940944" y="1757.0" />
+      <point x="1330.6887658227852" y="1757.0" />
+      <point x="-81.25" y="293.5" />
+    </edge>
+    <edge source="control.Server" target="control.commands" relationship="DEPENDENCY">
+      <point x="-81.25" y="293.5" />
+      <point x="1330.6887658227852" y="1757.0" />
+      <point x="1163.6200421940944" y="1757.0" />
+      <point x="1163.6200421940944" y="1797.0" />
+      <point x="1142.1887658227852" y="1797.0" />
+      <point x="20.5" y="-15.5" />
+    </edge>
+    <edge source="control.BootServer" target="control.SaveData" relationship="CREATE">
+      <point x="-36.75" y="-39.5" />
+      <point x="1490.5103902953574" y="3077.0" />
+      <point x="1345.7387658227851" y="3077.0" />
+      <point x="1345.7387658227851" y="3067.0" />
+      <point x="1415.661972573839" y="3067.0" />
+      <point x="0.0" y="51.0" />
+    </edge>
+    <edge source="control.Validator" target="control.Utility" relationship="TO_ONE">
+      <point x="73.33333333333326" y="-172.5" />
+      <point x="536.3333333333333" y="2338.0" />
+      <point x="910.661972573839" y="2338.0" />
+      <point x="910.661972573839" y="2308.0" />
+      <point x="1112.661972573839" y="2308.0" />
+      <point x="0.0" y="150.5" />
+    </edge>
+    <edge source="control.ValidateFields" target="control.DataReader" relationship="DEPENDENCY">
+      <point x="0.0" y="-216.0" />
+      <point x="416.52705696202406" y="244.0" />
+      <point x="384.875" y="244.0" />
+      <point x="0.0" y="106.5" />
+    </edge>
+    <edge source="control.commands" target="control.Response" relationship="TO_ONE">
+      <point x="-61.5" y="-15.5" />
+      <point x="1060.1887658227852" y="1797.0" />
+      <point x="946.661972573839" y="1797.0" />
+      <point x="946.661972573839" y="1787.0" />
+      <point x="978.5786392405056" y="1787.0" />
+      <point x="978.5786392405056" y="1096.0" />
+      <point x="999.9953059071722" y="1096.0" />
+      <point x="-85.66666666666667" y="161.5" />
+    </edge>
+    <edge source="control.commands" target="control.commands" relationship="CREATE">
+      <point x="-65.6" y="15.5" />
+      <point x="1056.088765822785" y="1905.5" />
+      <point x="1019.6887658227852" y="1905.5" />
+      <point x="1019.6887658227852" y="1877.75" />
+      <point x="-82.0" y="7.75" />
+    </edge>
+    <edge source="control.Application" target="control.Utility" relationship="DEPENDENCY">
+      <point x="96.0" y="-128.5" />
+      <point x="789.9887658227851" y="2767.0" />
+      <point x="1104.5033755274278" y="2767.0" />
+      <point x="1104.5033755274278" y="2338.0" />
+      <point x="1240.3286392405057" y="2338.0" />
+      <point x="127.66666666666674" y="150.5" />
+    </edge>
+    <edge source="control.Application" target="control.Validator" relationship="TO_ONE">
+      <point x="0.0" y="-128.5" />
+      <point x="693.9887658227851" y="2727.0" />
+      <point x="518.0" y="2727.0" />
+      <point x="55.0" y="172.5" />
+    </edge>
+    <edge source="control.Request" target="control.commands" relationship="TO_ONE">
+      <point x="-63.25" y="95.0" />
+      <point x="1106.4166666666667" y="719.0" />
+      <point x="946.661972573839" y="719.0" />
+      <point x="946.661972573839" y="1797.0" />
+      <point x="1060.1887658227852" y="1797.0" />
+      <point x="-61.5" y="-15.5" />
+    </edge>
+    <edge source="control.commands" target="control.Request" relationship="TO_ONE">
+      <point x="-61.5" y="-15.5" />
+      <point x="1060.1887658227852" y="1797.0" />
+      <point x="946.661972573839" y="1797.0" />
+      <point x="946.661972573839" y="719.0" />
+      <point x="1106.4166666666667" y="719.0" />
+      <point x="-63.25" y="95.0" />
+    </edge>
+    <edge source="control.Information" target="control.Validator" relationship="CREATE">
+      <point x="-73.0" y="183.5" />
+      <point x="395.0687236286907" y="1787.0" />
+      <point x="298.00000000000006" y="1787.0" />
+      <point x="298.00000000000006" y="2318.0" />
+      <point x="463.00000000000006" y="2318.0" />
+      <point x="0.0" y="-172.5" />
+    </edge>
+    <edge source="control.Validator" target="control.Information" relationship="DEPENDENCY">
+      <point x="-73.33333333333326" y="-172.5" />
+      <point x="389.6666666666668" y="2338.0" />
+      <point x="309.00000000000006" y="2338.0" />
+      <point x="309.00000000000006" y="1797.0" />
+      <point x="422.4887658227852" y="1797.0" />
+      <point x="422.4887658227852" y="1757.0" />
+      <point x="468.0687236286907" y="1757.0" />
+      <point x="0.0" y="183.5" />
+    </edge>
+    <edge source="control.InfDeliverer" target="control.Information" relationship="TO_ONE">
+      <point x="45.5" y="-51.0" />
+      <point x="508.50000000000006" y="1797.0" />
+      <point x="731.3267932489464" y="1797.0" />
+      <point x="731.3267932489464" y="1757.0" />
+      <point x="541.0687236286907" y="1757.0" />
+      <point x="73.0" y="183.5" />
+    </edge>
+    <edge source="control.DataWriter" target="control.Parser" relationship="DEPENDENCY">
+      <point x="0.0" y="-39.5" />
+      <point x="154.5" y="1116.0" />
+      <point x="347.8603902953574" y="1116.0" />
+      <point x="-68.66666666666669" y="84.0" />
+    </edge>
+    <edge source="control.Application" target="control.Information" relationship="TO_ONE">
+      <point x="0.0" y="-128.5" />
+      <point x="693.9887658227851" y="2727.0" />
+      <point x="819.5" y="2727.0" />
+      <point x="819.5" y="1797.0" />
+      <point x="731.3267932489464" y="1797.0" />
+      <point x="731.3267932489464" y="1757.0" />
+      <point x="541.0687236286907" y="1757.0" />
+      <point x="73.0" y="183.5" />
+    </edge>
+    <edge source="control.Server" target="control.Request" relationship="DEPENDENCY">
+      <point x="108.33333333333331" y="-293.5" />
+      <point x="1520.2720991561184" y="1126.0" />
+      <point x="1426.161972573839" y="1126.0" />
+      <point x="1426.161972573839" y="729.0" />
+      <point x="1424.1666666666667" y="729.0" />
+      <point x="1424.1666666666667" y="719.0" />
+      <point x="1232.9166666666667" y="719.0" />
+      <point x="63.25" y="95.0" />
+    </edge>
+    <edge source="control.Application" target="control.InfDeliverer" relationship="TO_ONE">
+      <point x="0.0" y="-128.5" />
+      <point x="693.9887658227851" y="2727.0" />
+      <point x="583.5" y="2727.0" />
+      <point x="583.5" y="1963.0" />
+      <point x="508.50000000000006" y="1963.0" />
+      <point x="45.5" y="51.0" />
+    </edge>
+    <edge source="control.BootServer" target="control.Server" relationship="CREATE">
+      <point x="-36.75" y="-39.5" />
+      <point x="1490.5103902953574" y="3077.0" />
+      <point x="1345.7387658227851" y="3077.0" />
+      <point x="1345.7387658227851" y="3067.0" />
+      <point x="1524.5637658227852" y="3067.0" />
+      <point x="1524.5637658227852" y="1797.0" />
+      <point x="1493.1887658227852" y="1797.0" />
+      <point x="81.25" y="293.5" />
+    </edge>
+    <edge source="control.InfDeliverer" target="control.Information" relationship="DEPENDENCY">
+      <point x="-45.5" y="-51.0" />
+      <point x="417.50000000000006" y="1797.0" />
+      <point x="422.4887658227852" y="1797.0" />
+      <point x="422.4887658227852" y="1757.0" />
+      <point x="468.0687236286907" y="1757.0" />
+      <point x="0.0" y="183.5" />
+    </edge>
+    <edge source="control.commands" target="control.commands" relationship="TO_ONE">
+      <point x="-32.80000000000001" y="15.5" />
+      <point x="1088.888765822785" y="1915.5" />
+      <point x="1009.6887658227852" y="1915.5" />
+      <point x="1009.6887658227852" y="1862.25" />
+      <point x="-82.0" y="-7.75" />
+    </edge>
+    <edge source="control.CollectionManager" target="control.DataReader" relationship="DEPENDENCY">
+      <point x="-58.0" y="-51.0" />
+      <point x="63.32679324894639" y="2767.0" />
+      <point x="11.0" y="2767.0" />
+      <point x="11.0" y="244.0" />
+      <point x="384.875" y="244.0" />
+      <point x="0.0" y="106.5" />
+    </edge>
+    <edge source="control.commands" target="control.Response" relationship="CREATE">
+      <point x="-20.5" y="-15.5" />
+      <point x="1101.1887658227852" y="1787.0" />
+      <point x="1062.9387658227852" y="1787.0" />
+      <point x="1062.9387658227852" y="1126.0" />
+      <point x="1239.4166666666667" y="1126.0" />
+      <point x="1239.4166666666667" y="1096.0" />
+      <point x="1171.3286392405057" y="1096.0" />
+      <point x="85.66666666666669" y="161.5" />
+    </edge>
+    <edge source="control.Response" target="control.Request" relationship="DEPENDENCY">
+      <point x="0.0" y="-161.5" />
+      <point x="1085.661972573839" y="729.0" />
+      <point x="1424.1666666666667" y="729.0" />
+      <point x="1424.1666666666667" y="719.0" />
+      <point x="1232.9166666666667" y="719.0" />
+      <point x="63.25" y="95.0" />
+    </edge>
+    <edge source="control.Application" target="control.Information" relationship="CREATE">
+      <point x="-96.0" y="-128.5" />
+      <point x="597.9887658227851" y="2767.0" />
+      <point x="301.4887658227852" y="2767.0" />
+      <point x="301.4887658227852" y="2737.0" />
+      <point x="298.00000000000006" y="2737.0" />
+      <point x="298.00000000000006" y="1787.0" />
+      <point x="395.0687236286907" y="1787.0" />
+      <point x="-73.0" y="183.5" />
+    </edge>
+    <edge source="control.commands" target="control.DataReader" relationship="DEPENDENCY">
+      <point x="20.5" y="-15.5" />
+      <point x="1142.1887658227852" y="1797.0" />
+      <point x="1163.6200421940944" y="1797.0" />
+      <point x="1163.6200421940944" y="1757.0" />
+      <point x="1589.161972573839" y="1757.0" />
+      <point x="1589.161972573839" y="244.0" />
+      <point x="384.875" y="244.0" />
+      <point x="0.0" y="106.5" />
+    </edge>
+    <edge source="control.interfaces" target="control.commands" relationship="DEPENDENCY">
+      <point x="-39.0" y="15.5" />
+      <point x="1112.4387658227852" y="1757.0" />
+      <point x="1163.6200421940944" y="1757.0" />
+      <point x="1163.6200421940944" y="1797.0" />
+      <point x="1142.1887658227852" y="1797.0" />
+      <point x="20.5" y="-15.5" />
+    </edge>
+    <edge source="control.commands" target="control.interfaces" relationship="REALIZATION">
+      <point x="61.5" y="-15.5" />
+      <point x="1183.1887658227852" y="1797.0" />
+      <point x="1190.4387658227852" y="1797.0" />
+      <point x="39.0" y="15.5" />
+    </edge>
+    <edge source="control.commands" target="control.Information" relationship="DEPENDENCY">
+      <point x="20.5" y="-15.5" />
+      <point x="1142.1887658227852" y="1797.0" />
+      <point x="1163.6200421940944" y="1797.0" />
+      <point x="1163.6200421940944" y="1767.0" />
+      <point x="422.4887658227852" y="1767.0" />
+      <point x="422.4887658227852" y="1757.0" />
+      <point x="468.0687236286907" y="1757.0" />
+      <point x="0.0" y="183.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.16452924616828277" showDependencies="true" x="823.0" y="1588.5" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
