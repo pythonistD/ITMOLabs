@@ -21,30 +21,13 @@ public class UpdateCommand extends Command {
      */
     @Override
     public void execute() throws CommandException {
-//        ListIterator<Dragon> dragonListIterator = Dragon.getDragonsCollection().listIterator();
-//        Dragon dragon = new Dragon();
-//        boolean flag = false;
-//        while (dragonListIterator.hasNext()) {
-//            dragon = dragonListIterator.next();
-//            if (dragon.getId() == information.getId()) {
-//                flag = true;
-//                break;
-//            }
-//        }
         Dragon dragon;
         dragon = getById(information.getId());
         if(dragon == null){
             throw CommandException.createExceptionChain(new NullPointerException("Нет такого id"),"ошибка во время исполнения команды update");
         }
-        response = new Response("update", dragon.toString() + "\n" + "Дракон успешно изменён");
+        response = new Response("update",   "Дракон успешно изменён");
         changeDragon(dragon, information.getId());
-//        if (flag) {
-//            response = new Response("update", dragon.toString() + "\n" + "Дракон успешно изменён");
-//            changeDragon(dragon, information.getId());
-//        } else {
-//            System.out.println("Нет такого Id");
-//        }
-
     }
 
     private void changeDragon(Dragon dragon, long id) throws CommandException {

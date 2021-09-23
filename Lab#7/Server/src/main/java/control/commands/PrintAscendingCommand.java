@@ -5,6 +5,8 @@ import control.Response;
 import control.Utility;
 import model.Dragon;
 
+import java.util.Collections;
+
 public class PrintAscendingCommand extends Command {
     private static final long serialVersionUID = 24L;
     private Response response;
@@ -16,9 +18,8 @@ public class PrintAscendingCommand extends Command {
      */
     @Override
     public void execute() throws CommandException {
-        DragonComparator dragonComparator = new DragonComparator();
         ShowCommand show = new ShowCommand();
-        Dragon.getDragonsCollection().sort(dragonComparator);
+        Collections.sort(Dragon.getDragonsCollection(),(d1, d2) -> (int) (d1.getAge() - d2.getAge()));
         Utility.reDefIds(Dragon.getDragonsCollection());
         response = new Response("printAscending", "Список успешно отсортирован");
         show.execute();

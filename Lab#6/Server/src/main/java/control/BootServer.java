@@ -15,7 +15,7 @@ public class BootServer {
             }
         });
         threadToCatchSaveCommandFromTerminal.start();
-        Server server = new Server(8888, 10000000);
+        Server server = new Server(8080, 10000000);
         try {
             server.run();
         } catch (Exception e) {

@@ -34,7 +34,7 @@ public class Validator implements Serializable {
     }
 
     public static void checkFileExist(String filePath) throws FileNotFoundException {
-        if (filePath.equals(null)) {
+        if (filePath == null) {
             throw new FileNotFoundException("Не правильно указан путь до CSV файла или не ввели его в аргументе коммандной строки");
         }
     }

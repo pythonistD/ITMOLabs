@@ -17,8 +17,6 @@ public class Client {
     private static boolean processingStatus;
     private final String hostName;
     private final int port;
-    private final int reconnectionTime;
-    private final int counfOfReconnAttempts;
     private final ByteBuffer bufferedDataReceive = ByteBuffer.allocate(100000);
     private final ConsoleMod consoleMod = new ConsoleMod();
     private Thread waitingThread;
@@ -27,11 +25,9 @@ public class Client {
     private ByteBuffer bufferedDataSend;
     private Response serverResponse;
 
-    public Client(String hostName, int port, int reconnectionTime, int counfOfReconnAttempts) {
+    public Client(String hostName, int port) {
         this.hostName = hostName;
         this.port = port;
-        this.reconnectionTime = reconnectionTime;
-        this.counfOfReconnAttempts = counfOfReconnAttempts;
     }
 
     public static boolean isProcessingStatus() {
