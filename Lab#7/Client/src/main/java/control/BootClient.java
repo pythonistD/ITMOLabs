@@ -1,7 +1,5 @@
 package control;
 
-import control.Client;
-
 public class BootClient {
     public static void main(String[] args) {
         Client client = new Client("localhost", 8080);
