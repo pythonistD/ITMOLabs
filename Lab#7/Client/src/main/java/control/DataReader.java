@@ -18,6 +18,7 @@ public class DataReader {
      * @throws FileNotFoundException
      * @throws UnsupportedEncodingException
      */
+
     public static BufferedReader getCollectionData() throws FileNotFoundException, UnsupportedEncodingException {
         //Проверка правильности пути файла
         Validator.checkFileExist(inputfileCollection);
@@ -38,7 +39,7 @@ public class DataReader {
         DataReader.inputfileCollection = inputfileCollection;
     }
 
-    public String getConsoleData() throws Exception {
+    public static String getConsoleData() throws IOException {
         String line;
         line = consoleInput.readLine();
         return line;

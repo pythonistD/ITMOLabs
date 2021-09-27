@@ -15,14 +15,13 @@ import java.nio.channels.DatagramChannel;
 
 public class Client {
     private static boolean processingStatus;
+    private static SocketAddress serverAddress;
+    private static DatagramChannel channel;
     private final String hostName;
     private final int port;
     private final ByteBuffer bufferedDataReceive = ByteBuffer.allocate(100000);
-    private final ConsoleMod consoleMod = new ConsoleMod();
+    private final Console console = new Console();
     private Thread waitingThread;
-    private SocketAddress serverAddress;
-    private DatagramChannel channel;
-    private ByteBuffer bufferedDataSend;
     private Response serverResponse;
 
     public Client(String hostName, int port) {
@@ -42,61 +41,9 @@ public class Client {
     }
 
     /*
-    Start control.Client
-     */
-    public void run() {
-        Command command;
-        Request request;
-        processingStatus = true;
-        serverAddress = new InetSocketAddress(hostName, port);
-        connectToServer();
-        while (processingStatus) {
-            try {
-                Thread waitingThread;
-                command = consoleMod.getDataFromKeyboard();
-                command.execute();
-                request = new Request(command);
-                bufferedDataSend = serialize(request);
-                sendClientRequest(bufferedDataSend, serverAddress);
-                waitingThread = isServerWorks();
-                bufferedDataSend.clear();
-                receiveServerResponse(bufferedDataReceive);
-                waitingThread.interrupt();
-                serverResponse = deSerialize(bufferedDataReceive.array());
-                if (serverResponse.isHardResponse()) {
-                    serverResponse.extractResponses();
-                    bufferedDataReceive.clear();
-                    continue;
-                }
-                bufferedDataReceive.clear();
-                serverResponse.viewResponse();
-            } catch (CommandException e) {
-                System.out.println(e);
-                System.exit(0);
-            } catch (SerializationException | DeserializationException serEx) {
-                System.out.println(serEx.getMessage());
-            } catch (ClientSendRequestException | ClientReceiveResponseException e) {
-                System.out.println(e.getMessage());
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void connectToServer() {
-        try {
-            channel = DatagramChannel.open();
-            channel.socket().bind(null);
-        } catch (IOException e) {
-            System.out.println("Нет соединения с сервером");
-        }
-        System.out.println("Client запущен, ожидание команд");
-    }
-
-    /*
     Send data
      */
-    private ByteBuffer serialize(Serializable o) throws SerializationException {
+    public static ByteBuffer serialize(Serializable o) throws SerializationException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
             oos.flush();
@@ -113,7 +60,7 @@ public class Client {
         return ByteBuffer.wrap(buff);
     }
 
-    private void sendClientRequest(ByteBuffer bufferedDataSend, SocketAddress serverAddress) throws ClientSendRequestException {
+    public static void sendClientRequest(ByteBuffer bufferedDataSend, SocketAddress serverAddress) throws ClientSendRequestException {
         try {
             channel.send(bufferedDataSend, serverAddress);
         } catch (IOException e) {
@@ -121,7 +68,7 @@ public class Client {
         }
     }
 
-    private void receiveServerResponse(ByteBuffer bufferedDataReceive) throws ClientReceiveResponseException {
+    public static void receiveServerResponse(ByteBuffer bufferedDataReceive) throws ClientReceiveResponseException {
         try {
             serverAddress = channel.receive(bufferedDataReceive);
         } catch (IOException e) {
@@ -129,7 +76,7 @@ public class Client {
         }
     }
 
-    private Response deSerialize(byte[] buffer) throws DeserializationException {
+    public static Response deSerialize(byte[] buffer) throws DeserializationException {
         Response object;
         try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(buffer))) {
             object = (Response) ois.readObject();
@@ -143,7 +90,7 @@ public class Client {
         return object;
     }
 
-    private Thread isServerWorks() {
+    public static Thread serverTimeOut() {
         Runnable task = () -> {
             int time = 1000;
             try {
@@ -156,5 +103,59 @@ public class Client {
         Thread thread = new Thread(task);
         thread.start();
         return thread;
+    }
+
+    public static SocketAddress getServerAddress() {
+        return serverAddress;
+    }
+
+    /*
+    Start control.Client
+     */
+    public void run() {
+        Command command;
+        Request request;
+        Thread waitingThread;
+        processingStatus = true;
+        serverAddress = new InetSocketAddress(hostName, port);
+        connectToServer();
+        try {
+            UserAuth.userAuth();
+            while (processingStatus) {
+                command = console.getDataFromKeyboard();
+                request = new Request(command);
+                ByteBuffer bufferedDataSend = serialize(request);
+                sendClientRequest(bufferedDataSend, serverAddress);
+                waitingThread = serverTimeOut();
+                bufferedDataSend.clear();
+                receiveServerResponse(bufferedDataReceive);
+                waitingThread.interrupt();
+                serverResponse = deSerialize(bufferedDataReceive.array());
+                if (serverResponse.isHardResponse()) {
+                    serverResponse.extractResponses();
+                    bufferedDataReceive.clear();
+                    continue;
+                }
+                bufferedDataReceive.clear();
+                serverResponse.viewResponse();
+            }
+        } catch (CommandException e) {
+            System.out.println(e);
+            System.exit(0);
+        } catch (SerializationException | DeserializationException | ClientSendRequestException | ClientReceiveResponseException serEx) {
+            System.out.println(serEx.getMessage());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void connectToServer() {
+        try {
+            channel = DatagramChannel.open();
+            channel.socket().bind(null);
+        } catch (IOException e) {
+            System.out.println("Нет соединения с сервером");
+        }
+        System.out.println("Client запущен, ожидание команд");
     }
 }

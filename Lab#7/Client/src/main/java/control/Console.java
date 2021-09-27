@@ -3,27 +3,36 @@ package control;
 import MyExceptions.CommandException;
 import control.commands.Command;
 import control.commands.CommandFactoryImpl;
+
+import java.io.IOException;
 import java.util.NoSuchElementException;
 
 /**
  * Главный класс, который отвечает за консольный интерактивный режим
  */
-public class ConsoleMod {
+public class Console {
     private static boolean loop = true;
-    private final DataReader dataReader = new DataReader();
     private final CommandFactoryImpl commandFactoryImpl = new CommandFactoryImpl();
     private final Validator validator = new Validator();
     private Information information;
     private InfDeliverer infDeliverer;
 
-    public Command getDataFromKeyboard() {
+
+    public void consoleMod() throws IOException {
+        String inData;
+        while (true){
+            inData = DataReader.getConsoleData();
+        }
+    }
+
+    public Command getDataFromKeyboard() throws CommandException {
             Utility.createAvailableCommandsMap();
             String line;
             Command command = new Command();
             while (loop) {
                 information = new Information();
                 try {
-                    line = dataReader.getConsoleData();
+                    line = DataReader.getConsoleData();
                     information.takeInformation(line);
                     infDeliverer = new InfDeliverer(information);
                     validator.checkLine(information);
@@ -31,8 +40,6 @@ public class ConsoleMod {
                         System.out.print("Работа клиента завершена");
                         System.exit(0);
                     }
-                }catch (CommandException e){
-                    System.out.println(e.getCause());
                 } catch (IllegalArgumentException badArgument) {
                     System.out.print(badArgument.getMessage());
                 } catch (NoSuchElementException | IllegalStateException e) {
@@ -42,6 +49,7 @@ public class ConsoleMod {
                     continue;
                 }
                 command = commandFactoryImpl.chooseCommand(information.getCommand());
+                command.execute();
                 break;
             }
             return command;
@@ -52,7 +60,7 @@ public class ConsoleMod {
      * @param loop
      */
     public static void setTreat(boolean loop) {
-        ConsoleMod.loop = loop;
+        Console.loop = loop;
     }
 
 

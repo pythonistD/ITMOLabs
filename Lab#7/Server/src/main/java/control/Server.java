@@ -6,6 +6,7 @@ import MyExceptions.ServerSendResponseException;
 import com.sun.xml.internal.ws.encoding.soap.DeserializationException;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 import control.commands.Command;
+import database.User;
 
 import java.io.*;
 import java.net.*;
@@ -13,17 +14,14 @@ import java.net.*;
 public class Server {
     private static DatagramSocket socket;
     private static boolean processingStatus;
-    private static byte[] buffReceived = new byte[100000];
-    private static DatagramPacket packetReceived = new DatagramPacket(buffReceived, buffReceived.length);
-    private int port;
-    private int timeout;
-    private SocketAddress socketAddress;
+    private static final byte[] buffReceived = new byte[100000];
+    private static final DatagramPacket packetReceived = new DatagramPacket(buffReceived, buffReceived.length);
+    private final int port;
+    private final int timeout;
     private Response response;
-    private int clientCounter = 0;
     private InetAddress clientIp;
     private int clientPort;
     private byte buffSend[] = new byte[10000];
-    private DatagramPacket packetSend;
 
     public Server(int port, int timeout) {
         this.port = port;
@@ -40,8 +38,7 @@ public class Server {
     }
 
     public static DatagramPacket createServerResponsePacket(byte[] buffToSend) {
-        DatagramPacket packetSend = new DatagramPacket(buffToSend, buffToSend.length, packetReceived.getAddress(), packetReceived.getPort());
-        return packetSend;
+        return new DatagramPacket(buffToSend, buffToSend.length, packetReceived.getAddress(), packetReceived.getPort());
     }
 
     public static byte[] serialization(Object responseObject) throws SerializationException {
@@ -82,7 +79,7 @@ public class Server {
      *control.Server operations
      */
     public void run() {
-        socketAddress = new InetSocketAddress(port);
+        DatagramPacket packetSend;
         Request clientRequest;
         Command command;
         openSocket();
@@ -92,7 +89,17 @@ public class Server {
                 receiveClientRequest(packetReceived);
                 getClientAddress(packetReceived);
                 clientRequest = deSerialize(packetReceived);
-                command = clientRequest.getCommandObjectArgument();
+                if(clientRequest.getMessage().equals("auth")){
+                    User user = (User) clientRequest.getObjectArgument();
+                    if(user.getTarget().equals("login")){
+
+                    }
+                    if(user.getTarget().equals("sing up")){
+
+                    }
+
+                }
+                command = (Command) clientRequest.getObjectArgument();
                 try {
                     command.execute();
                 } catch (CommandException comEx) {
@@ -112,6 +119,7 @@ public class Server {
             }
         }
     }
+
 
     private DatagramPacket createPacket(Response response) {
         byte[] buff;
@@ -140,7 +148,7 @@ public class Server {
     Deserialize Data
      */
     private Request deSerialize(DatagramPacket packet) throws DeserializationException {
-        Request object = null;
+        Request object;
         try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(packet.getData()))) {
             object = (Request) ois.readObject();
             System.out.println(object);
@@ -168,6 +176,7 @@ public class Server {
         if (!isInfFromTheSameClient(clientIp, clientPort)) {
             clientIp = packet.getAddress();
             clientPort = packet.getPort();
+            int clientCounter = 0;
             System.out.println("Клиент " + clientCounter);
             System.out.println("Хост Клиента: " + clientIp);
             System.out.println("Порт Клиента: " + clientPort);

@@ -47,6 +47,46 @@ public class ValidateFields {
         }
         return inData;
     }
+    public static String checkLogOrSingUp(String promptToChange) {
+        String inData;
+        BufferedReader in = DataReader.getTreat();
+        while (true) {
+            try {
+                inData = in.readLine();
+                if(inData.equals("login")){
+
+                }
+                if (inData.trim().isEmpty()) {
+                    throw new IllegalArgumentException("Неправильно введён Password");
+                }
+            } catch (Exception e) {
+                System.out.println("Данные введены некорректно" + "\n" + "Попробуйте ввести ещё раз");
+                System.out.println(promptToChange);
+                continue;
+            }
+            break;
+        }
+        return inData;
+    }
+
+    public static String checkPassInteractive(String promptToChange) {
+        String inData;
+        BufferedReader in = DataReader.getTreat();
+        while (true) {
+            try {
+                inData = in.readLine();
+                if (inData.trim().isEmpty()) {
+                    throw new IllegalArgumentException("Неправильно введён Password");
+                }
+            } catch (Exception e) {
+                System.out.println("Данные введены некорректно" + "\n" + "Попробуйте ввести ещё раз");
+                System.out.println(promptToChange);
+                continue;
+            }
+            break;
+        }
+        return inData;
+    }
 
     public static Long checkAge(String field) throws IllegalArgumentException, NullPointerException {
         long age = Long.parseLong(field);

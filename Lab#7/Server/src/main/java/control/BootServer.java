@@ -1,9 +1,7 @@
 package control;
 
 import database.DataBase;
-import database.UserHandler;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 public class BootServer {
@@ -14,12 +12,6 @@ public class BootServer {
 
         DataBase dataBase = new DataBase();
         dataBase.showDragon(dataBase.getById(1));
-        UserHandler userHandler = new UserHandler();
-        try {
-            userHandler.addUser("new","qwe");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
         Scanner scanner = new Scanner(System.in);
         SaveData saveData = new SaveData(scanner);

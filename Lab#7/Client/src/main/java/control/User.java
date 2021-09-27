@@ -1,4 +1,4 @@
-package database;
+package control;
 
 import java.io.Serializable;
 
@@ -7,7 +7,6 @@ public class User implements Serializable {
     private String name;
     private String pass;
     private String target;
-
 
     public User(String name, String pass) {
         this.name = name;
@@ -33,7 +32,7 @@ public class User implements Serializable {
         this.pass = pass;
     }
 
-    public String getTarget() {
-        return target;
+    public void setTarget(String target) {
+        this.target = target;
     }
 }

@@ -8,23 +8,20 @@ import java.util.Deque;
 public class Request implements Serializable {
     private static final long serialVersionUID = 30L;
     private String commandName;
+    private String message;
     private String commandStringArgument;
-    private Command commandObjectArgument;
+    private Serializable objectArgument;
     private Deque<Command> commandsDeque;
-
-    public boolean isHardRequest() {
-        if (commandsDeque.size() == 0) {
-            return false;
-        }
-        return true;
-    }
 
     public Deque<Command> getCommandsDeque() {
         return commandsDeque;
     }
 
-    public Command getCommandObjectArgument() {
-        return commandObjectArgument;
+    public Serializable getObjectArgument() {
+        return objectArgument;
     }
 
+    public String getMessage() {
+        return message;
+    }
 }

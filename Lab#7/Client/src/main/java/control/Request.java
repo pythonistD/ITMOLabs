@@ -9,17 +9,18 @@ import java.util.Deque;
 public class Request implements Serializable {
     private static final long serialVersionUID = 30L;
     private String commandName;
-    private String commandStringArgument;
-    private Serializable commandObjectArgument;
+    private String message;
+    private Serializable objectArgument;
     private final Deque<Command> commandsDeque = new ArrayDeque<>();
 
-    public Request(String commandName, Serializable commandObjectArgument){
-        this.commandName=commandName;
-        this.commandObjectArgument=commandObjectArgument;
+    public Request(Serializable objectArgument){
+        this.objectArgument = objectArgument;
     }
-    public Request(Serializable commandObjectArgument){
-        this.commandObjectArgument=commandObjectArgument;
+    public Request(String message,Serializable objectArgument){
+        this.message = message;
+        this.objectArgument = objectArgument;
     }
+
     public  Request(){}
 
     public void addCommandToRequest(Command command){
