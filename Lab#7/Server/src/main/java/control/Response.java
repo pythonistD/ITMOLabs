@@ -9,25 +9,20 @@ import java.util.Iterator;
 
 public class Response implements Serializable {
     private static final long serialVersionUID = 1L;
-    private String message;
+    private boolean flag = false;
     private String commandStringArgument;
     private Serializable commandObjectArgument;
     private Deque<Response> responseDeque = new ArrayDeque<>();
 
-    public Response(String message, String commandStringArgument, Serializable commandObjectArgument) {
-        this.message = message;
+    public Response(String commandStringArgument, Serializable commandObjectArgument) {
         this.commandStringArgument = commandStringArgument;
         this.commandObjectArgument = commandObjectArgument;
     }
 
-    public Response(String message, String commandStringArgument) {
-        this.message = message;
+    public Response(String commandStringArgument) {
         this.commandStringArgument = commandStringArgument;
     }
 
-    public Response(String message) {
-        this.message = message;
-    }
 
     public Response() {
     }
@@ -39,19 +34,6 @@ public class Response implements Serializable {
     public void sendResponse(Response response) {
 
     }
-
-    public void viewResponse() {
-        System.out.println(message + "\n" + commandStringArgument);
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
     public String getCommandStringArgument() {
         return commandStringArgument;
     }
@@ -78,6 +60,10 @@ public class Response implements Serializable {
             response.addNewResponse(command.getResponse());
         }
         return response;
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
     public Deque<Response> getResponseDeque() {

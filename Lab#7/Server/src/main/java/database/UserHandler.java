@@ -1,5 +1,8 @@
 package database;
 
+import control.Request;
+import control.Response;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -20,6 +23,10 @@ public class UserHandler {
     public UserHandler() {
     }
 
+    public static void authUser(){
+
+    }
+
     public static String MD2(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD2");
@@ -35,17 +42,23 @@ public class UserHandler {
         }
     }
 
-    public void loginUser(String name, String password) throws SQLException {
+    public static Response loginUser(String name, String password) throws SQLInvalidAuthorizationSpecException {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
             try (PreparedStatement ps = connection.prepareStatement("GET  users (name,password) values (?,?)")) {
                 ps.setObject(1, name);
                 ps.setObject(2, password);
                 ps.executeUpdate();
             }
+        }catch (SQLException e){
+//            throw new SQLException("не найдет пользователь");
+            throw new SQLInvalidAuthorizationSpecException("пользователь не найден");
         }
+        Response response = new Response("пользователь: " + name + "успешно авторизован");
+        response.setFlag(true);
+        return response;
     }
 
-    public void addUser(String name, String password) throws SQLException {
+    public static Response addUser(String name, String password) throws SQLException {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
             try (PreparedStatement ps = connection.prepareStatement("INSERT INTO users (name,password,MD2) values (?,?,?)")) {
                 ps.setObject(1, name);
@@ -53,6 +66,9 @@ public class UserHandler {
                 ps.setObject(3, MD2(password));
                 ps.executeUpdate();
                 System.out.println("Пользователь успешно добавлен");
+                Response response = new Response("Пользователь успешно добавлен");
+                response.setFlag(true);
+                return response;
             }
         }
 
@@ -76,7 +92,7 @@ public class UserHandler {
         return exist;
     }
 
-    public boolean accountExist(String username, String password) throws SQLException {
+    public static boolean accountExist(String username, String password) throws SQLException {
         boolean exist = false;
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
             try (Statement ps = connection.createStatement()) {

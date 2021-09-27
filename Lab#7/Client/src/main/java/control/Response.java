@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 public class Response implements Serializable{
     private static final long serialVersionUID = 1L;
+    private boolean flag;
     private String commandName;
     private String commandStringArgument;
     private Serializable commandObjectArgument;
@@ -55,5 +56,7 @@ public class Response implements Serializable{
         System.out.println(this.commandName + "\n" + this.commandStringArgument);
     }
 
-
+    public boolean isFlag() {
+        return flag;
+    }
 }

@@ -2,6 +2,7 @@ package control;
 
 import MyExceptions.ClientReceiveResponseException;
 import MyExceptions.ClientSendRequestException;
+import database.User;
 
 
 import java.io.BufferedReader;
@@ -14,14 +15,19 @@ public class UserAuth {
 
     public static void userAuth() throws ClientSendRequestException, ClientReceiveResponseException {
         ByteBuffer buffer = ByteBuffer.allocate(10000);
-        User user = logOrSingUp();
-        Request request = new Request("auth",user);
-        Client.sendClientRequest(Client.serialize(request),Client.getServerAddress());
-        Thread waitingThread = serverTimeOut();
-        Client.receiveServerResponse(buffer);
-        waitingThread.interrupt();
-        Response response = Client.deSerialize(buffer.array());
-        response.viewResponse();
+        while (true) {
+            User user = logOrSingUp();
+            Request request = new Request("auth", user);
+            Client.sendClientRequest(Client.serialize(request), Client.getServerAddress());
+            Thread waitingThread = serverTimeOut();
+            Client.receiveServerResponse(buffer);
+            waitingThread.interrupt();
+            Response response = Client.deSerialize(buffer.array());
+            response.viewResponse();
+            if(response.isFlag()){
+                break;
+            }
+        }
     }
 
 

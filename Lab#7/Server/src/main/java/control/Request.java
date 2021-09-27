@@ -9,9 +9,13 @@ public class Request implements Serializable {
     private static final long serialVersionUID = 30L;
     private String commandName;
     private String message;
-    private String commandStringArgument;
     private Serializable objectArgument;
     private Deque<Command> commandsDeque;
+
+    public Request(String message,Serializable objectArgument){
+        this.message = message;
+        this.objectArgument = objectArgument;
+    }
 
     public Deque<Command> getCommandsDeque() {
         return commandsDeque;

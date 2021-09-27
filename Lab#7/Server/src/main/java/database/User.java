@@ -3,7 +3,7 @@ package database;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    private static final long serialVersionUID = 100L;
+    private static final long serialVersionUID = 101L;
     private String name;
     private String pass;
     private String target;

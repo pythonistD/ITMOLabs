@@ -10,9 +10,6 @@ public class BootServer {
         CollectionManager collectionManager = new CollectionManager();
         collectionManager.readCollection();
 
-        DataBase dataBase = new DataBase();
-        dataBase.showDragon(dataBase.getById(1));
-
         Scanner scanner = new Scanner(System.in);
         SaveData saveData = new SaveData(scanner);
         Thread threadToCatchSaveCommandFromTerminal = new Thread(() -> {
