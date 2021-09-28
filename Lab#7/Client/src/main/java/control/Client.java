@@ -6,7 +6,9 @@ import MyExceptions.CommandException;
 import com.sun.xml.internal.ws.encoding.soap.DeserializationException;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 import control.commands.Command;
+import database.User;
 
+import javax.jws.soap.SOAPBinding;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -23,6 +25,7 @@ public class Client {
     private final Console console = new Console();
     private Thread waitingThread;
     private Response serverResponse;
+    private static User user;
 
     public Client(String hostName, int port) {
         this.hostName = hostName;
@@ -120,7 +123,7 @@ public class Client {
         serverAddress = new InetSocketAddress(hostName, port);
         connectToServer();
         try {
-            UserAuth.userAuth();
+            user = UserAuth.userAuth();
             while (processingStatus) {
                 command = console.getDataFromKeyboard();
                 request = new Request(command);
@@ -157,5 +160,9 @@ public class Client {
             System.out.println("Нет соединения с сервером");
         }
         System.out.println("Client запущен, ожидание команд");
+    }
+
+    public static User getUser() {
+        return user;
     }
 }

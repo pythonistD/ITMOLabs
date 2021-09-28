@@ -44,7 +44,7 @@ public class UserHandler {
 
     public static Response loginUser(String name, String password) throws SQLInvalidAuthorizationSpecException {
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
-            try (PreparedStatement ps = connection.prepareStatement("GET  users (name,password) values (?,?)")) {
+            try (PreparedStatement ps = connection.prepareStatement("FROM users GET (name,password) values (?,?)")) {
                 ps.setObject(1, name);
                 ps.setObject(2, password);
                 ps.executeUpdate();
@@ -74,7 +74,7 @@ public class UserHandler {
 
     }
 
-    public boolean userExist(String username) throws SQLException {
+    public static boolean userExist(String username) throws SQLException {
         boolean exist = false;
         try (Connection connection = DriverManager.getConnection(DB_URL, USER, PASS)) {
             try (Statement ps = connection.createStatement()) {

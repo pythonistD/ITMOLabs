@@ -13,9 +13,9 @@ public class RemoveHeadCommand extends Command {
      */
     @Override
     public void execute() {
-        response = new Response("removeHead", Dragon.getDragonsCollection().getFirst().toString() + "Удаление прошло успешно");
-        Dragon.getDragonsCollection().removeFirst();
-        Utility.reDefIds(Dragon.getDragonsCollection());
+        response = new Response("removeHead", Dragon.getDragonsCollection().get(0).toString() + "Удаление прошло успешно");
+        Dragon.getDragonsCollection().remove(0);
+//        Utility.reDefIds(Dragon.getDragonsCollection());
     }
 
     @Override

@@ -39,10 +39,10 @@ public class Parser implements Serializable {
             Coordinates coordinates = new Coordinates(x, y);
             double tooth = ValidateFields.checkTooth(csvRecord.get(7));
             DragonHead dragonHead = new DragonHead(tooth);
-            Dragon dragon = new Dragon(id, name, age, wingspan, speaking, coordinates, dragonHead, DragonType.valueOf(csvRecord.get(8)));
-            dragon.setStartDate(LocalDateTime.now());
-            dragon.setEndDate(LocalDateTime.now());
-            Dragon.getDragonsCollection().add(dragon);
+//            Dragon dragon = new Dragon(id, name, age, wingspan, speaking, coordinates, dragonHead, DragonType.valueOf(csvRecord.get(8)));
+//            dragon.setStartDate(LocalDateTime.now());
+//            dragon.setEndDate(LocalDateTime.now());
+//            Dragon.getDragonsCollection().add(dragon);
         }
     }
 

@@ -1,8 +1,10 @@
 package control.commands;
 
 
+import control.Client;
 import control.Utility;
 import control.ValidateFields;
+import database.User;
 import model.Coordinates;
 import model.Dragon;
 import model.DragonHead;
@@ -22,6 +24,8 @@ public class AddCommand extends Command {
     private Double y;
     private Double tooth;
     private DragonType dragonType;
+    private String owner;
+
 
     /**
      * Запуск команды add {Dragon}
@@ -61,5 +65,6 @@ public class AddCommand extends Command {
         promptToChange = promptsiterator.next();
         System.out.println(promptToChange);
         dragonType = ValidateFields.checkDragonTypeInteractive(promptToChange);
+        owner = Client.getUser().getName();
     }
 }

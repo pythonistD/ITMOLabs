@@ -5,14 +5,15 @@ import MyExceptions.IncorrectIdException;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Объетк коллекции
  */
 public class Dragon implements Comparable<Dragon> {
-    private static LinkedList<Dragon> dragons = new LinkedList<>();
+    private static CopyOnWriteArrayList<Dragon> dragons = new CopyOnWriteArrayList<>();
     private static long counter;
     private static LocalDateTime startDate;
     private static LocalDateTime endDate;
@@ -26,6 +27,7 @@ public class Dragon implements Comparable<Dragon> {
     private DragonType type; //Поле не может быть null
     private DragonHead dragonHead;
     private Clock clock = Clock.systemUTC();
+    private String owner;
 
     public Dragon() {
 
@@ -42,7 +44,7 @@ public class Dragon implements Comparable<Dragon> {
         this.creationDate = LocalDate.now(clock);
     }
 
-    public Dragon(Long id, String name, Long age, Double wingspan, Boolean speaking, Coordinates coordinates, DragonHead dragonHead, DragonType type) throws IncorrectIdException {
+    public Dragon(long id, String name, Long age, Double wingspan, Boolean speaking, Coordinates coordinates, DragonHead dragonHead, DragonType type, String owner){
         this.name = name;
         this.age = age;
         this.id = id;
@@ -51,6 +53,7 @@ public class Dragon implements Comparable<Dragon> {
         this.speaking = speaking;
         this.type = type;
         this.dragonHead = dragonHead;
+        this.owner = owner;
         this.creationDate = LocalDate.now(clock);
     }
 
@@ -70,8 +73,8 @@ public class Dragon implements Comparable<Dragon> {
         Dragon.endDate = endDate;
     }
 
-    public static LinkedList<Dragon> getDragonsCollection() {
-        return Dragon.dragons;
+    public static CopyOnWriteArrayList<Dragon> getDragonsCollection() {
+        return dragons;
     }
 
     public long inctCounter() {

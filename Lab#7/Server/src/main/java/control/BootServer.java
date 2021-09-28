@@ -3,13 +3,11 @@ package control;
 import database.DataBase;
 
 import java.util.Scanner;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class BootServer {
     public static void main(String[] args) {
-        DataReader.setInputfileCollection(args[0]);
-        CollectionManager collectionManager = new CollectionManager();
-        collectionManager.readCollection();
-
         Scanner scanner = new Scanner(System.in);
         SaveData saveData = new SaveData(scanner);
         Thread threadToCatchSaveCommandFromTerminal = new Thread(() -> {
@@ -19,6 +17,8 @@ public class BootServer {
         });
         threadToCatchSaveCommandFromTerminal.start();
         Server server = new Server(8080, 10000000);
+        server.openSocket();
+        DataBase.uploadDataFromDataBase(Server.getUser());
         try {
             server.run();
         } catch (Exception e) {

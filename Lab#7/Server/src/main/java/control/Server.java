@@ -15,16 +15,21 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.sql.SQLException;
+import java.sql.SQLInvalidAuthorizationSpecException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
-public class Server {
+public class Server implements Runnable {
     private static final byte[] buffReceived = new byte[100000];
     private static final DatagramPacket packetReceived = new DatagramPacket(buffReceived, buffReceived.length);
     private static DatagramSocket socket;
     private static boolean processingStatus;
-    private final int port;
-    private final int timeout;
+    int clientCounter = 0;
+    private static int port;
+    private static int timeout;
     private InetAddress clientIp;
     private int clientPort;
+    private static User user;
     private byte buffSend[] = new byte[10000];
 
     public Server(int port, int timeout) {
@@ -86,7 +91,6 @@ public class Server {
         DatagramPacket packetSend;
         Request clientRequest;
         Command command;
-        openSocket();
         processingStatus = true;
         while (processingStatus) {
             Response response = new Response();
@@ -95,9 +99,15 @@ public class Server {
                 getClientAddress(packetReceived);
                 clientRequest = deSerialize(packetReceived);
                 if (!(clientRequest.getMessage() == null)) {
-                    User user = (User) clientRequest.getObjectArgument();
+                    user = (User) clientRequest.getObjectArgument();
+                    System.out.println(user.getTarget());
                     if (user.getTarget().equals("login")) {
-                        response = UserHandler.loginUser(user.getName(), user.getPass());
+                        if(!UserHandler.userExist(user.getName())){
+                            System.out.println("Пользователь успешно добавлен");
+                            response.setCommandStringArgument("Пользователь успешно добавлен");
+                            response.setFlag(true);
+                        }
+
                     }
                     if (user.getTarget().equals("sing up")) {
                         response = UserHandler.addUser(user.getName(), user.getPass());
@@ -108,7 +118,7 @@ public class Server {
                     command.execute();
                     response = command.getResponse();
                 }
-            } catch (SerializationException | DeserializationException | SQLException | CommandException e) {
+            } catch (SerializationException | DeserializationException | CommandException | NullPointerException | SQLException e) {
                 System.out.println(e.getMessage());
                 response.setCommandStringArgument(e.getMessage());
             } catch (ServerReceiveException e) {
@@ -126,7 +136,7 @@ public class Server {
     }
 
 
-    private DatagramPacket createPacket(Response response) {
+    public static DatagramPacket createPacket(Response response) {
         byte[] buff;
         DatagramPacket packet;
         buff = serialization(response);
@@ -134,11 +144,16 @@ public class Server {
         return packet;
     }
 
+    public void createPool(){
+        Executor pool = Executors.newFixedThreadPool(2);
+
+    }
+
 
     /*
     Open socket
      */
-    private void openSocket() {
+    public void openSocket() {
         System.out.println("Запуск сервера...");
         try {
             socket = new DatagramSocket(port);
@@ -152,7 +167,7 @@ public class Server {
     /*
     Deserialize Data
      */
-    private Request deSerialize(DatagramPacket packet) throws DeserializationException {
+    public static Request deSerialize(DatagramPacket packet) throws DeserializationException {
         Request object;
         try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(packet.getData()))) {
             object = (Request) ois.readObject();
@@ -179,10 +194,18 @@ public class Server {
     Who dropped the packet?
      */
     private void getClientAddress(DatagramPacket packet) {
-        if (!isInfFromTheSameClient(clientIp, clientPort)) {
+        System.out.println(packet.getPort());
+        if (isInfFromTheSameClient(packet.getAddress(), packet.getPort())) {
             clientIp = packet.getAddress();
             clientPort = packet.getPort();
-            int clientCounter = 0;
+            System.out.println("Клиент " + clientCounter);
+            System.out.println("Хост Клиента: " + clientIp);
+            System.out.println("Порт Клиента: " + clientPort);
+        }
+        if(!isInfFromTheSameClient(packet.getAddress(), packet.getPort())){
+            clientIp = packet.getAddress();
+            clientPort = packet.getPort();
+            clientCounter++;
             System.out.println("Клиент " + clientCounter);
             System.out.println("Хост Клиента: " + clientIp);
             System.out.println("Порт Клиента: " + clientPort);
@@ -191,15 +214,22 @@ public class Server {
     }
 
     private boolean isInfFromTheSameClient(InetAddress ip, int port) {
-
         try {
             if (clientIp.equals(ip) && clientPort == port) {
                 return true;
             }
         } catch (NullPointerException e) {
-            return false;
+            return true;
         }
 
         return false;
+    }
+
+    public static DatagramSocket getSocket() {
+        return socket;
+    }
+
+    public static User getUser() {
+        return user;
     }
 }

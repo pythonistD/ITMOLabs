@@ -17,7 +17,7 @@ public class RemoveByIdCommand extends Command {
         Dragon dragon = getById(information.getId());
         response = new Response("removeById", dragon.toString() + "Удаление прошло успешно");
         Dragon.getDragonsCollection().remove(dragon);
-        Utility.reDefIds(Dragon.getDragonsCollection());
+//        Utility.reDefIds(Dragon.getDragonsCollection());
     }
 
     @Override

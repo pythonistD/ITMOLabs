@@ -21,19 +21,13 @@ public class AddIfMinCommand extends Command {
      */
     @Override
     public void execute() throws CommandException {
-        try {
-            Dragon dragonMin = findDragonMin();
-            Dragon dragonNew = addCommand.createDragon();
-            if (dragonComparator.compare(dragonMin, dragonNew) > 0) {
-                dragonNew.inctCounter();
-                dragonNew.setEndDate(LocalDateTime.now());
-                Dragon.getDragonsCollection().add(dragonNew);
-                response = new Response("addIfMin", "Дракон минимален, поэтому успешно добавлен");
-            }
-        } catch (IncorrectIdException e) {
-            CommandException commandException = new CommandException("ошибка при выполнении команды addIfMax");
-            commandException.initCause(e);
-            throw commandException;
+        Dragon dragonMin = findDragonMin();
+        Dragon dragonNew = addCommand.createDragon();
+        if (dragonComparator.compare(dragonMin, dragonNew) > 0) {
+            dragonNew.inctCounter();
+            dragonNew.setEndDate(LocalDateTime.now());
+            Dragon.getDragonsCollection().add(dragonNew);
+            response = new Response("addIfMin", "Дракон минимален, поэтому успешно добавлен");
         }
 
     }

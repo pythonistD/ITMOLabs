@@ -19,8 +19,8 @@ public class PrintAscendingCommand extends Command {
     @Override
     public void execute() throws CommandException {
         ShowCommand show = new ShowCommand();
-        Collections.sort(Dragon.getDragonsCollection(),(d1, d2) -> (int) (d1.getAge() - d2.getAge()));
-        Utility.reDefIds(Dragon.getDragonsCollection());
+        Dragon.getDragonsCollection().stream().sorted(new DragonComparator());
+//        Utility.reDefIds(Dragon.getDragonsCollection());
         response = new Response("printAscending", "Список успешно отсортирован");
         show.execute();
         response.addNewResponse(show.getResponse());

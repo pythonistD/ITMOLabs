@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Различные полезные методы
@@ -17,14 +19,14 @@ public class Utility implements Serializable {
     private static final ArrayList<String> promptstocreate = new ArrayList<>();
     private static final HashMap<String, Command> availableCommandsMap = new HashMap<>();
 
-    public static void reDefIds(LinkedList<Dragon> collection) {
-        Dragon dragon;
-        for (Dragon value : collection) {
-            dragon = value;
-            long id = collection.indexOf(dragon) + 1;
-            dragon.setId(id);
-        }
-    }
+//    public static void reDefIds(ConcurrentLinkedDeque<Dragon> collection) {
+//        Dragon dragon;
+//        for (Dragon value : collection) {
+//            dragon = value;
+//            long id = collection.(dragon) + 1;
+//            dragon.setId(id);
+//        }
+//    }
 
     public static ArrayList<String> promptsListtocreate() {
         promptstocreate.add("Введите имя дракона");
@@ -39,7 +41,7 @@ public class Utility implements Serializable {
         return promptstocreate;
     }
 
-    public static int count(LinkedList<Dragon> elements) {
+    public static int count(CopyOnWriteArrayList<Dragon> elements) {
         return elements.size();
     }
 

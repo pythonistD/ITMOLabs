@@ -21,6 +21,7 @@ public class AddCommand extends Command {
     private Double y;
     private Double tooth;
     private DragonType dragonType;
+    private String owner;
 
     /**
      * Запуск команды
@@ -38,9 +39,9 @@ public class AddCommand extends Command {
         response = new Response("add", "Дракон:" + name + " успешно добавлен");
     }
 
-    public Dragon createDragon() throws IncorrectIdException {
-        id = Dragon.getDragonsCollection().getLast().getId() + 1;
-        return new Dragon(id, name, age, wingspan, speaking, new Coordinates(x, y), new DragonHead(tooth), dragonType);
+    public Dragon createDragon(){
+        id = Dragon.getDragonsCollection().size();
+        return new Dragon(id, name, age, wingspan, speaking, new Coordinates(x, y), new DragonHead(tooth), dragonType,owner);
     }
 
     public Response getResponse() {

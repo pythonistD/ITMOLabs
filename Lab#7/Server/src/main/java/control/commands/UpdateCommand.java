@@ -34,14 +34,10 @@ public class UpdateCommand extends Command {
         int index = Dragon.getDragonsCollection().indexOf(dragon);
         Dragon.getDragonsCollection().remove(dragon);
         Dragon updatedDragon;
-        try {
-            updatedDragon = addCommand.createDragon();
-            updatedDragon.setId(id);
-            updatedDragon.setEndDate(LocalDateTime.now());
-            Dragon.getDragonsCollection().add(index, updatedDragon);
-        } catch (IncorrectIdException e) {
-            throw CommandException.createExceptionChain(e, "ошибка во время обновления дракона");
-        }
+        updatedDragon = addCommand.createDragon();
+        updatedDragon.setId(id);
+        updatedDragon.setEndDate(LocalDateTime.now());
+        Dragon.getDragonsCollection().add(index, updatedDragon);
     }
 
     @Override
