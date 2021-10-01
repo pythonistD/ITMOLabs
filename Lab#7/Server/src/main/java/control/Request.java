@@ -1,6 +1,7 @@
 package control;
 
 import control.commands.Command;
+import database.User;
 
 import java.io.Serializable;
 import java.util.Deque;
@@ -9,23 +10,28 @@ public class Request implements Serializable {
     private static final long serialVersionUID = 30L;
     private String commandName;
     private String message;
-    private Serializable objectArgument;
+    private Command command;
     private Deque<Command> commandsDeque;
+    private User user;
 
-    public Request(String message,Serializable objectArgument){
+    public Request(String message,Command command){
         this.message = message;
-        this.objectArgument = objectArgument;
+        this.command = command;
     }
 
     public Deque<Command> getCommandsDeque() {
         return commandsDeque;
     }
 
-    public Serializable getObjectArgument() {
-        return objectArgument;
+    public Command getCommand() {
+        return command;
     }
 
     public String getMessage() {
         return message;
+    }
+
+    public User getUser() {
+        return user;
     }
 }

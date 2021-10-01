@@ -1,6 +1,5 @@
 package database;
 
-import control.Request;
 import control.Response;
 
 import java.math.BigInteger;

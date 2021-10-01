@@ -18,7 +18,7 @@ public class UserAuth {
         User user;
         while (true) {
             user = logOrSingUp();
-            Request request = new Request("auth", user);
+            Request request = new Request(user);
             Client.sendClientRequest(Client.serialize(request), Client.getServerAddress());
             Thread waitingThread = serverTimeOut();
             Client.receiveServerResponse(buffer);

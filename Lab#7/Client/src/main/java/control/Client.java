@@ -95,7 +95,7 @@ public class Client {
 
     public static Thread serverTimeOut() {
         Runnable task = () -> {
-            int time = 1000;
+            int time = 100000;
             try {
                 Thread.sleep(time);
                 System.out.println("Нет ответа от сервера, завершение работы");

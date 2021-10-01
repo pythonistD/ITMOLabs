@@ -1,6 +1,5 @@
 package database;
 
-import MyExceptions.IncorrectIdException;
 import model.Coordinates;
 import model.Dragon;
 import model.DragonHead;

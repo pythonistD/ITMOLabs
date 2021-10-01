@@ -12,7 +12,7 @@ public class ExitCommand extends Command {
      */
     @Override
     public void execute() {
-        Server.setProcessingStatus(false);
+        System.exit(0);
         response = new Response("exit", "Работа успешно завершена");
         System.out.println("Работа успешно завершена");
     }
