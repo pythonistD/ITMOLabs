@@ -41,6 +41,7 @@ public class ReceiveRequest implements Runnable {
             e.printStackTrace();
             throw new DeserializationException("Ошибка десериализации,класс не найден");
         } catch (IOException e) {
+            e.printStackTrace();
             throw new DeserializationException("Ошибка десериализации");
         }
         return object;
@@ -54,8 +55,6 @@ public class ReceiveRequest implements Runnable {
 
     @Override
     public void run() {
-        byte[] buffer = new byte[100000];
-        DatagramPacket packetReceived = new DatagramPacket(buffer, buffer.length);
         getClientsAddress(packetReceived);
         Request request = deSerialize(packetReceived);
         Connections connection = new Connections(clientPort, clientIp, request.getUser());

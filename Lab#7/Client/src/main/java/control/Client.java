@@ -155,7 +155,8 @@ public class Client {
     private void connectToServer() {
         try {
             channel = DatagramChannel.open();
-            channel.socket().bind(null);
+//            channel.socket().bind(null);
+            channel.connect(serverAddress);
         } catch (IOException e) {
             System.out.println("Нет соединения с сервером");
         }

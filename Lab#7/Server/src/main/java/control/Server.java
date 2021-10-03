@@ -53,7 +53,7 @@ public class Server implements Runnable {
     public void run() {
         running = true;
         System.out.println("Server started on port " + port);
-        byte[] buffReceived = new byte[100000];
+        byte[] buffReceived = new byte[10000000];
         DatagramPacket packetReceived = new DatagramPacket(buffReceived, buffReceived.length);
         while (running) {
             try {

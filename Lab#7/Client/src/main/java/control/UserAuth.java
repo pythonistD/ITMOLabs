@@ -14,7 +14,7 @@ import static control.Client.serverTimeOut;
 public class UserAuth {
 
     public static User userAuth() throws ClientSendRequestException, ClientReceiveResponseException {
-        ByteBuffer buffer = ByteBuffer.allocate(10000);
+        ByteBuffer buffer = ByteBuffer.allocate(100000);
         User user;
         while (true) {
             user = logOrSingUp();
