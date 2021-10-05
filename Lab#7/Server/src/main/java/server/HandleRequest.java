@@ -9,18 +9,15 @@ import database.User;
 import database.UserHandler;
 
 import java.sql.SQLException;
-import java.util.concurrent.ConcurrentLinkedDeque;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
-public class HandleRequest implements Runnable {
+public class HandleRequest implements Callable<Boolean> {
     //Connections map
     private static final ConcurrentLinkedDeque<Connections> connections = new ConcurrentLinkedDeque<>();
-    private User user;
-    private Command command;
+    private static final ExecutorService sendResp = Executors.newCachedThreadPool();
     private final Request clientRequest;
     private final Connections connection;
-    private final ExecutorService sendResp = Executors.newCachedThreadPool();
+
 
     public HandleRequest(Request clientRequest, Connections connections) {
         this.clientRequest = clientRequest;
@@ -33,13 +30,20 @@ public class HandleRequest implements Runnable {
             response = loginOrSingUp(connection.getUser());
             connections.add(connection);
         }
-        if(isInConnectionsMap(connection)){
+        if (isInConnectionsMap(connection)) {
             //TODO Парсинг такой идёт запроса клиента.Прописать отдельный парсер для этого дела?
             User user = clientRequest.getUser();
             Command command = clientRequest.getCommand();
-            command.execute();
-            response = command.getResponse();
+            try {
+                if(command != null) {
+                    command.execute();
+                    response = command.getResponse();
+                }
+            }catch (CommandException e){
+                System.out.println("Something went wrong with command execution");
+            }
         }
+        System.out.println(response);
         return response;
     }
 
@@ -67,14 +71,19 @@ public class HandleRequest implements Runnable {
         return connections.contains(connection);
     }
 
-
     @Override
-    public void run() {
+    public Boolean call(){
+        System.out.println(Thread.currentThread().getName());
+        System.out.println(Thread.currentThread().getState());
+        Response response = null;
         try {
-            Response response = createResponse();
-            sendResp.execute(new SendResponse(connection,response));
-        } catch (CommandException e) {
+            response = createResponse();
+            Future<Boolean> future = sendResp.submit(new SendResponse(connection, response));
+            future.get();
+        } catch (CommandException | InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
+
+        return true;
     }
 }

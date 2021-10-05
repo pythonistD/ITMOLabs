@@ -24,6 +24,7 @@ public class UserAuth {
             Client.receiveServerResponse(buffer);
             waitingThread.interrupt();
             Response response = Client.deSerialize(buffer.array());
+            System.out.println(response);
             buffer.clear();
             response.viewResponse();
             if(response.isFlag()){

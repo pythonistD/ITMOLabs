@@ -11,18 +11,20 @@ import java.io.ObjectInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
-public class ReceiveRequest implements Runnable {
+public class ReceiveRequest implements Callable<Boolean> {
+    //Thread pool
+    private static final ExecutorService processTheadPool = Executors.newCachedThreadPool();
     private DatagramPacket packetReceived;
-    private InetAddress clientIp;
     private int clientPort;
     private int clientCounter = 0;
     //
     private DatagramSocket socket;
-    //Thread pool
-    private ExecutorService processTheadPool = Executors.newCachedThreadPool();
 
 
     public ReceiveRequest(DatagramPacket packet) {
@@ -34,7 +36,6 @@ public class ReceiveRequest implements Runnable {
         Request object;
         try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(packet.getData()))) {
             object = (Request) ois.readObject();
-            System.out.println(object);
         } catch (InvalidClassException e) {
             throw new DeserializationException("Ошибка десериализации, id десериализируемых объектов не соответствуют");
         } catch (ClassNotFoundException e) {
@@ -47,17 +48,41 @@ public class ReceiveRequest implements Runnable {
         return object;
     }
 
-    public void getClientsAddress(DatagramPacket packet) {
-        this.clientIp = packet.getAddress();
-        this.clientPort = packet.getPort();
+    public InetSocketAddress getClientsAddress(DatagramPacket packet) {
+        InetSocketAddress address = null;
+        try {
+            InetAddress clientIp = packet.getAddress();
+            System.out.println(clientIp);
+            int clientPort = packet.getPort();
+            System.out.println(clientPort);
+            address = new InetSocketAddress(clientIp,clientPort);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return address;
     }
 
 
+//    @Override
+//    public void run() {
+//        System.out.println(Thread.currentThread().getName());
+//        System.out.println(Thread.currentThread().getState());
+//        InetSocketAddress clientsAddress = getClientsAddress(packetReceived);
+//        Request request = deSerialize(packetReceived);
+//        Connections connection = new Connections(clientsAddress, request.getUser());
+//        processTheadPool.submit(new HandleRequest(request, connection));
+//        processTheadPool.shutdown();
+//    }
+
     @Override
-    public void run() {
-        getClientsAddress(packetReceived);
+    public Boolean call() throws Exception {
+        System.out.println(Thread.currentThread().getName());
+        System.out.println(Thread.currentThread().getState());
+        InetSocketAddress clientsAddress = getClientsAddress(packetReceived);
         Request request = deSerialize(packetReceived);
-        Connections connection = new Connections(clientPort, clientIp, request.getUser());
-        processTheadPool.execute(new HandleRequest(request, connection));
+        Connections connection = new Connections(clientsAddress, request.getUser());
+        Future<Boolean> future = processTheadPool.submit(new HandleRequest(request, connection));
+        future.get();
+        return true;
     }
 }

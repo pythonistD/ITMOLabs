@@ -1,15 +1,16 @@
 package database;
 
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 public class Connections {
     private int port;
     private InetAddress clientAddress;
     private User user;
 
-    public Connections(int port, InetAddress clientAddress, User user) {
-        this.port = port;
-        this.clientAddress = clientAddress;
+    public Connections(InetSocketAddress address, User user) {
+        this.port = address.getPort();
+        this.clientAddress = address.getAddress() ;
         this.user = user;
     }
 

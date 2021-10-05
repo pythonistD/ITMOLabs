@@ -12,10 +12,10 @@ public class BootServer {
                 saveData.saveCollection();
             }
         });
+        threadToCatchSaveCommandFromTerminal.setDaemon(true);
         threadToCatchSaveCommandFromTerminal.start();
         //Запуск сервера
         Server server = new Server(8080, 10000000);
-//        server.startListening();
         server.run();
 
 

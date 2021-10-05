@@ -10,8 +10,9 @@ import java.io.*;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.concurrent.Callable;
 
-public class SendResponse implements Runnable {
+public class SendResponse implements Callable<Boolean> {
     private Connections connections;
     private DatagramSocket socket;
     private Response response;
@@ -22,10 +23,11 @@ public class SendResponse implements Runnable {
         this.response = response;
     }
 
-    @Override
-    public void run() {
-        sendResp(response,connections);
-    }
+
+//    @Override
+//    public void run() {
+//        sendResp(response,connections);
+//    }
 
     public void sendResp(Response response,Connections connections){
         try {
@@ -65,11 +67,19 @@ public class SendResponse implements Runnable {
 
     public void sendServerResponse(DatagramPacket serverResponsePacket) throws ServerSendResponseException {
         try {
+            System.out.println(Thread.currentThread().getName());
+            System.out.println(Thread.currentThread().getState());
             System.out.println(serverResponsePacket);
             this.socket.send(serverResponsePacket);
         } catch (IOException e) {
             throw new ServerSendResponseException("Что-то пошло не так, данные не отправлены клиенту");
         }
         System.out.println("Данные успешно отправлены");
+    }
+
+    @Override
+    public Boolean call() throws Exception {
+        sendResp(response,connections);
+        return true;
     }
 }
