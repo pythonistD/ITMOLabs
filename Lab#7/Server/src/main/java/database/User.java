@@ -1,6 +1,7 @@
 package database;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class User implements Serializable {
     private static final long serialVersionUID = 101L;
@@ -35,5 +36,18 @@ public class User implements Serializable {
 
     public String getTarget() {
         return target;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return name.equals(user.name) && pass.equals(user.pass) && target.equals(user.target);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, pass, target);
     }
 }

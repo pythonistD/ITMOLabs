@@ -1,7 +1,10 @@
 package database;
 
+import control.Server;
+
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.util.Objects;
 
 public class Connections {
     private int port;
@@ -24,5 +27,18 @@ public class Connections {
 
     public User getUser() {
         return user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Connections that = (Connections) o;
+        return port == that.port && clientAddress.equals(that.clientAddress) && user.equals(that.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(port, clientAddress, user);
     }
 }

@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
-public class ReceiveRequest implements Callable<Boolean> {
+public class ReceiveRequest implements Callable<Request> {
     //Thread pool
     private static final ExecutorService processTheadPool = Executors.newCachedThreadPool();
     private DatagramPacket packetReceived;
@@ -48,41 +48,10 @@ public class ReceiveRequest implements Callable<Boolean> {
         return object;
     }
 
-    public InetSocketAddress getClientsAddress(DatagramPacket packet) {
-        InetSocketAddress address = null;
-        try {
-            InetAddress clientIp = packet.getAddress();
-            System.out.println(clientIp);
-            int clientPort = packet.getPort();
-            System.out.println(clientPort);
-            address = new InetSocketAddress(clientIp,clientPort);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return address;
-    }
-
-
-//    @Override
-//    public void run() {
-//        System.out.println(Thread.currentThread().getName());
-//        System.out.println(Thread.currentThread().getState());
-//        InetSocketAddress clientsAddress = getClientsAddress(packetReceived);
-//        Request request = deSerialize(packetReceived);
-//        Connections connection = new Connections(clientsAddress, request.getUser());
-//        processTheadPool.submit(new HandleRequest(request, connection));
-//        processTheadPool.shutdown();
-//    }
-
     @Override
-    public Boolean call() throws Exception {
+    public Request call() throws Exception {
         System.out.println(Thread.currentThread().getName());
         System.out.println(Thread.currentThread().getState());
-        InetSocketAddress clientsAddress = getClientsAddress(packetReceived);
-        Request request = deSerialize(packetReceived);
-        Connections connection = new Connections(clientsAddress, request.getUser());
-        Future<Boolean> future = processTheadPool.submit(new HandleRequest(request, connection));
-        future.get();
-        return true;
+        return deSerialize(packetReceived);
     }
 }
