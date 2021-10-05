@@ -50,8 +50,6 @@ public class ReceiveRequest implements Callable<Request> {
 
     @Override
     public Request call() throws Exception {
-        System.out.println(Thread.currentThread().getName());
-        System.out.println(Thread.currentThread().getState());
         return deSerialize(packetReceived);
     }
 }

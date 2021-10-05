@@ -1,5 +1,7 @@
 package control;
 
+import database.DataBase;
+
 import java.util.Scanner;
 
 public class BootServer {
@@ -15,6 +17,7 @@ public class BootServer {
         threadToCatchSaveCommandFromTerminal.setDaemon(true);
         threadToCatchSaveCommandFromTerminal.start();
         //Запуск сервера
+        DataBase.uploadDataFromDataBase();
         Server server = new Server(8080, 10000000);
         server.run();
 

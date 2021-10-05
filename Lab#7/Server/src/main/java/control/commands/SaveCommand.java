@@ -25,7 +25,7 @@ public class SaveCommand extends Command {
         while (dragonListIterator.hasNext()) {
             dragonNext = dragonListIterator.next();
             dragonNext.setEndDate(LocalDateTime.now());
-            writeDragonToTheFile(out, dragonNext.toString());
+            writeDragonToTheDB(out, dragonNext.toString());
         }
         System.out.println("Saved");
         closeWritingToTheFile(out);
@@ -41,13 +41,14 @@ public class SaveCommand extends Command {
         }
     }
 
-    private void writeDragonToTheFile(Writer out, String dragon) throws CommandException {
+    private void writeDragonToTheDB(Writer out, String dragon) throws CommandException {
         try {
             out.write(dragon);
         } catch (IOException e) {
             throw CommandException.createExceptionChain(e, "ошибка во время выполнения команды save, проблемы с записью в файл");
         }
     }
+
 
     private void closeWritingToTheFile(Writer out) throws CommandException {
         try {

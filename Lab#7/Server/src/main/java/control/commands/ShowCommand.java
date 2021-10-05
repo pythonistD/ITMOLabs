@@ -1,12 +1,14 @@
 package control.commands;
 
 import control.Response;
+import database.User;
 import model.Dragon;
 
 import java.util.ListIterator;
 
 public class ShowCommand extends Command {
     private static final long serialVersionUID = 2L;
+    private User user;
     private Response response;
 
     /**
@@ -18,7 +20,10 @@ public class ShowCommand extends Command {
         StringBuilder field = new StringBuilder();
         ListIterator<Dragon> itr = Dragon.getDragonsCollection().listIterator();
         while (itr.hasNext()) {
-            field.append(itr.next().toString());
+            Dragon dragon = itr.next();
+            if(dragon.getOwner().equals(user.getName())) {
+                field.append(itr.next().toString());
+            }
         }
         response.setCommandStringArgument(field.toString());
     }

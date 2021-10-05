@@ -2,8 +2,8 @@ package control.commands;
 
 
 import MyExceptions.CommandException;
-import MyExceptions.IncorrectIdException;
 import control.Response;
+import database.DataBase;
 import model.Coordinates;
 import model.Dragon;
 import model.DragonHead;
@@ -33,6 +33,7 @@ public class AddCommand extends Command {
         try {
             Dragon dragon = createDragon();
             Dragon.getDragonsCollection().add(dragon);
+            DataBase.addDragonToDataBase(dragon);
         } catch (Exception e) {
             throw new CommandException("ошибка при добавлении");
         }

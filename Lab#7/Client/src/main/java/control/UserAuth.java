@@ -2,6 +2,9 @@ package control;
 
 import MyExceptions.ClientReceiveResponseException;
 import MyExceptions.ClientSendRequestException;
+import control.commands.Command;
+import control.commands.Login;
+import control.commands.Register;
 import database.User;
 
 
@@ -12,13 +15,14 @@ import java.nio.ByteBuffer;
 import static control.Client.serverTimeOut;
 
 public class UserAuth {
+    private static User user;
 
     public static User userAuth() throws ClientSendRequestException, ClientReceiveResponseException {
         ByteBuffer buffer = ByteBuffer.allocate(100000);
-        User user;
+        Command command;
         while (true) {
-            user = logOrSingUp();
-            Request request = new Request(user);
+            command = logOrSingUp();
+            Request request = new Request(command);
             Client.sendClientRequest(Client.serialize(request), Client.getServerAddress());
             Thread waitingThread = serverTimeOut();
             Client.receiveServerResponse(buffer);
@@ -34,21 +38,21 @@ public class UserAuth {
     }
 
 
-    public static User logOrSingUp() {
+    public static Command logOrSingUp() {
         String inData;
         BufferedReader reader = DataReader.getTreat();
-        User user;
+        Command command;
         while (true) {
             System.out.println("Введите:login или sing up");
             try {
                 inData = reader.readLine();
                 if (inData.equals("login")) {
                     user = createUser();
-                    user.setTarget("login");
+                    command = new Login(user);
                     break;
                 } else if (inData.equals("sing up")) {
                     user = createUser();
-                    user.setTarget("sing up");
+                    command = new Register(user);
                     break;
                 } else {
                     System.out.println("Данные введены неверно " + "\n" + "Попробуйте ввести ещё раз");
@@ -59,7 +63,7 @@ public class UserAuth {
                 System.out.println("Данные введены неверно " + "\n" + "Попробуйте ввести ещё раз");
             }
         }
-        return user;
+        return command;
     }
 
     public static User createUser() {

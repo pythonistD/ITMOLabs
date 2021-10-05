@@ -105,6 +105,21 @@ public class Dragon implements Comparable<Dragon> {
         return dragonHead;
     }
 
+    public double getWingspan() {
+        return wingspan;
+    }
+
+    public Boolean getSpeaking() {
+        return speaking;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
 
     @Override
     public boolean equals(Object o) {

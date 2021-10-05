@@ -4,8 +4,10 @@ import MyExceptions.CommandException;
 import MyExceptions.IncorrectIdException;
 import control.Information;
 import control.Response;
+import database.DataBase;
 import model.Dragon;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 public class UpdateCommand extends Command {
@@ -32,6 +34,11 @@ public class UpdateCommand extends Command {
 
     private void changeDragon(Dragon dragon, long id) throws CommandException {
         int index = Dragon.getDragonsCollection().indexOf(dragon);
+        try {
+            DataBase.removeFromDb(id,dragon.getOwner());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         Dragon.getDragonsCollection().remove(dragon);
         Dragon updatedDragon;
         updatedDragon = addCommand.createDragon();
@@ -39,6 +46,7 @@ public class UpdateCommand extends Command {
         updatedDragon.setEndDate(LocalDateTime.now());
         Dragon.getDragonsCollection().add(index, updatedDragon);
     }
+
 
     @Override
     public Response getResponse() {

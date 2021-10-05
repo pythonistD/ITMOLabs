@@ -3,8 +3,10 @@ package control.commands;
 import MyExceptions.CommandException;
 import MyExceptions.IncorrectIdException;
 import control.Response;
+import database.DataBase;
 import model.Dragon;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
@@ -25,6 +27,11 @@ public class AddIfMaxCommand extends Command {
             dragonNew.inctCounter();
             dragonNew.setEndDate(LocalDateTime.now());
             Dragon.getDragonsCollection().add(dragonNew);
+            try {
+                DataBase.addDragonToDataBase(dragonNew);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             response = new Response("addIfMax", "Дракон максимален, поэтому успешно добавлен");
         }
 
